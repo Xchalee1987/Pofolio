@@ -393,7 +393,7 @@ h6 {
   .navmenu li:hover>a,
   .navmenu .active,
   .navmenu .active:focus {
-    color: var(--nav-color);
+    color: color-mix(in srgb, var(--nav-color), transparent 50%);
   }
 
   .navmenu .dropdown ul {
@@ -488,7 +488,8 @@ h6 {
   .navmenu a,
   .navmenu a:focus {
     color: var(--nav-dropdown-color);
-    padding: 10px 20px;
+    padding: 10px 10px;
+    margin: 10px 10px;
     font-family: var(--nav-font);
     font-size: 17px;
     font-weight: 500;
@@ -523,7 +524,8 @@ h6 {
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
-    color: var(--nav-dropdown-hover-color);
+    background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+    color: var(--nav-hover-color);
   }
 
   .navmenu .active i,
@@ -902,10 +904,18 @@ section,
   font-size: 48px;
   font-weight: 700;
   margin-bottom: 20px;
+  text-align: center;
+}
+
+.hero div {
+  align-items: center;
 }
 
 .hero h2 .accent {
-  color: var(--conrast-color);
+  color: rgb(83, 113, 66);
+  background-color: rgb(168, 255, 171);
+  border-radius: 10px;
+  padding: 0 10px;
 }
 
 .hero p {
@@ -1029,6 +1039,10 @@ section,
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
+.about h2 {
+  margin: 60px 0 0 0;
+}
+
 .about h3 {
   font-weight: 700;
   font-size: 28px;

@@ -217,6 +217,8 @@
 
 })();
 
+
+/* autocomplete search box on navbar*/
 function autocomplete(inp) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
@@ -259,7 +261,7 @@ function autocomplete(inp) {
       }
   });
 
-  /* autocomplete search box on navbar*/
+  
   /*execute a function presses a key on the keyboard:*/
   inp.addEventListener("keydown", function(e) {
       var x = document.getElementById(this.id + "autocomplete-list");
@@ -316,5 +318,5 @@ document.addEventListener("click", function (e) {
     closeAllLists(e.target);
 });
 }
-autocomplete(document.getElementById("myInput"));
+autocomplete(document.getElementById("search-concert"));
 /*THE END OF autocomplete search box on navbar*/
