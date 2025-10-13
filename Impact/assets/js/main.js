@@ -218,6 +218,8 @@
 })();
 
 
+
+
 /* autocomplete search box on navbar*/
 function autocomplete(inp) {
   /*the autocomplete function takes two arguments,
@@ -320,9 +322,3 @@ document.addEventListener("click", function (e) {
 }
 autocomplete(document.getElementById("search-concert"));
 /*THE END OF autocomplete search box on navbar*/
-
-$(document).ready(function(){
-    $('.message a').click(function(){
-      $('.login-page').animate({height:"toggle", opacity:"toggle"}, "slow");
-    });
-});
