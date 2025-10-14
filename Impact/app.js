@@ -78,12 +78,13 @@ function requireRole(...roles) {
   };
 }
 
-// app.get("/u", (req, res) => {
-//   if (req.user) {
-//     return res.render("main.ejs", { u : req.user });
-//   }
-//   res.sendFile("index.html");
-// });
+// check in case user without login click on event list items
+app.get("/u", (req, res) => {
+  if (req.user) {
+    return res.render("main.ejs", { u : req.user });
+  }
+  res.sendFile("index.html");
+});
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -138,11 +139,18 @@ app.post("/register", async (req, res) => {
       VALUES ($1, $2, crypt($3, gen_salt('bf')) , 'user')
     `;
 
-    pool.query(q, [username, number, password]);
-    res.render('register.ejs');
+    await pool.query(q, [username, number, password]); //ดักจับถ้าชื่อผู้ใช้ซ้ำ
+
+    return res.render('register.ejs');
   } catch (e) {
     console.error(e);
-    res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
+    if (e.code === '23505') {
+      return res.status(409).send(`
+        <h1>ชื่อผู้ใช้ซ้ำกรุณาลงทะเบียนใหม่</h1>
+        <a href="/login_page.html">ย้อนกลับ/a>
+        `);
+    }
+    return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
   }
 });
 

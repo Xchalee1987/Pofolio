@@ -7,12 +7,12 @@ $(document).ready(function(){
 $(document).ready(function(){
   $('#profile').click(function(e) {
     e.preventDefault();
-    $('.overlay-toggle').toggle();
+    $('.overlay-toggle').animate({width:"toggle", opacity:"toggle"}, "fast");
   });
   
   $('.overlay-container').on('click', function(e) {
     if (!$('.overlay').is(e.target) && $('.overlay').has(e.target).length === 0) {
-      $('.overlay-container').toggle();
+      $('.overlay-container').animate({width:"toggle", opacity:"toggle"}, "fast");
     }
   });
 });

@@ -199,13 +199,13 @@ input[type=submit] {
 
 .overlay {
   position: fixed;
-  left: 800px;
-  top: 100px;
+  right: 0;
+  top: 110px;
   width: 200px;
   margin: 0;
   padding: 10px;
   background-color: #d4d4d4;
-  border-radius: 0 0 8px 8px;
+  border-radius: 8px 0 0 8px ;
 }
 
 .overlay > span {
