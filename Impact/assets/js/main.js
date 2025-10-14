@@ -224,7 +224,7 @@
 function autocomplete(inp) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
-  var arr = ["One","two","three"];
+  var arr = ["One","two","three", "first event", "second event", "thirth event", "forth event", "fifth event"];
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {

@@ -175,3 +175,40 @@ input[type=submit] {
 .registration-form {
   display: none;
 }
+
+.navmenu ul li button {
+  border: none;
+  outline-style: none;
+}
+
+.register-page {
+  width: 600px;
+}
+
+.overlay-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay-toggle {
+  display: none;
+}
+
+.overlay {
+  position: fixed;
+  left: 800px;
+  top: 100px;
+  width: 200px;
+  margin: 0;
+  padding: 10px;
+  background-color: #d4d4d4;
+  border-radius: 0 0 8px 8px;
+}
+
+.overlay > span {
+  display: block;
+  margin-top: 5px;
+}
