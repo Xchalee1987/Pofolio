@@ -172,20 +172,47 @@ app.get("/u/purchase_history", (req, res) => {
 // fetch user transaction for display
 app.get('/u/fetch', async (req, res) => {
   try {
-    const q = `
-      SELECT 
-        t.trans_id,
-        z.zone_name,
-        t.seat_number,
-        z.base_price,
-        t.purchase_date,
-        c.title
-      FROM "transaction" t
-      JOIN zone_detail z ON t.zone_id = z.zone_id
-      JOIN concert_detail c ON z.concert_id = c.concert_id
-      WHERE t.user_id = $1
-    `;
-    const result = await pool.query(q, [ req.user.user_id ]);
+    let q;
+    let params;
+
+    if (req.user.role === 'admin') {
+      // Admin: fetch ALL users' transactions
+      q = `
+        SELECT 
+          t.trans_id,
+          z.zone_name,
+          t.seat_number,
+          z.base_price,
+          t.purchase_date,
+          c.title,
+          u.user_id,
+          u.username
+        FROM "transaction" t
+        JOIN zone_detail z ON t.zone_id = z.zone_id
+        JOIN concert_detail c ON z.concert_id = c.concert_id
+        JOIN user_detail u ON t.user_id = u.user_id
+        ORDER BY t.purchase_date DESC
+      `;
+      params = [];
+    } else {
+      //  User: fetch only their own transactions
+      q = `
+        SELECT 
+          t.trans_id,
+          z.zone_name,
+          t.seat_number,
+          z.base_price,
+          t.purchase_date,
+          c.title
+        FROM "transaction" t
+        JOIN zone_detail z ON t.zone_id = z.zone_id
+        JOIN concert_detail c ON z.concert_id = c.concert_id
+        WHERE t.user_id = $1
+        ORDER BY t.purchase_date DESC
+      `;
+      params = [req.user.user_id];
+    }
+    const result = await pool.query(q, params);
 
     // Get list of zone names only
     const timeStamp = result.rows.map(row => row.purchase_date);
@@ -197,6 +224,17 @@ app.get('/u/fetch', async (req, res) => {
     res.status(500).send('Query to database not successful');
   }
 })
+
+app.get('/admin/delete/:id', async (req, res) =>{
+  const { id } = req.params;
+  try {
+    await pool.query(`Delete transaction id $1?`, [ id ]);
+    res.json({ message: 'Transaction deleted'});
+  } catch (err) {
+    console.error('Database error:', err.message);
+    res.status(500).send('Query to database not successful');
+  }
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

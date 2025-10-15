@@ -241,3 +241,9 @@ input[type=submit] {
   display: block;
   padding: 10px 0;
 }
+
+.history-container .history-item span:last-child {
+}
+
+.history-container .history-item button {
+}

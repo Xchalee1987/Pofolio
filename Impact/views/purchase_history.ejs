@@ -184,6 +184,7 @@
   <script src="/js/myJQuery.js"></script>
 
   <script>
+    const userRole = "<%= u.role %>";
     const historyList = document.getElementById('history-list');
 
     async function fetchTransaction() {
@@ -193,21 +194,53 @@
         transactions.forEach(transaction => {
             const transactionDiv = document.createElement('div');
             transactionDiv.classList.add('history-item');
-            transactionDiv.innerHTML = `
-                <hr>
-                <div>
-                    <span>Transaction ID: ${transaction.trans_id}</span>
-                    <span>Concert Name: ${transaction.title}</span>
-                    <span>Zone Name: ${transaction.zone_name}</span>
-                    <span>Seat Number: ${transaction.seat_number}</span>
-                    <span>Price: ${transaction.base_price}</span>
-                    <span>${transaction.purchase_date}</span>
-                </div>
-                <hr>
+            if (userRole === 'admin') {
+              transactionDiv.innerHTML += `
+              <hr>
+              <div>
+                <span>Transaction ID: ${transaction.trans_id}</span>
+                <span>Concert Name: ${transaction.title}</span>
+                <span>Zone Name: ${transaction.zone_name}</span>
+                <span>Seat Number: ${transaction.seat_number}</span>
+                <span>Price: ${transaction.base_price}</span>
+                <span>${transaction.purchase_date}</span>
+                <span>Username: ${transaction.username} (User ID: ${transaction.user_id})</span>
+                <button onclick="deleteTransaction(${transaction.trans_id})">Delete</button>
+              </div>
+              <hr>
+              `;}
+              else {
+                transactionDiv.innerHTML = `
+              <hr>
+              <div>
+                <span>Transaction ID: ${transaction.trans_id}</span>
+                <span>Concert Name: ${transaction.title}</span>
+                <span>Zone Name: ${transaction.zone_name}</span>
+                <span>Seat Number: ${transaction.seat_number}</span>
+                <span>Price: ${transaction.base_price}</span>
+                <span>${transaction.purchase_date}</span>
+              </div>
+              <hr>
                 `;
+              }
+
             historyList.appendChild(transactionDiv);
         });
     }
+    
+    async function deleteTransaction(id) {
+      if (confirm('Are you sure to delete this transaction?')) {
+        const res = await fetch(`/admin/delete/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          alert('Transaction deleted');
+          fetchTransaction();
+        } else {
+          alert('Failed to delete transaction');
+        }
+      }
+    }
+
+
     fetchTransaction();
   </script>
 
