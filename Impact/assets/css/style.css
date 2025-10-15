@@ -200,15 +200,44 @@ input[type=submit] {
 .overlay {
   position: fixed;
   right: 0;
-  top: 110px;
+  top: 113px;
   width: 200px;
   margin: 0;
   padding: 10px;
   background-color: #d4d4d4;
-  border-radius: 8px 0 0 8px ;
+  border-radius: 0 0 0 8px ;
 }
 
 .overlay > span {
   display: block;
   margin-top: 5px;
+}
+
+.history-title {
+  margin-top: 120px;
+}
+
+.history-container {
+  width: 1000px;
+  margin: 0 0 80px 0;
+  padding: 0;
+  justify-self: center;
+  align-items: center;
+  padding: 20px 60px 60px 60px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 0 5px 5px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.history-container .history-item {
+  width: 100%;
+  margin: 40px 0;
+}
+
+.history-container .history-item  div{
+  padding: 0 40px;
+}
+
+.history-container .history-item span {
+  display: block;
+  padding: 10px 0;
 }

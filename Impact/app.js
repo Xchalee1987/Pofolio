@@ -79,6 +79,7 @@ function requireRole(...roles) {
 }
 
 // check in case user without login click on event list items
+// (enter the path that contain /u will check if user login yet)
 app.get("/u", (req, res) => {
   if (req.user) {
     return res.render("main.ejs", { u : req.user });
@@ -160,6 +161,42 @@ app.get("/u/first", (req, res) => {
   }
   res.sendFile("index.html");
 });
+
+app.get("/u/purchase_history", (req, res) => {
+  if (req.user) {
+    return res.render('purchase_history.ejs', { u : req.user });
+  }
+  res.sendFile("index.html");
+});
+
+// fetch user transaction for display
+app.get('/u/fetch', async (req, res) => {
+  try {
+    const q = `
+      SELECT 
+        t.trans_id,
+        z.zone_name,
+        t.seat_number,
+        z.base_price,
+        t.purchase_date,
+        c.title
+      FROM "transaction" t
+      JOIN zone_detail z ON t.zone_id = z.zone_id
+      JOIN concert_detail c ON z.concert_id = c.concert_id
+      WHERE t.user_id = $1
+    `;
+    const result = await pool.query(q, [ req.user.user_id ]);
+
+    // Get list of zone names only
+    const timeStamp = result.rows.map(row => row.purchase_date);
+    console.log('Zone names:', timeStamp);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Database error:', err.message);
+    res.status(500).send('Query to database not successful');
+  }
+})
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

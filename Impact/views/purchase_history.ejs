@@ -54,14 +54,14 @@
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="/u" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="img/logo.png" alt=""> -->
-          <h1 class="sitename">ยินดีต้อนรับ!</h1>
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="img/logo.png" alt=""> -->
+            <h1 class="sitename">Ticket Duo</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="/u/purchase_history" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
+            <li><a href="#" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
             <li><a href="#" id="profile">คุณ <%= u.username %></a></li>
             <li><a href="/logout" onclick="">Logout</a></li>
           </ul>
@@ -87,108 +87,17 @@
 
   <main class="main">
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero section accent-background">
-
-      <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
-        <div class="row gy-5 justify-content-between">
-          <div class="col-lg-12 order-2 order-lg-1 d-flex flex-column justify-content-center">
-            <h2><span>Ticket</span> <a href="/u" class="accent">Duo</a></h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="icon-boxes position-relative" data-aos="fade-up" data-aos-delay="200">
-        <div class="container position-relative">
-          <div class="row gy-4 mt-5">
-          </div>
-        </div>
-      </div>
-
-    </section><!-- /Hero Section -->
-
-    
-
-    <!-- About Section -->
+    <!-- Purchase history Section -->
     <section id="about" class="about section">
-      <!-- Carousel -->
-      <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-interval="4000" data-bs-ride="carousel" >
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="./img/Con_1.jpg" class="d-block w-100" alt="Con_1">
-          </div>
-          <div class="carousel-item">
-            <img src="./img/Con_2.jpg" class="d-block w-100" alt="Con_2">
-          </div>
-          <div class="carousel-item">
-            <img src="./img/con_3.webp" class="d-block w-100" alt="Con_3">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
       
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Events<br></h2>
+      <div class="container section-title history-title" data-aos="fade-up">
+        <h2>ประวัติการสั่งซื้อ</h2>
       </div><!-- End Section Title -->
 
-      <div class="container event-lists">
-        <a href="/u/first" class="event-items">
-          <div>
-            <img src="https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/c740a4a0b91c11ef911101117567899b.jpg" alt="Con_3">
-            <span>Booktroverts</span>
-            <span>date</span>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, repellendus nam ab quibusdam culpa itaque reiciendis repudiandae a corporis ducimus earum assumenda, quam eveniet rem. Ratione molestias iste quia optio?</span>
-          </div>
-        </a>
-        <a href="/u/second" class="event-items">
-          <div>
-            <img src="https://tm-prod-event-files-v3.ticketmelon.com/08894bda5c7711f0922201117567899b/poster/5bc3abef832911f0922201117567899b.png" alt="Con_3">
-            <span>How Do You Do, Snoopy?</span>
-            <span>date</span>
-            <span>description</span>
-          </div>
-        </a>
-        <a href="/u/thirth" class="event-items">
-          <div>
-            <img src="https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/c740a4a0b91c11ef911101117567899b.jpg" alt="Con_3">
-            <span>third event</span>
-            <span>date</span>
-            <span>description</span>
-          </div>
-        </a>
-        <a href="/u/forth" class="event-items">
-          <div>
-            <img src="https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/c740a4a0b91c11ef911101117567899b.jpg" alt="Con_3">
-            <span>forth event</span>
-            <span>date</span>
-            <span>description</span>
-          </div>
-        </a>
-        <a href="/u/fifth" class="event-items">
-        <div>
-          <img src="https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/c740a4a0b91c11ef911101117567899b.jpg" alt="Con_3">
-          <span>fifth event</span>
-          <span>date</span>
-            <span>description</span>
-        </div>
-          
-        </a>
-      </div>
+      <div class="history-container" id="history-list"></div>
 
-    </section><!-- /About Section -->
+    </section><!-- Purchase history Section -->
 
   </main>
 
@@ -259,9 +168,6 @@
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/vendor/php-email-form/validate.js"></script>
@@ -276,6 +182,34 @@
   <script src="/js/main.js"></script>
 
   <script src="/js/myJQuery.js"></script>
+
+  <script>
+    const historyList = document.getElementById('history-list');
+
+    async function fetchTransaction() {
+        const response = await fetch('/u/fetch');
+        const transactions = await response.json();
+        historyList.innerHTML = '';
+        transactions.forEach(transaction => {
+            const transactionDiv = document.createElement('div');
+            transactionDiv.classList.add('history-item');
+            transactionDiv.innerHTML = `
+                <hr>
+                <div>
+                    <span>Transaction ID: ${transaction.trans_id}</span>
+                    <span>Concert Name: ${transaction.title}</span>
+                    <span>Zone Name: ${transaction.zone_name}</span>
+                    <span>Seat Number: ${transaction.seat_number}</span>
+                    <span>Price: ${transaction.base_price}</span>
+                    <span>${transaction.purchase_date}</span>
+                </div>
+                <hr>
+                `;
+            historyList.appendChild(transactionDiv);
+        });
+    }
+    fetchTransaction();
+  </script>
 
 </body>
 
