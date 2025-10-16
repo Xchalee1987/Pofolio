@@ -184,7 +184,9 @@ input[type=submit] {
 .register-page {
   width: 600px;
 }
+/* register/login box register.html*/
 
+/* Profile Overlay main.ejs, purchase_history.ejs */
 .overlay-container {
   position: fixed;
   left: 0;
@@ -200,24 +202,44 @@ input[type=submit] {
 .overlay {
   position: fixed;
   right: 0;
-  top: 113px;
+  top: 112.5px;
   width: 200px;
+  height: auto;
   margin: 0;
   padding: 10px;
   background-color: #d4d4d4;
   border-radius: 0 0 0 8px ;
 }
 
-.overlay > span {
+.overlay > span, #editProfileBtn {
   display: block;
   margin-top: 5px;
 }
 
+.overlay #editProfileBtn {
+  display: inline-block;
+  color: var(--default-color);
+  background-color: rgb(255, 255, 255, 0.7);
+  border: 2px solid var(--accent-color);
+  margin-top: 8px;
+  padding: 2px 6px 2px 6px;
+}
+/* Profile Overlay main.ejs, purchase_history.ejs */
+
+
+/* User progfile in edit_profile.ejs */
+.profile-container h2 {
+  text-align: center;
+}
+/* User progfile in edit_profile.ejs */
+
+
+/* transaction lists purchase_history.ejs */
 .history-title {
   margin-top: 120px;
 }
 
-.history-container {
+.history-container , .profile-container{
   width: 1000px;
   margin: 0 0 80px 0;
   padding: 0;
@@ -247,3 +269,4 @@ input[type=submit] {
 
 .history-container .history-item button {
 }
+/* transaction lists purchase_history.ejs */

@@ -53,7 +53,7 @@
     <div class="branding d-flex align-items-cente">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="/u" class="logo d-flex align-items-center">
+        <a href="/login" class="logo d-flex align-items-center">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="img/logo.png" alt=""> -->
             <h1 class="sitename">Ticket Duo</h1>
@@ -78,6 +78,7 @@
           <span>Username: <%= u.username %></span>
           <span>Phone number: <%= u.phone %></span>
           <span>Role: <%= u.role %></span>
+          <a href="/editProfile" id="editProfileBtn">Edit Profile</a>
         </div>
       </div>
 
@@ -188,7 +189,7 @@
     const historyList = document.getElementById('history-list');
 
     async function fetchTransaction() {
-        const response = await fetch('/u/fetch');
+        const response = await fetch('/fetchTransactions');
         const transactions = await response.json();
         historyList.innerHTML = '';
         transactions.forEach(transaction => {

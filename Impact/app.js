@@ -62,8 +62,10 @@ function requireAuth(req, res, next) {
   next();
 }
 
+// check in case user without login enter where "no role" can't enter
+// (enter the path that contain /u will check if user login yet)
 app.use((req, res, next) => {
-  const openPaths = ["/", "/login", "/logout", "/register"];
+  const openPaths = ["/", "/login", "/logout", "/register"]; //all paths that "no role" can enter
   if (openPaths.includes(req.path)) {
     return next(); 
   }
@@ -72,19 +74,18 @@ app.use((req, res, next) => {
 
 function requireRole(...roles) {
   return (req, res, next) => {
-    if (!req.user) return res.status(401).send("Unauthorized");
+    if (!req.user) return res.status(401).send("กรุณาลงชื่อเข้าใช้");
     if (!roles.includes(req.user.role)) return res.status(403).send("คุณไม่ได้รับอนุญาตให้เข้าหน้านี้");
     next();
   };
 }
 
-// check in case user without login click on event list items
-// (enter the path that contain /u will check if user login yet)
-app.get("/u", (req, res) => {
-  if (req.user) {
+// click on ลงชื่อเข้าใช้ in index.html will check first if already login
+app.get("/login", (req, res) => {
+  if(req.user){
     return res.render("main.ejs", { u : req.user });
   }
-  res.sendFile("index.html");
+  return res.status(401).sendFile(path.join(__dirname, 'public', 'login_page.html'));
 });
 
 app.post("/login", async (req, res) => {
@@ -130,7 +131,6 @@ app.post("/logout", (req, res) => {
   });
 });
 
-
 app.post("/register", async (req, res) => {
   const { username, number, password } = req.body;
   try {
@@ -155,22 +155,20 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.get("/u/first", (req, res) => {
-  if (req.user) {
-    return res.sendFile(path.join(__dirname, 'public', 'first.html'));
-  }
-  res.sendFile("index.html");
+app.get("/first", (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'first.html'));
 });
 
-app.get("/u/purchase_history", (req, res) => {
-  if (req.user) {
-    return res.render('purchase_history.ejs', { u : req.user });
-  }
-  res.sendFile("index.html");
+app.get("/purchase_history", (req, res) => {
+  res.render('purchase_history.ejs', { u : req.user });
+});
+
+app.get("/editProfile", (req, res) => {
+  res.render('edit_profile.ejs', { u : req.user });
 });
 
 // fetch user transaction for display
-app.get('/u/fetch', async (req, res) => {
+app.get('/fetchTransactions', async (req, res) => {
   try {
     let q;
     let params;
