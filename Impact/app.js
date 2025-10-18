@@ -43,6 +43,7 @@ app.use(
 );
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'assets')));
 
@@ -52,6 +53,10 @@ app.use((req, res, next) => {
     req.user = req.session.user;
   }
   next();
+});
+
+app.get("/", (req, res) => {
+  res.render("main.ejs", { u : req.user });
 });
 
 // --- Middleware: ต้องล็อกอินก่อน ---
@@ -181,7 +186,7 @@ app.get('/fetchTransactions', async (req, res) => {
           z.zone_name,
           t.seat_number,
           z.base_price,
-          t.purchase_date,
+          to_char(t.purchase_date, 'HH24:MI on DD Month YYYY') AS formatted_purchase_date,
           c.title,
           u.user_id,
           u.username
@@ -200,7 +205,7 @@ app.get('/fetchTransactions', async (req, res) => {
           z.zone_name,
           t.seat_number,
           z.base_price,
-          t.purchase_date,
+          to_char(t.purchase_date, 'HH24:MI on DD Month YYYY') AS formatted_purchase_date,
           c.title
         FROM "transaction" t
         JOIN zone_detail z ON t.zone_id = z.zone_id
@@ -213,8 +218,8 @@ app.get('/fetchTransactions', async (req, res) => {
     const result = await pool.query(q, params);
 
     // Get list of zone names only
-    const timeStamp = result.rows.map(row => row.purchase_date);
-    console.log('Zone names:', timeStamp);
+    const all_trans_id = result.rows.map(row => row.trans_id);
+    console.log('all transaction id: ', all_trans_id);
 
     res.json(result.rows);
   } catch (err) {
@@ -223,15 +228,47 @@ app.get('/fetchTransactions', async (req, res) => {
   }
 })
 
-app.get('/admin/delete/:id', async (req, res) =>{
+app.delete('/admin/delete/:id', async (req, res) =>{
   const { id } = req.params;
   try {
-    await pool.query(`Delete transaction id $1?`, [ id ]);
+    await pool.query(`DELETE FROM "transaction" WHERE trans_id = $1`, [ id ]);
     res.json({ message: 'Transaction deleted'});
   } catch (err) {
     console.error('Database error:', err.message);
     res.status(500).send('Query to database not successful');
   }
+});
+
+app.post("/editProfile/update", async (req, res) => {
+  const { inputUsername, inputPhone, inputPass } = req.body;
+  try {
+    const validPassword = await pool.query(
+      'SELECT * FROM "user_detail" WHERE user_id = $1 AND password = crypt($2, password) LIMIT 1',
+      [req.user.user_id, inputPass]
+    );
+    if (validPassword.rows.length === 0) {
+      console.log("wrong password input");
+      return res.status(404).json({ message: 'Invalid password' });
+    }
+
+    await pool.query(
+      'UPDATE "user_detail" SET username = $1, phone = $2 WHERE user_id = $3 RETURNING *',
+      [inputUsername, inputPhone, req.user.user_id]
+    );
+
+    req.session.user.username = inputUsername;
+    req.session.user.phone = inputPhone;
+
+    console.log("profile update succesfully");
+    return res.json({ message: 'profile update' });
+  } catch (err) {
+    console.error('error massage: ', err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+app.post("/editProfile/updatePass", async (req, res) => {
+  res.render('edit_profile.ejs', { u : req.user });
 });
 
 app.listen(port, () => {

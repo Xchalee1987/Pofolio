@@ -37,7 +37,7 @@
   ======================================================== -->
 
   <!-- JQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   
 </head>
 
@@ -53,12 +53,13 @@
     <div class="branding d-flex align-items-cente">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="/login" class="logo d-flex align-items-center">
+        <a href="/" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="img/logo.png" alt=""> -->
           <h1 class="sitename">ยินดีต้อนรับ!</h1>
         </a>
 
+      <% if (locals.u) { %>
         <nav id="navmenu" class="navmenu">
           <ul>
             <li><a href="/purchase_history" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
@@ -67,10 +68,7 @@
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
-
-        
-
-      </div>
+       </div>
 
       <div class="overlay-container overlay-toggle">
         <div class="overlay">
@@ -81,6 +79,17 @@
           <a href="/editProfile" id="editProfileBtn">Edit Profile</a>
         </div>
       </div>
+      <% } else { %>
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="/login">ลงชื่อเข้าใช้</a></li>
+            </li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+      </div>
+      <% } %>
 
     </div>
 
@@ -162,7 +171,7 @@
             <span>description</span>
           </div>
         </a>
-        <a href="/thirth" class="event-items">
+        <a href="/third" class="event-items">
           <div>
             <img src="https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/c740a4a0b91c11ef911101117567899b.jpg" alt="Con_3">
             <span>third event</span>
@@ -194,55 +203,6 @@
   </main>
 
   <footer id="footer" class="footer accent-background">
-
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-5 col-md-12 footer-about">
-          <a href="#" class="logo d-flex align-items-center">
-            <span class="sitename">Impact</span>
-          </a>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-6 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-6 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <h4>Contact Us</h4>
-          <p>A108 Adam Street</p>
-          <p>New York, NY 535022</p>
-          <p>United States</p>
-          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-          <p><strong>Email:</strong> <span>info@example.com</span></p>
-        </div>
-
-      </div>
-    </div>
 
     <div class="container copyright text-center mt-4">
       <p>© <span>Copyright</span> <strong class="px-1 sitename">Impact</strong> <span>All Rights Reserved</span></p>
