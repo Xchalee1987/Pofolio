@@ -268,7 +268,33 @@ app.post("/editProfile/update", async (req, res) => {
 });
 
 app.post("/editProfile/updatePass", async (req, res) => {
-  res.render('edit_profile.ejs', { u : req.user });
+  const { inputUsername, inputPhone, inputPass, inputPassNew } = req.body;
+  try {
+    const validPassword = await pool.query(
+      'SELECT * FROM "user_detail" WHERE user_id = $1 AND password = crypt($2, password) LIMIT 1',
+      [req.user.user_id, inputPass]
+    );
+    if (validPassword.rows.length === 0) {
+      console.log("wrong password input");
+      return res.status(404).json({ message: 'Invalid password' });
+    }
+
+    const q = `
+    UPDATE "user_detail" 
+    SET username = $1, phone = $2, password = crypt($3, gen_salt('bf')) 
+    WHERE user_id = $4 RETURNING *
+    `;
+    await pool.query(q, [inputUsername, inputPhone, inputPassNew, req.user.user_id]);
+
+    req.session.user.username = inputUsername;
+    req.session.user.phone = inputPhone;
+
+    console.log("profile update succesfully");
+    return res.json({ message: 'profile update' });
+  } catch (err) {
+    console.error('error massage: ', err.message);
+    res.status(500).send('Server error');
+  }
 });
 
 app.listen(port, () => {
