@@ -160,9 +160,28 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.get("/first", (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'first.html'));
+// strat path
+
+app.get("/naruto", (req, res) => {
+ res.render('naruto.ejs', { u : req.user });
 });
+
+app.get("/cocktail", (req, res) => {
+ res.render('cocktail.ejs', { u : req.user });
+});
+
+app.get("/Solo", (req, res) => {
+ res.render('solo.ejs', { u : req.user });
+});
+
+app.get("/Mayaram", (req, res) => {
+ res.render('Mayaram.ejs', { u : req.user });
+});
+
+app.get("/Lisa", (req, res) => {
+ res.render('Lisa.ejs', { u : req.user });
+});
+// End path
 
 app.get("/purchase_history", (req, res) => {
   res.render('purchase_history.ejs', { u : req.user });

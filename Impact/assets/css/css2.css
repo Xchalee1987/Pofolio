@@ -1,0 +1,31 @@
+body{
+    background-color: antiquewhite;
+}
+.container_reserve{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 800px;
+    flex-direction: column;
+}
+.container_reserve_in{
+
+}
+#buttom_home{
+    padding: 20px;
+}
+
+.fa-regular{
+    color: green;
+    font-size: 120px
+}
+.reserve_text{
+   text-align: center;
+   font-size: 30px;
+}
+.reserve_correct{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}

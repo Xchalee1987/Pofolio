@@ -1,0 +1,802 @@
+
+body h2,body h3{
+    color: white; 
+
+  /* 2. สร้างเส้นขอบโดยใช้เงาสี่ทิศทาง (บน, ล่าง, ซ้าย, ขวา) */
+  text-shadow: 
+    -1px -1px 0 #000,  /* บนซ้าย */
+     1px -1px 0 #000,  /* บนขวา */
+    -1px  1px 0 #000,  /* ล่างซ้าย */
+     1px  1px 0 #000;   /* ล่างขวา */
+}
+body p,body button{
+     color: white; 
+
+  /* 2. สร้างเส้นขอบโดยใช้เงาสี่ทิศทาง (บน, ล่าง, ซ้าย, ขวา) */
+  text-shadow: 
+    -1px -1px 0 #000,  /* บนซ้าย */
+     1px -1px 0 #000,  /* บนขวา */
+    -1px  1px 0 #000,  /* ล่างซ้าย */
+     1px  1px 0 #000;   /* ล่างขวา */
+
+}
+.BG_top >img{
+    width: 100%; /* ให้ความกว้างเต็มพื้นที่ของ .BG_top */
+    height: 450px;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.page-title{
+
+    background-color: rgb(42, 3, 87);  
+
+    overflow: hidden;
+
+}
+
+.page-title_Mayaram{
+
+    background-color: #3B060A;  
+
+    overflow: hidden;
+
+}
+
+
+
+
+
+.container_middle {
+
+   
+
+    width: 100%;
+
+    margin-left: auto;
+
+    box-sizing: border-box;
+
+    margin-right: auto;
+
+    display: block;
+
+    padding-left: 16px;
+
+    padding-right: 16px;
+
+    position: relative;
+
+    margin-top: -225px;
+
+    z-index: 1;
+
+}
+
+.Grid_middle {
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    flex-flow: wrap;
+
+    width: 100%;
+
+    -webkit-box-pack: center;
+
+    justify-content: center;
+
+   
+
+}
+
+
+
+.inGrid_middle {
+
+   
+
+    flex-basis: 83.3333%;
+
+        -webkit-box-flex: 0;
+
+        flex-grow: 0;
+
+        max-width: 83.3333%;
+
+}
+
+.inGrid_middle_middle {
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    flex-direction: row;
+
+
+
+}
+
+
+
+.inGrid_middle_Left {
+
+    display: block;
+
+    width: 282px;
+
+    height: 400px;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    box-shadow: rgba(114, 114, 114, 0.1) 0px 0px 0px 0px, rgba(114, 114, 114, 0.05) 0px 4px 10px 0px;
+
+}
+
+.inGrid_middle_Rigth {
+
+    flex: 1 1 0%;
+
+    margin-left: 24px;
+
+}
+
+.mg_middle_Left{
+
+    width: 282px;
+
+}
+
+.mg_middle_Left img{
+
+        position: absolute;
+
+    inset: 0px;
+
+    box-sizing: border-box;
+
+    padding: 0px;
+
+    border: none;
+
+    margin: auto;
+
+    display: block;
+
+    width: 0px;
+
+    height: 0px;
+
+    min-width: 100%;
+
+    max-width: 100%;
+
+    min-height: 100%;
+
+    max-height: 100%;
+
+     background-color: #e00202;
+
+}
+
+.mg_middle_Lefe_left >.mg_middle_Left_1{
+
+    box-sizing: border-box;
+
+    display: block;
+
+    overflow: hidden;
+
+    width: initial;
+
+    height: initial;
+
+    background: none;
+
+    opacity: 1;
+
+    border: 0px;
+
+    margin: 0px;
+
+    padding: 0px;
+
+    position: relative;
+
+}
+
+.mg_middle_Left_2{
+
+    box-sizing: border-box;
+
+    display: block;
+
+    width: initial;
+
+    height: initial;
+
+    background: none;
+
+    opacity: 1;
+
+    border: 0px;
+
+    margin: 0px;
+
+    padding: 141.844% 0px 0px;
+
+}
+
+.mg_middle_Lefe_left{
+
+    width: 282px;  
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: rgba(114, 114, 114, 0.1) 0px 0px 0px 0px, rgba(114, 114, 114, 0.05) 0px 4px 10px 0px;
+
+}
+
+.inGrid_middle_Rigth{
+
+    margin-left: 24px;
+
+    margin: 0px;
+
+    flex: 1 1 0%;
+
+}
+
+.box_middle_Rigth {
+
+    display: flex;
+
+    margin-left: 24px;
+
+    flex-direction: column;
+
+    height: 100%;
+
+}
+
+.box_middle_Rigth_top{
+
+    margin: 0px;
+
+    background-color: rgb(48, 107, 145);
+
+    padding: 24px;
+
+    border-radius: 12px;
+
+    box-shadow: rgba(114, 114, 114, 0.1) 0px 0px 0px 0px, rgba(114, 114, 114, 0.05) 0px 4px 10px 0px;
+
+}
+
+.box_middle_Rigth_top_Mayaram{
+
+    margin: 0px;
+
+    background-color: #8A0000;
+
+    padding: 24px;
+
+    border-radius: 12px;
+
+    box-shadow: rgba(114, 114, 114, 0.1) 0px 0px 0px 0px, rgba(114, 114, 114, 0.05) 0px 4px 10px 0px;
+
+}
+
+
+
+.box_middle_Rigth_top_text{
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: flex-start;
+
+}
+
+.box_middle_Rigth_buttom{
+
+    margin-top: 16px;
+
+    background-color: rgb(48, 107, 145);
+
+    -webkit-box-flex: 1;
+
+    flex-grow: 1;
+
+    padding: 24px;
+
+    border-radius: 12px;
+
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+
+}
+
+.box_middle_Rigth_buttom_condetail{
+
+    display: flex;
+
+    flex-direction: column;
+
+    height: 100%;
+
+    color: white;
+
+}
+
+.buttom_ticket{
+
+    display: flex;
+
+    justify-content:center;
+
+    align-items: center;
+
+}
+
+#buy_menu{
+    width: 100%;
+    height: 115%;
+    background: blueviolet;
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 5;
+    transition: all 0.6s;
+}
+
+#buy_menu span{
+
+    position: absolute;
+
+    top: 9.5rem;
+
+    right: 35px;
+
+    font-size: 30px;
+
+    line-height: 35px;
+
+    padding: 6px 10px;
+
+    color: white;
+
+    background: #333;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+}
+
+#buy_menu_solo p{
+
+    position: absolute;
+
+    top: 9.5rem;
+
+    font-size: 30px;
+
+    color: white;
+
+    background: #00abd6;
+
+}
+
+
+
+.img_ticket{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+
+.wapper_img_ticket{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1000px;
+
+}
+
+.img_ticket_map_container {
+    /* กำหนดขนาดที่ชัดเจนให้ภาชนะนี้ */
+    width: 960px; /* หรือขนาดที่คุณต้องการให้ Image Map แสดงผล */
+    height: 540px;
+    position: relative; /* สำคัญ: ให้องค์ประกอบย่อยซ้อนทับกันได้ */
+    margin: 20px auto;
+}
+
+.img_ticket_map_container .img-mapper-img {
+
+    /* ทำให้รูปภาพปรับขนาดตามภาชนะ */
+
+    display: block;
+
+}
+
+.img_ticket_map_container #ticketHighlightCanvas {
+
+    /* ทำให้ Canvas ซ้อนทับรูปภาพ */
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+}
+.buy_container_top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buy_container_top span{
+
+    position: absolute;
+
+    top: 9.5rem;
+
+    right: 35px;
+
+    font-size: 30px;
+
+    line-height: 35px;
+
+    padding: 6px 10px;
+
+    color: white;
+
+    background: #333;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+}
+
+.wapper_img_ticket_top{
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    height: 500px;
+
+    width: 600px;
+
+}
+
+.ticket_map_container_top{
+    display: block;
+    color:white;
+    text-shadow: 
+    -1px -1px 0 #000,  /* บนซ้าย */
+     1px -1px 0 #000,  /* บนขวา */
+    -1px  1px 0 #000,  /* ล่างซ้าย */
+     1px  1px 0 #000;   /* ล่างขวา */
+}
+.ticket_map_container_top>h2,h3{
+    
+    color:white;
+}
+
+
+.wapper_ticker_detail{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.my-form{
+
+    display: flex;
+
+    flex-direction: column; /* ให้ form-group เรียงจากบนลงล่าง */
+
+    gap: 20px; /* ระยะห่างระหว่าง form-group */
+
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+.buttom_ticket_buy{
+
+    background-color: #36a4b1;
+
+    color: white;
+
+    font-size: 1.2em;
+
+    font-weight: bold;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    padding: 15px 30px;
+
+    width: 550px;
+
+    max-width: 100%;
+
+    border-radius: 50px;
+
+    border: none;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.seat_number_class{
+
+    width: 300px;
+
+    padding: 10px;
+
+    text-align: center;
+
+}
+
+#buy_ticket{
+
+    margin-top: 90px;
+
+    color: #e00202;
+
+}
+
+.ticket_detail_in{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.ticket_detail_item1,.ticket_detail_item2,.ticket_detail_item3{
+
+    display: flex;
+
+    padding: 20px;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+.ticket_detail_item1_in,.ticket_detail_item2_in,.ticket_detail_item3_in{
+
+    margin-top: 22px;
+
+}
+
+.ticket_detail_item1_in > p,.ticket_detail_item2_in > p,.ticket_detail_item3_in >p{
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: white;
+
+}
+
+.ticket_detail_in{
+    margin-bottom: 20px;
+    background-color:#4FB7B3;
+    border-radius: 15px;
+}
+
+
+.ticket_detail_in > p{
+    font-size: 20px;
+}
+
+
+
+.ticket_detail_container{
+
+    margin: 50px 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+
+.BG_ticket_detail{
+
+    width: 1000px;
+
+    border-radius: 15px;
+
+}
+
+
+
+#buy_ticket{
+
+    
+
+    color: white;
+
+    font-size: 1.2em;
+
+    font-weight: bold;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    padding: 15px 30px;
+
+    width: 550px;
+
+    max-width: 100%;
+
+    border-radius: 50px;
+
+    border: none;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เงาด้านล่างเล็กน้อย */
+
+}
+
+#buy_menu_top_4500{
+    display: flex;
+    justify-content: center;
+    padding: 20%;
+    width: 100%;
+    height: 115%;
+    background: rgb(212, 166, 255);
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 6;
+    transition: all 0.6s;
+
+}
+#buy_menu_top_5500{
+    display: flex;
+    justify-content: center;
+    padding: 20%;
+    width: 100%;
+    height: 115%;
+    background: rgb(212, 166, 255);
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 6;
+    transition: all 0.6s;
+
+}
+#buy_menu_top_7500{
+    display: flex;
+    justify-content: center;
+    padding: 20%;
+    width: 100%;
+    height: 115%;
+    background: rgb(212, 166, 255);
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 6;
+    transition: all 0.6s;
+
+}
+#buy_menu_top_7500_AL{
+    display: flex;
+    justify-content: center;
+    padding: 20%;
+    width: 100%;
+    height: 115%;
+    background: #134686;
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 6;
+    transition: all 0.6s;
+
+}
+#buy_menu_top_7500_AR{
+    display: flex;
+    justify-content: center;
+    padding: 20%;
+    width: 100%;
+    height: 115%;
+    background: #134686;
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 6;
+    transition: all 0.6s;
+
+}
+#buy_menu_top_5500_B{
+    display: flex;
+    justify-content: center;
+    padding: 20%;
+    width: 100%;
+    height: 115%;
+    background: #134686;
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 6;
+    transition: all 0.6s;
+
+}
+#buy_menu_top_4500_C{
+    display: flex;
+    justify-content: center;
+    padding: 20%;
+    width: 100%;
+    height: 115%;
+    background: #134686;
+    position: absolute;
+    top: 0;
+    right: -100%;
+    z-index: 6;
+    transition: all 0.6s;
+
+}
+.BG_border{
+    box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.8);
+}
+.color_mayaram{
+    background-color: #8C1007;
+}
+.color_Lisa{
+    background-color: #A53860;
+}
+.color_cocktail{
+    background-color:#FEB21A ;
+}
+.color_naruto{
+    background-color: #F8B259;
+}
+.VDO_div_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.VDO_div_in{
+    margin-bottom:50px ;
+}

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Service Details - Impact Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Favicons -->
+  <link href="/img/favicon.png" rel="icon">
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/cs.css">
+
+  <!-- Main CSS File -->
+  <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Impact
+  * Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="service-details-page">
+
+  <header id="header" class="header fixed-top">
+
+    <div class="topbar d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+      </div>
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-cente">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="img/logo.png" alt=""> -->
+          <h1 class="sitename">ยินดีต้อนรับ!</h1>
+        </a>
+
+      <% if (locals.u) { %>
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="/purchase_history" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
+            <li><a href="#" id="profile">คุณ <%= u.username %></a></li>
+            <li><a href="/logout" onclick="">Logout</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+       </div>
+
+      <div class="overlay-container overlay-toggle">
+        <div class="overlay">
+          <span>User ID: <%= u.user_id %></span>
+          <span>Username: <%= u.username %></span>
+          <span>Phone number: <%= u.phone %></span>
+          <span>Role: <%= u.role %></span>
+          <a href="/editProfile" id="editProfileBtn">Edit Profile</a>
+        </div>
+      </div>
+      <% } else { %>
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="/login">ลงชื่อเข้าใช้</a></li>
+            </li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+      </div>
+      <% } %>
+
+    </div>
+
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title">
+      
+        <div class="container"> 
+          <div class="BG_Theme">
+            <!-- Background -->
+            <div class="BG_top">
+              <img src="https://4kwallpapers.com/images/walls/thumbs_3t/15351.jpg" alt="">
+            </div>
+            <div class="container_middle">
+              <div class="Grid_middle">
+                <div class="inGrid_middle">
+                  <div class="inGrid_middle_middle">
+                    <div class="inGrid_middle_Left">
+                      <div class="mg_middle_Left">
+                        <div class="mg_middle_Lefe_left">
+                          <span style="box-sizing: border-box; display: block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                            <span style="box-sizing: border-box; display: block; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 141.844% 0px 0px;"></span>
+                          
+                          <span style="box-sizing: border-box; display: block; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; "></span>                          
+                          <!-- IMG Promode -->
+                          <img src="https://i.pinimg.com/1200x/12/39/bd/1239bd52ed659fbdb6a941bc87d26c53.jpg" alt="">
+                         </span>
+                        </div>                       
+                      </div>
+                    </div>
+                    <div class="inGrid_middle_Rigth">
+                          <div class="box_middle_Rigth">
+                            <div class="box_middle_Rigth_top">
+                              <div class="box_middle_Rigth_top_text">
+                                  <h2 style="color: white;">Solo leveling</h2>
+                              </div>
+                            </div>
+                            <div class="box_middle_Rigth_buttom">
+                              <div class="box_middle_Rigth_buttom_condetail">
+                                <p>วันที่จัดการแสดง : 25 November 2025</p>
+                                <p>สถานที่        : Banhkok</p>
+                                <p>ศิลปิน         : Sung jin Oo</p>
+                                <div class="buttom_ticket">
+                                    <button id="buy_ticket" onclick="openManu()">ซื้อตั๋ว</button>
+                                </div>                            
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ticket_detail_container">
+            <div class="wapper_ticket_detail_container .BG_ticket_detail">
+                <div class="ticket_detail BG_ticket_detail">
+                    <div class="ticket_detail_in">
+                        <div class="ticket_detail_item1">
+                            <div class="ticket_detail_item1_in">
+                                <p>Zone AR</p>
+                            </div>
+                        </div>
+                        <div class="ticket_detail_item2">
+                            <div class="ticket_detail_item2_in">
+                                    <p>7,500 THB</p>
+                            </div>                      
+                        </div>
+                        <div class="ticket_detail_item3">
+                              <div class="ticket_detail_item3_in">
+                                    <p>On Sale</p>
+                            </div>   
+                        </div>                    
+                    </div>
+                     
+                    <div class="ticket_detail_in">
+                        <div class="ticket_detail_item1">
+                            <div class="ticket_detail_item1_in">
+                                <p>Zone AL</p>
+                            </div>
+                        </div>
+                        <div class="ticket_detail_item2">
+                            <div class="ticket_detail_item2_in">
+                                    <p>7,500 THB</p>
+                            </div>                      
+                        </div>
+                        <div class="ticket_detail_item3">
+                              <div class="ticket_detail_item3_in">
+                                    <p>On Sale</p>
+                            </div>   
+                        </div>                    
+                    </div>
+
+                    <div class="ticket_detail_in">
+                        <div class="ticket_detail_item1">
+                            <div class="ticket_detail_item1_in">
+                                <p>Zone B</p>
+                            </div>
+                        </div>
+                        <div class="ticket_detail_item2">
+                            <div class="ticket_detail_item2_in">
+                                    <p>5,500 THB</p>
+                            </div>                      
+                        </div>
+                        <div class="ticket_detail_item3">
+                              <div class="ticket_detail_item3_in">
+                                    <p>On Sale</p>
+                            </div>   
+                        </div>                    
+                    </div>
+
+
+                    <div class="ticket_detail_in">
+                        <div class="ticket_detail_item1">
+                            <div class="ticket_detail_item1_in">
+                                <p>Zone C</p>
+                            </div>
+                        </div>
+                        <div class="ticket_detail_item2">
+                            <div class="ticket_detail_item2_in">
+                                    <p>4,500 THB</p>
+                            </div>                      
+                        </div>
+                        <div class="ticket_detail_item3">
+                              <div class="ticket_detail_item3_in">
+                                    <p>On Sale</p>
+                            </div>   
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VDO -->
+
+        <div class="VDO_div_container" style="background-color:  #C75D2C">
+          <div class="VDO_div_in">
+              <iframe width="840" height="540" src="https://www.youtube.com/embed/C0zMWogztQs?si=LS5ZCy7iI7GzNtlU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+
+    <!-- VDO -->       
+
+        <div class="buy_container">
+            <div id="buy_menu" style="background-color: #450693">
+              <div class="warpper_all_buy">
+                
+              <span class="fa fa-times" onclick="closeManu()"></span>
+               <div class="wapper_img_ticket">
+                <div class="img_ticket_map_container">
+                  <img src="/img/ST.png" alt="" usemap="#ticket-map" class="img-mapper-img" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                  <canvas id="ticketHighlightCanvas" class="img-mapper-canvas" width="960" height="540" style="position: absolute; top: 0; left: 0; pointer-events: none; z-index: 2;"></canvas>
+                  <map name="ticket-map">
+                      <area target="" alt="" title="" href="#" coords="150,153,463,249" shape="rect"onmouseover="highlightTicketArea(this)" onmouseout="clearTicketHighlight()" onclick="openManu_top_7500_AL()">
+                      <area target="" alt="" title="" href="#" coords="511,157,823,252" shape="rect"onmouseover="highlightTicketArea(this)" onmouseout="clearTicketHighlight()" onclick="openManu_top_7500_AR()">
+                      <area target="" alt="" title="" href="#" coords="101,269,871,368" shape="rect"onmouseover="highlightTicketArea(this)" onmouseout="clearTicketHighlight()" onclick="openManu_top_5500_B()">
+                      <area target="" alt="" title="" href="#" coords="46,389,927,485" shape="rect"onmouseover="highlightTicketArea(this)" onmouseout="clearTicketHighlight()" onclick="openManu_top_4500_C()"> 
+                  </map>
+               </div>
+              </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- 7500 -->
+        <div class="buy_container_top">
+          <div id="buy_menu_top_7500_AL">
+            <span class="fa fa-times" onclick="closeManu()"></span>
+            <div class="wapper_img_ticket_top">
+              <div class="ticket_map_container_top">
+                <div class="wapper_ticker_detail">
+                    <h2>คุณ <%= u.username %></h2>
+                </div>
+                <div class="wapper_ticker_detail">
+                    <h3>Concertที่คุณเลือกคือ SOLO</h3>
+                </div>             
+                <div class="wapper_ticker_detail">
+                    <form class="my-form" action="/transaction" method="POST">
+                    <input type="hidden" name="user_id" value="<%= u.user_id %>"required >
+                    <input type="hidden"name="zone_id" value="3" required >
+                    <label for="seat_number">เลือกที่นั่ง:</label>
+                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                      <option value="1">AL ที่นั่ง1</option>
+                      <option value="2">AL ที่นั่ง2</option>
+                      <option value="3">AL ที่นั่ง3</option>
+                    </select> <br>
+                    <div class="wapper_ticker_detail">
+                        <h3>ราคา 7,500 THB</h3>
+                    </div> 
+                    <br>
+                  <button class="buttom_ticket_buy" type="submit">จองเลย</button>
+                </form>
+                    
+                </div>
+                
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end 7500_AL -->
+       <!-- 7500_AR -->
+        <div class="buy_container_top">
+          <div id="buy_menu_top_7500_AR">
+            <span class="fa fa-times" onclick="closeManu()"></span>
+            <div class="wapper_img_ticket_top">
+              <div class="ticket_map_container_top">
+                <div class="wapper_ticker_detail">
+                    <h2>คุณ <%= u.username %></h2>
+                </div>
+                <div class="wapper_ticker_detail">
+                    <h3>Concertที่คุณเลือกคือ SOLO</h3>
+                </div>             
+                <div class="wapper_ticker_detail">
+                    <form class="my-form" action="/transaction" method="POST">
+                    <input type="hidden" name="user_id" value="<%= u.user_id %>"required >
+                    <input type="hidden"name="zone_id" value="4" required >
+                    <label for="seat_number">เลือกที่นั่ง:</label>
+                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                      <option value="1">AR ที่นั่ง1</option>
+                      <option value="2">AR ที่นั่ง2</option>
+                      <option value="3">AR ที่นั่ง3</option>
+                    </select> <br>
+                    <div class="wapper_ticker_detail">
+                        <h3>ราคา 7,500 THB</h3>
+                    </div> 
+                    <br>
+                  <button class="buttom_ticket_buy" type="submit">จองเลย</button>
+                </form>
+                
+                </div>
+                
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end 7500_AR -->
+
+        <!-- 5500_B -->
+         <div class="buy_container_top">
+          <div id="buy_menu_top_5500_B">
+            <span class="fa fa-times" onclick="closeManu()"></span>
+            <div class="wapper_img_ticket_top">
+              <div class="ticket_map_container_top">
+                <div class="wapper_ticker_detail">
+                    <h2>คุณ <%= u.username %></h2>
+                </div>
+                <div class="wapper_ticker_detail">
+                    <h3>Concertที่คุณเลือกคือ SOLO</h3>
+                </div>             
+                <div class="wapper_ticker_detail">
+                    <form class="my-form" action="/transaction" method="POST">
+                    <input type="hidden" name="user_id" value="<%= u.user_id %>"required >
+                    <input type="hidden"name="zone_id" value="5" required >
+                    <label for="seat_number">เลือกที่นั่ง:</label>
+                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                      <option value="1">B ที่นั่ง1</option>
+                      <option value="2">B ที่นั่ง2</option>
+                      <option value="3">B ที่นั่ง3</option>
+                    </select> <br>
+                    <div class="wapper_ticker_detail">
+                        <h3>ราคา 5,500 THB</h3>
+                    </div> 
+                    <br>
+                  <button class="buttom_ticket_buy" type="submit">จองเลย</button>
+                </form>
+                
+
+                </div>
+                
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- end 5500_B -->
+       <!-- 4500_C -->
+         <div class="buy_container_top">
+          <div id="buy_menu_top_4500_C">
+            <span class="fa fa-times" onclick="closeManu()"></span>
+            <div class="wapper_img_ticket_top">
+              <div class="ticket_map_container_top">
+                <div class="wapper_ticker_detail">
+                    <h2>คุณ <%= u.username %></h2>
+                </div>
+                <div class="wapper_ticker_detail">
+                    <h3>Concertที่คุณเลือกคือ SOLO</h3>
+                </div>             
+                <div class="wapper_ticker_detail">
+                    <form class="my-form" action="/transaction" method="POST">
+                    <input type="hidden" name="user_id" value="<%= u.user_id %>"required >
+                    <input type="hidden"name="zone_id" value="5" required >
+                    <label for="seat_number">เลือกที่นั่ง:</label>
+                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                      <option value="1">C ที่นั่ง1</option>
+                      <option value="2">C ที่นั่ง2</option>
+                      <option value="3">C ที่นั่ง3</option>
+                    </select> <br>
+                    <div class="wapper_ticker_detail">
+                        <h3>ราคา 4,500 THB</h3>
+                    </div> 
+                    <br>
+                    <a href=""><button  class="buttom_ticket_buy" type="submit">จองเลย</button></a>
+                  
+                </form>
+                
+
+                </div>
+                
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- end 4500_C -->
+      
+    </div><!-- End Page Title -->
+
+    <!-- Ticket price -->
+     <div class="container_ticket">
+      <div class="ticket_First">
+        
+      </div>
+     </div>
+  </main>
+
+ <footer id="footer" class="footer accent-background">
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Impact</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+
+  </footer>
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/php-email-form/validate.js"></script>
+  <script src="/vendor/aos/aos.js"></script>
+  <script src="/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="/js/main.js"></script>
+  <script>
+    function openManu(){
+      document.getElementById('buy_menu').style.right='0%';
+     
+    }
+    function closeManu(){
+      document.getElementById('buy_menu').style.right='100%';
+      document.getElementById('buy_menu_top_7500_AL').style.right='100%';
+      document.getElementById('buy_menu_top_7500_AR').style.right='100%';
+      document.getElementById('buy_menu_top_5500_B').style.right='100%';
+      document.getElementById('buy_menu_top_4500_C').style.right='100%';
+    }
+
+    function openManu_top(){
+      document.getElementById('buy_menu_top').style.right='0%';
+    }
+    function openManu_top_7500_AL(){
+      document.getElementById('buy_menu_top_7500_AL').style.right='0%';
+    }
+     function openManu_top_7500_AR(){
+      document.getElementById('buy_menu_top_7500_AR').style.right='0%';
+    }
+     function openManu_top_5500_B(){
+      document.getElementById('buy_menu_top_5500_B').style.right='0%';
+    }
+    function openManu_top_4500_C(){
+      document.getElementById('buy_menu_top_4500_C').style.right='0%';
+    }
+
+      const ticketCanvas = document.getElementById('ticketHighlightCanvas');
+    const ticketCtx = ticketCanvas ? ticketCanvas.getContext('2d') : null;
+
+    // ถ้า Canvas ไม่พบ ก็หยุดการทำงาน
+    if (!ticketCtx) {
+      console.error("Canvas 'ticketHighlightCanvas' not found or context failed.");
+    }
+
+    /**
+     * ฟังก์ชันวาดรูปร่างไฮไลต์บน Canvas ของ Ticket
+     * @param {HTMLElement} areaElement - แท็ก <area> ที่ถูกชี้เมาส์
+     */
+    function highlightTicketArea(areaElement) {
+        if (!ticketCtx) return;
+        
+        clearTicketHighlight(); 
+        
+        const coordsString = areaElement.getAttribute('coords');
+        const coords = coordsString.split(',').map(c => parseFloat(c.trim())); 
+        
+        // **********************************************
+        // ส่วนสำคัญ: การปรับสัดส่วน (Scaling)
+        // เนื่องจากรูปภาพและ Canvas ถูกตั้งค่าให้ปรับขนาด 100% 
+        // แต่พิกัด (coords) อ้างอิงขนาดดั้งเดิม (เช่น 886x530)
+        // เราต้องคำนวณอัตราส่วนการปรับขนาด (Scale Factor)
+        // เพื่อให้พิกัดตรงกับขนาดจริงของ Canvas ที่แสดงผล
+        // **********************************************
+        
+        // สมมติขนาดดั้งเดิมของรูปภาพ (ตามพิกัดสูงสุดที่คุณให้มา)
+        const originalWidth = 960; 
+        const originalHeight = 540; 
+        
+        // คำนวณอัตราส่วนการปรับขนาด
+        const scaleX = ticketCanvas.width / originalWidth;
+        const scaleY = ticketCanvas.height / originalHeight;
+        
+        ticketCtx.beginPath();
+        
+        // รูปแบบ rect
+        if (areaElement.shape.toLowerCase() === 'rect' && coords.length === 4) {
+            // ใช้พิกัดที่ปรับสเกลแล้ว
+            const [x1, y1, x2, y2] = coords;
+            const w = (x2 - x1) * scaleX;
+            const h = (y2 - y1) * scaleY;
+            ticketCtx.rect(x1 * scaleX, y1 * scaleY, w, h);
+        }
+        // เพิ่ม logic สำหรับ poly, circle ตรงนี้ถ้ามี
+
+        // กำหนดสีและวาด
+        ticketCtx.fillStyle = 'rgba(255, 0, 0, 0.4)'; // สีแดงโปร่งแสง 40%
+        ticketCtx.fill();
+    }
+
+    /**
+     * ฟังก์ชันล้าง Canvas ของ Ticket ทั้งหมด
+     */
+    function clearTicketHighlight() {
+        if (!ticketCtx) return;
+        ticketCtx.clearRect(0, 0, ticketCanvas.width, ticketCanvas.height);
+    }
+  </script>
+</body>
+
+</html>
