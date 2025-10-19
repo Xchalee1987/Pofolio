@@ -183,6 +183,10 @@ app.get("/Lisa", (req, res) => {
 });
 // End path
 
+app.post("/Succeed", (req, res) => {
+ res.render('succeed.ejs', { u : req.user });
+});
+
 app.get("/purchase_history", (req, res) => {
   res.render('purchase_history.ejs', { u : req.user });
 });
