@@ -322,6 +322,10 @@ app.post("/editProfile/update", async (req, res) => {
     console.log("profile update succesfully");
     return res.json({ message: 'profile update' });
   } catch (err) {
+    if (err.code === '23505') {
+      console.error('Username or Phone Number already exists');
+      return res.json({ message : 'Username is already taken' });
+    }
     console.error('error massage: ', err.message);
     res.status(500).send('Server error');
   }
@@ -352,6 +356,10 @@ app.post("/editProfile/updatePass", async (req, res) => {
     console.log("profile update succesfully");
     return res.json({ message: 'profile update' });
   } catch (err) {
+    if (err.code === '23505') {
+      console.error('Username or Phone Number already exists');
+      return res.json({ message : 'Username is already taken' });
+    }
     console.error('error massage: ', err.message);
     res.status(500).send('Server error');
   }
