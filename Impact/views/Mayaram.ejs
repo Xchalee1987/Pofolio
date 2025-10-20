@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Service Details - Impact Bootstrap Template</title>
+  <title>Mayaram</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -46,7 +46,7 @@
   <main class="main">
 
     <!-- Page Title -->
-    <div class="page-title" id="page-title_BG" style="background-color: #FFF0C4">
+      <div class="page-title" id="page-title_BG" style="background-color: #FFF0C4">
       
         <div class="container"> 
           <div class="BG_Theme">
@@ -73,18 +73,18 @@
                     </div>
                     <div class="inGrid_middle_Rigth">
                           <div class="box_middle_Rigth">
-                            <div class="box_middle_Rigth_top BG_border" style="background-color: #8C1007;">
+                            <div class="box_middle_Rigth_top BG_border color_mayaram" >
                               <div class="box_middle_Rigth_top_text">
-                                  <h2 style="color: white;">MAIYARAP</h2>
+                                  <h2 style="color: white;">Naruto</h2>
                               </div>
                             </div>
-                            <div class="box_middle_Rigth_buttom BG_border" style="background-color: #8C1007;">
+                            <div class="box_middle_Rigth_buttom BG_border color_mayaram" >
                               <div class="box_middle_Rigth_buttom_condetail">
                                 <p>วันที่จัดการแสดง : 25 November 2025</p>
                                 <p>สถานที่        : Banhkok</p>
-                                <p>ศิลปิน         : MAIYARAP</p>
+                                <p>ศิลปิน         : Naruto</p>
                                 <div class="buttom_ticket">
-                                    <button id="buy_ticket" class="color_mayaram BG_border" onclick="openManu()" style="background-color: #3E0703;">ซื้อตั๋ว</button >
+                                      <button id="buy_ticket" class="color_mayaram BG_border" onclick="openManu()" style="background-color: #3E0703;">ซื้อตั๋ว</button >
                                 </div>                            
                               </div>
                             </div>
@@ -99,7 +99,7 @@
         <div class="ticket_detail_container">
             <div class="wapper_ticket_detail_container .BG_ticket_detail">
                 <div class="ticket_detail BG_ticket_detail">
-                    <div class="ticket_detail_in BG_border color_mayaram">
+                    <div class="ticket_detail_in BG_border color_mayaram" >
                         <div class="ticket_detail_item1">
                             <div class="ticket_detail_item1_in">
                                 <p>Zone AR</p>
@@ -117,7 +117,7 @@
                         </div>                    
                     </div>
                      
-                    <div class="ticket_detail_in color_mayaram BG_border">
+                    <div class="ticket_detail_in BG_border color_mayaram">
                         <div class="ticket_detail_item1">
                             <div class="ticket_detail_item1_in">
                                 <p>Zone AL</p>
@@ -174,8 +174,20 @@
                 </div>
             </div>
         </div>
+
+        <!-- VDO -->
+
+        <div class="VDO_div_container" >
+          <div class="VDO_div_in">
+              <iframe width="840" height="540" src="https://www.youtube.com/embed/YI6EJLGBNjk?si=J2WNslA6NibrBpOE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>          </div>
+        </div>
+
+    <!-- VDO -->
+
+
+
         <div class="buy_container">
-            <div id="buy_menu" style="background-color: #DC143C">
+            <div id="buy_menu"  style="background-color: #DC143C">
               <div class="warpper_all_buy">
                 
               <span class="fa fa-times" onclick="closeManu()"></span>
@@ -197,17 +209,17 @@
 
         <!-- 7500 -->
         <div class="buy_container_top">
-          <div id="buy_menu_top_7500_AL">
+          <div id="buy_menu_top_7500_AL" >
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ MAIYARAP</h3>
+                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="3" required >
+                    <input type="hidden"name="zone_id" value="11" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
                       <option value="1">AL ที่นั่ง1</option>
@@ -231,16 +243,17 @@
         <!-- end 7500_AL -->
        <!-- 7500_AR -->
         <div class="buy_container_top">
-          <div id="buy_menu_top_7500_AR">
+          <div id="buy_menu_top_7500_AR" >
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ MAIYARAP</h3>
+                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
-                    <input type="hidden"name="zone_id" value="4" required >
+                    <form class="my-form" action="/buyTicket" method="POST">
+                    <input type="hidden"name="zone_id" value="12" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
                       <option value="1">AR ที่นั่ง1</option>
@@ -265,17 +278,17 @@
 
         <!-- 5500_B -->
          <div class="buy_container_top">
-          <div id="buy_menu_top_5500_B">
+          <div id="buy_menu_top_5500_B" >
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
-
+                
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ MAIYARAP</h3>
+                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="5" required >
+                    <input type="hidden"name="zone_id" value="13" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
                       <option value="1">B ที่นั่ง1</option>
@@ -306,13 +319,13 @@
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ Mayaram</h3>
+                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="5" required >
+                    <input type="hidden"name="zone_id" value="14" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="seat_number" required>
                       <option value="1">C ที่นั่ง1</option>
                       <option value="2">C ที่นั่ง2</option>
                       <option value="3">C ที่นั่ง3</option>
@@ -336,17 +349,6 @@
       <!-- end 4500_C -->
       
     </div><!-- End Page Title -->
-
-    <!-- VDO -->
-
-    <div class="VDO_div_container" style="background-color: #FFF0C4">
-      <div class="VDO_div_in">
-          <iframe width="840" height="540" src="https://www.youtube.com/embed/_43rNBwXTIo?si=mHIeo9809ObrZq3U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <!-- VDO -->
-
 
     <!-- Ticket price -->
      <div class="container_ticket">

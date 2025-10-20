@@ -1,3 +1,5 @@
+
+
 .navmenu ul li button {
   border: none;
   outline-style: none;
@@ -104,7 +106,9 @@ input[type=submit] {
 .event-lists > .event-items {
   width: 230px;
   margin: 0 10px 80px 10px;
-  padding: 0;
+  padding: 10px;
+
+
 }
 
 .event-lists > .event-items > div {
@@ -113,6 +117,7 @@ input[type=submit] {
   transition: color 0.5s ease;
   padding: 0 0 30px 0;
   transition: 0.3s;
+  background-color: white;
 }
 
 .event-items > div:hover {
@@ -131,7 +136,7 @@ input[type=submit] {
 .event-lists > .event-items span {
   padding: 10px 0 0 10px;
   color: var(--default-color);
-  height: 30px;
+  height: 29px;
   display: block;
   word-wrap: break-word;
   overflow: hidden;
@@ -147,7 +152,7 @@ input[type=submit] {
 
 .event-lists > .event-items span:nth-child(4) {
   color: rgb(101, 101, 101);
-  height: 50px;
+  height: 45px;
 }
 /* event lists */
 
@@ -266,6 +271,7 @@ input[type=submit] {
   padding: 20px 60px 60px 60px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 0 5px 5px 0 rgba(0, 0, 0, 0.3);
   border-radius: 10px;
+  background-color: white;
 }
 
 .history-container .history-item {
@@ -374,4 +380,3 @@ label.disable {
   padding: 10px 200px;
   margin-top: 20px;
 }
-/* User progfile in edit_profile.ejs */

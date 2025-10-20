@@ -80,7 +80,10 @@ app.use((req, res, next) => {
 function requireRole(...roles) {
   return (req, res, next) => {
     if (!req.user) return res.status(401).send("กรุณาลงชื่อเข้าใช้");
-    if (!roles.includes(req.user.role)) return res.status(403).send("คุณไม่ได้รับอนุญาตให้เข้าหน้านี้");
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).render('No_admin.ejs', { u : req.user });
+      // return res.status(403).send("ไม่มีสิทธิ์");
+    }
     next();
   };
 }
@@ -107,7 +110,12 @@ app.post("/login", async (req, res) => {
     const { rows } = await pool.query(q, [username, password]);
 
     if (rows.length === 0) {
-      return res.status(401).send("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง หรือบัญชีถูกระงับ");
+      return res.status(401).send(
+        `
+        <h1>ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</h1>
+        <a href="/login">ย้อนกลับ/a>
+        `
+      );
     }
 
     const u = rows[0];
@@ -153,12 +161,37 @@ app.post("/register", async (req, res) => {
     if (e.code === '23505') {
       return res.status(409).send(`
         <h1>ชื่อผู้ใช้ซ้ำกรุณาลงทะเบียนใหม่</h1>
-        <a href="/login_page.html">ย้อนกลับ/a>
+        <a href="/login">ย้อนกลับ/a>
         `);
     }
     return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
   }
 });
+
+app.post("/buyTicket",requireRole("user") ,async (req, res) => {
+    
+  const {zone_id, seat_number } = req.body;
+    try {
+    const q = `
+      INSERT INTO transaction(user_id,zone_id, seat_number) 
+      VALUES ($1,$2,$3)
+    `;
+
+    await pool.query(q, [req.user.user_id,zone_id, seat_number]); //ดักจับที่นั่ง
+
+    res.render('succeed.ejs', { u : req.user });
+  } catch (e) {
+    console.error(e);
+    if (e.code === '23505') {
+      return res.status(409).send(`
+        <h1>ที่นั่งถูกจองไปแล้ว</h1>
+        <a href="/naruto">ย้อนกลับ/a>
+        `);
+    }
+    return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
+  }
+});
+
 
 // strat path
 
@@ -183,9 +216,6 @@ app.get("/Lisa", (req, res) => {
 });
 // End path
 
-app.post("/Succeed", (req, res) => {
- res.render('succeed.ejs', { u : req.user });
-});
 
 app.get("/purchase_history", (req, res) => {
   res.render('purchase_history.ejs', { u : req.user });

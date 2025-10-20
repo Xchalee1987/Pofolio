@@ -30,3 +30,8 @@ body{
     margin-bottom: 10%;
     margin-top: 25%;
 }
+
+.fa-circle-xmark{
+    color: red;
+    font-size: 120px
+}
