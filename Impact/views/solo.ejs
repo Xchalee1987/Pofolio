@@ -218,7 +218,8 @@
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="3" required >
+                    <input type="hidden"name="concert_title" value="Solo" required >
+                    <input type="hidden"name="zone_name" value="AL" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
                       <option value="1">AL ที่นั่ง1</option>
@@ -252,7 +253,8 @@
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="4" required >
+                    <input type="hidden"name="concert_title" value="Solo" required >
+                    <input type="hidden"name="zone_name" value="AR" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
                       <option value="1">AR ที่นั่ง1</option>
@@ -287,7 +289,8 @@
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="5" required >
+                    <input type="hidden"name="concert_title" value="Solo" required >
+                    <input type="hidden"name="zone_name" value="B" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
                       <option value="1">B ที่นั่ง1</option>
@@ -322,7 +325,8 @@
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="6" required >
+                    <input type="hidden"name="concert_title" value="Solo" required >
+                    <input type="hidden"name="zone_name" value="C" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
                       <option value="1">C ที่นั่ง1</option>
@@ -392,7 +396,10 @@
   <script>
     function openManu(){
       document.getElementById('buy_menu').style.right='0%';
-     
+
+      // scroll to top
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
     function closeManu(){
       document.getElementById('buy_menu').style.right='100%';

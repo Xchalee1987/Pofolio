@@ -74,7 +74,7 @@ app.use((req, res, next) => {
   if (openPaths.includes(req.path)) {
     return next(); 
   }
-  return requireAuth(req, res, next); 
+  return requireAuth(req, res, next);
 });
 
 function requireRole(...roles) {
@@ -170,14 +170,21 @@ app.post("/register", async (req, res) => {
 
 app.post("/buyTicket",requireRole("user") ,async (req, res) => {
     
-  const {zone_id, seat_number } = req.body;
+  const { concert_title, zone_name, seat_number } = req.body;
     try {
     const q = `
-      INSERT INTO transaction(user_id,zone_id, seat_number) 
-      VALUES ($1,$2,$3)
+      INSERT INTO transaction(user_id, zone_id, seat_number) 
+      SELECT 
+        $1 AS user_id,
+        z.zone_id,
+        $2 AS seat_number
+      FROM zone_detail z
+      JOIN concert_detail c
+        ON z.concert_id = c.concert_id
+      WHERE c.title = $3 AND z.zone_name = $4;
     `;
 
-    await pool.query(q, [req.user.user_id,zone_id, seat_number]); //ดักจับที่นั่ง
+    await pool.query(q, [req.user.user_id, seat_number, concert_title, zone_name]); //ดักจับที่นั่ง
 
     res.render('succeed.ejs', { u : req.user });
   } catch (e) {
@@ -271,8 +278,8 @@ app.get('/fetchTransactions', async (req, res) => {
     const result = await pool.query(q, params);
 
     // Get list of zone names only
-    const all_trans_id = result.rows.map(row => row.trans_id);
-    console.log('all transaction id: ', all_trans_id);
+    // const all_trans_id = result.rows.map(row => row.trans_id);
+    // console.log('all transaction id: ', all_trans_id);
 
     res.json(result.rows);
   } catch (err) {

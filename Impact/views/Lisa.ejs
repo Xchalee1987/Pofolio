@@ -221,12 +221,13 @@
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="19" required >
+                    <input type="hidden"name="concert_title" value="Lisa" required >
+                    <input type="hidden"name="zone_name" value="AL" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
-                      <option value="1">A1 ที่นั่ง1</option>
-                      <option value="2">A1 ที่นั่ง2</option>
-                      <option value="3">A1 ที่นั่ง3</option>
+                      <option value="1">AL ที่นั่ง1</option>
+                      <option value="2">AL ที่นั่ง2</option>
+                      <option value="3">AL ที่นั่ง3</option>
                     </select> <br>
                     <div class="wapper_ticker_detail">
                         <h3>ราคา 7,500 THB</h3>
@@ -255,12 +256,13 @@
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="20" required >
+                    <input type="hidden"name="concert_title" value="Lisa" required >
+                    <input type="hidden"name="zone_name" value="AR" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
-                      <option value="1">A2 ที่นั่ง1</option>
-                      <option value="2">A2 ที่นั่ง2</option>
-                      <option value="3">A2 ที่นั่ง3</option>
+                      <option value="1">AR ที่นั่ง1</option>
+                      <option value="2">AR ที่นั่ง2</option>
+                      <option value="3">AR ที่นั่ง3</option>
                     </select> <br>
                     <div class="wapper_ticker_detail">
                         <h3>ราคา 7,500 THB</h3>
@@ -290,12 +292,13 @@
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="21" required >
+                    <input type="hidden"name="concert_title" value="Lisa" required >
+                    <input type="hidden"name="zone_name" value="B" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
-                      <option value="1">A3 ที่นั่ง1</option>
-                      <option value="2">A3 ที่นั่ง2</option>
-                      <option value="3">A3 ที่นั่ง3</option>
+                      <option value="1">B ที่นั่ง1</option>
+                      <option value="2">B ที่นั่ง2</option>
+                      <option value="3">B ที่นั่ง3</option>
                     </select> <br>
                     <div class="wapper_ticker_detail">
                         <h3>ราคา 5,500 THB</h3>
@@ -326,12 +329,13 @@
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="zone_id" value="22" required >
+                    <input type="hidden"name="concert_title" value="Lisa" required >
+                    <input type="hidden"name="zone_name" value="C" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
-                      <option value="1">A3 ที่นั่ง1</option>
-                      <option value="2">A3 ที่นั่ง2</option>
-                      <option value="3">A3 ที่นั่ง3</option>
+                      <option value="1">C ที่นั่ง1</option>
+                      <option value="2">C ที่นั่ง2</option>
+                      <option value="3">C ที่นั่ง3</option>
                     </select> <br>
                     <div class="wapper_ticker_detail">
                         <h3>ราคา 4,500 THB</h3>
@@ -396,6 +400,10 @@
   <script>
     function openManu(){
       document.getElementById('buy_menu').style.right='0%';
+
+      // scroll to top
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
     function closeManu(){
       document.getElementById('buy_menu').style.right='100%';
