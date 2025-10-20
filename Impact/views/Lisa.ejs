@@ -41,57 +41,7 @@
 
 <body class="service-details-page">
 
- <header id="header" class="header fixed-top">
-
-    <div class="topbar d-flex align-items-center">
-      <div class="container d-flex justify-content-center justify-content-md-between">
-      </div>
-    </div><!-- End Top Bar -->
-
-    <div class="branding d-flex align-items-cente">
-
-      <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="/" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="img/logo.png" alt=""> -->
-          <h1 class="sitename">ยินดีต้อนรับ!</h1>
-        </a>
-
-      <% if (locals.u) { %>
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="/purchase_history" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
-            <li><a href="#" id="profile">คุณ <%= u.username %></a></li>
-            <li><a href="/logout" onclick="">Logout</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-       </div>
-
-      <div class="overlay-container overlay-toggle">
-        <div class="overlay">
-          <span>User ID: <%= u.user_id %></span>
-          <span>Username: <%= u.username %></span>
-          <span>Phone number: <%= u.phone %></span>
-          <span>Role: <%= u.role %></span>
-          <a href="/editProfile" id="editProfileBtn">Edit Profile</a>
-        </div>
-      </div>
-      <% } else { %>
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="/login">ลงชื่อเข้าใช้</a></li>
-            </li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-
-      </div>
-      <% } %>
-
-    </div>
-
-  </header>
+<%- include("loginNav.ejs"); %>
 
 
   <main class="main">
@@ -265,15 +215,12 @@
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
-                <div class="wapper_ticker_detail">
-                    <h2>คุณ <%= u.username %></h2>
-                </div>
+                
                 <div class="wapper_ticker_detail">
                     <h3>Concertที่คุณเลือกคือ Lisa</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
-                    <form class="my-form" action="/Succeed" method="POST">
-                    <input type="hidden" name="user_id" value="<%= u.user_id %>"required >
+                    <form class="my-form" action="/buyTicket" method="POST">
                     <input type="hidden"name="zone_id" value="3" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
@@ -302,15 +249,12 @@
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
-                <div class="wapper_ticker_detail">
-                    <h2>คุณ <%= u.username %></h2>
-                </div>
+                
                 <div class="wapper_ticker_detail">
                     <h3>Concertที่คุณเลือกคือ Lisa</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
-                    <form class="my-form" action="/Succeed" method="POST">
-                    <input type="hidden" name="user_id" value="<%= u.user_id %>"required >
+                    <form class="my-form" action="/buyTicket" method="POST">
                     <input type="hidden"name="zone_id" value="4" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
@@ -340,15 +284,12 @@
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
-                <div class="wapper_ticker_detail">
-                    <h2>คุณ <%= u.username %></h2>
-                </div>
+                
                 <div class="wapper_ticker_detail">
                     <h3>Concertที่คุณเลือกคือ Lisa</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
-                    <form class="my-form" action="/Succeed" method="POST">
-                    <input type="hidden" name="user_id" value="<%= u.user_id %>"required >
+                    <form class="my-form" action="/buyTicket" method="POST">
                     <input type="hidden"name="zone_id" value="5" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
@@ -379,15 +320,12 @@
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
-                <div class="wapper_ticker_detail">
-                    <h2>คุณ <%= u.username %></h2>
-                </div>
+                
                 <div class="wapper_ticker_detail">
                     <h3>Concertที่คุณเลือกคือ Lisa</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
-                    <form class="my-form" action="/Succeed" method="POST">
-                    <input type="hidden" name="user_id" value="<%= u.user_id %>"required >
+                    <form class="my-form" action="/buyTicket" method="POST">
                     <input type="hidden"name="zone_id" value="5" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>

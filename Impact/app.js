@@ -70,7 +70,7 @@ function requireAuth(req, res, next) {
 // check in case user without login enter where "no role" can't enter
 // (enter the path that contain /u will check if user login yet)
 app.use((req, res, next) => {
-  const openPaths = ["/", "/login", "/logout", "/register"]; //all paths that "no role" can enter
+  const openPaths = ["/", "/login", "/logout", "/register", "/naruto", "/Lisa", "/Mayaram", "/Solo", "/cocktail"]; //all paths that "no role" can enter
   if (openPaths.includes(req.path)) {
     return next(); 
   }
