@@ -32,7 +32,7 @@ $(document).ready(function(){
   });
 
   $('.editpassbtn').click(function(){
-    $('.passwordLabeld').toggleClass("disable");
+    $('.passwordLabel').toggleClass("disable");
     $('.editpassbtn').toggleClass("disable");
     $('#input-passwordNew').toggleClass("disable");
     $('.clear-password').val("");

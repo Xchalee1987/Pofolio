@@ -110,11 +110,11 @@ app.post("/login", async (req, res) => {
     const { rows } = await pool.query(q, [username, password]);
 
     if (rows.length === 0) {
-      return res.status(401).send(
-        `
-        <h1>ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</h1>
-        <a href="/login">ย้อนกลับ/a>
-        `
+      return res.status(401).render('No_login.ejs',{
+        mess:"รหัสผ่านไม่ถูกต้อง หรือ ถูกใช้งานไปแล้ว"
+      
+        , u : req.user }
+        
       );
     }
 
@@ -190,10 +190,8 @@ app.post("/buyTicket",requireRole("user") ,async (req, res) => {
   } catch (e) {
     console.error(e);
     if (e.code === '23505') {
-      return res.status(409).send(`
-        <h1>ที่นั่งถูกจองไปแล้ว</h1>
-        <a href="/naruto">ย้อนกลับ/a>
-        `);
+     
+      return res.status(409).render('No_selec.ejs', { u : req.user });
     }
     return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
   }
