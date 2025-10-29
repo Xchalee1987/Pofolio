@@ -168,7 +168,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.post("/buyTicket",requireRole("user") ,async (req, res) => {
+app.post("/buyTicket", requireRole("user"), async (req, res) => {
     
   const { concert_title, zone_name, seat_number } = req.body;
     try {
@@ -184,12 +184,12 @@ app.post("/buyTicket",requireRole("user") ,async (req, res) => {
       WHERE c.title = $3 AND z.zone_name = $4;
     `;
 
-    await pool.query(q, [req.user.user_id, seat_number, concert_title, zone_name]); //ดักจับที่นั่ง
+    await pool.query(q, [req.user.user_id, seat_number, concert_title, zone_name]);//ดักจับที่นั่งซ้ำ
 
     res.render('succeed.ejs', { u : req.user });
   } catch (e) {
     console.error(e);
-    if (e.code === '23505') {
+    if (e.code === '23505') { //ดักจับที่นั่งซ้ำ
      
       return res.status(409).render('No_selec.ejs', { u : req.user });
     }
@@ -365,4 +365,5 @@ app.post("/editProfile/updatePass", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
+  console.log(`URL : http://localhost:${port}/`);
 });

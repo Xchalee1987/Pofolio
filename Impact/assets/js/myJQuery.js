@@ -1,9 +1,12 @@
+// toggle register page in login_page.html
 $(document).ready(function(){
-  $('.message a').click(function(){
+  $('.toggle-register a').click(function(){
     $('.login-page').animate({height:"toggle", opacity:"toggle"}, "slow");
   });
 });
+// toggle register page in login_page.html
 
+// toggle user info in loginNav.ejs
 $(document).ready(function(){
   $('#profile').click(function(e) {
     e.preventDefault();
@@ -16,8 +19,9 @@ $(document).ready(function(){
     }
   });
 });
+// toggle user info in loginNav.ejs
 
-/* User progfile in edit_profile.ejs */
+/* edit profile buttons in edit_profile.ejs */
 $(document).ready(function(){
   $('.editnamebtn').click(function(){
     $('.editUsername').toggleClass("disable");
@@ -38,4 +42,4 @@ $(document).ready(function(){
     $('.clear-password').val("");
   });
 });
-/* User progfile in edit_profile.ejs */
+/* edit profile buttons in edit_profile.ejs */
