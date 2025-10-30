@@ -221,7 +221,7 @@
                     <input type="hidden"name="concert_title" value="Solo" required >
                     <input type="hidden"name="zone_name" value="AL" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="ALseat_number"required>
                       <option value="1">AL ที่นั่ง1</option>
                       <option value="2">AL ที่นั่ง2</option>
                       <option value="3">AL ที่นั่ง3</option>
@@ -256,7 +256,7 @@
                     <input type="hidden"name="concert_title" value="Solo" required >
                     <input type="hidden"name="zone_name" value="AR" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="ARseat_number"required>
                       <option value="1">AR ที่นั่ง1</option>
                       <option value="2">AR ที่นั่ง2</option>
                       <option value="3">AR ที่นั่ง3</option>
@@ -292,7 +292,7 @@
                     <input type="hidden"name="concert_title" value="Solo" required >
                     <input type="hidden"name="zone_name" value="B" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="Bseat_number"required>
                       <option value="1">B ที่นั่ง1</option>
                       <option value="2">B ที่นั่ง2</option>
                       <option value="3">B ที่นั่ง3</option>
@@ -328,7 +328,7 @@
                     <input type="hidden"name="concert_title" value="Solo" required >
                     <input type="hidden"name="zone_name" value="C" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="Cseat_number"required>
                       <option value="1">C ที่นั่ง1</option>
                       <option value="2">C ที่นั่ง2</option>
                       <option value="3">C ที่นั่ง3</option>
@@ -485,6 +485,41 @@
         if (!ticketCtx) return;
         ticketCtx.clearRect(0, 0, ticketCanvas.width, ticketCanvas.height);
     }
+
+// create JavaScript object
+  const zones = {
+    AL: document.getElementById("ALseat_number"),
+    AR: document.getElementById("ARseat_number"),
+    B: document.getElementById("Bseat_number"),
+    C: document.getElementById("Cseat_number")
+  };
+  const title = document.querySelector('input[name="concert_title"]').getAttribute('value');
+
+  // fetch only available seats to display
+  async function fetchSeats() {
+    for (const index in zones) {
+      const selectElement = zones[index];
+      const response = await fetch(`/fetchSeats/${title}/${index}`);
+      const seats = await response.json();
+
+      selectElement.innerHTML = '';
+
+      if (seats.length === 0) {
+        const optionAdd = document.createElement('option');
+        optionAdd.value = "";
+        optionAdd.textContent = 'sold out';
+        selectElement.appendChild(optionAdd);
+      }
+
+      seats.forEach(seat => {
+        const optionAdd = document.createElement('option');
+        optionAdd.value = seat.seat_number;
+        optionAdd.textContent = `${index} ที่นั่งที่ ${seat.seat_number}`;
+        selectElement.appendChild(optionAdd);
+      });
+    }
+  }
+  fetchSeats();
   </script>
 </body>
 

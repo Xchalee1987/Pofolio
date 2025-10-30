@@ -224,7 +224,7 @@
                     <input type="hidden"name="concert_title" value="Lisa" required >
                     <input type="hidden"name="zone_name" value="AL" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="ALseat_number"required>
                       <option value="1">AL ที่นั่ง1</option>
                       <option value="2">AL ที่นั่ง2</option>
                       <option value="3">AL ที่นั่ง3</option>
@@ -259,7 +259,7 @@
                     <input type="hidden"name="concert_title" value="Lisa" required >
                     <input type="hidden"name="zone_name" value="AR" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="ARseat_number"required>
                       <option value="1">AR ที่นั่ง1</option>
                       <option value="2">AR ที่นั่ง2</option>
                       <option value="3">AR ที่นั่ง3</option>
@@ -295,7 +295,7 @@
                     <input type="hidden"name="concert_title" value="Lisa" required >
                     <input type="hidden"name="zone_name" value="B" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="Bseat_number"required>
                       <option value="1">B ที่นั่ง1</option>
                       <option value="2">B ที่นั่ง2</option>
                       <option value="3">B ที่นั่ง3</option>
@@ -332,7 +332,7 @@
                     <input type="hidden"name="concert_title" value="Lisa" required >
                     <input type="hidden"name="zone_name" value="C" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="Cseat_number"required>
                       <option value="1">C ที่นั่ง1</option>
                       <option value="2">C ที่นั่ง2</option>
                       <option value="3">C ที่นั่ง3</option>
@@ -437,44 +437,79 @@
  console.error("Canvas 'ticketHighlightCanvas' not found or context failed.");
  }
 
-     function highlightTicketArea(areaElement) {
-     if (!ticketCtx) return;
+function highlightTicketArea(areaElement) {
+  if (!ticketCtx) return;
  
-        clearTicketHighlight(); 
+    clearTicketHighlight(); 
  
-        const coordsString = areaElement.getAttribute('coords');
-        const coords = coordsString.split(',').map(c => parseFloat(c.trim())); 
+    const coordsString = areaElement.getAttribute('coords');
+    const coords = coordsString.split(',').map(c => parseFloat(c.trim())); 
                
         
-        // ปรับขนาดให้ตรงกับรูป
-        const originalWidth = 960; 
-        const originalHeight = 540; 
+    // ปรับขนาดให้ตรงกับรูป
+    const originalWidth = 960; 
+    const originalHeight = 540; 
         
-        // คำนวณอัตราส่วนการปรับขนาด
-        const scaleX = ticketCanvas.width / originalWidth;
-        const scaleY = ticketCanvas.height / originalHeight;
+    // คำนวณอัตราส่วนการปรับขนาด
+    const scaleX = ticketCanvas.width / originalWidth;
+    const scaleY = ticketCanvas.height / originalHeight;
         
-            ticketCtx.beginPath();
+    ticketCtx.beginPath();
 
-            if (areaElement.shape.toLowerCase() === 'rect' && coords.length === 4) {
+    if (areaElement.shape.toLowerCase() === 'rect' && coords.length === 4) {
             
-            const [x1, y1, x2, y2] = coords;
-            const w = (x2 - x1) * scaleX;
-            const h = (y2 - y1) * scaleY;
-            ticketCtx.rect(x1 * scaleX, y1 * scaleY, w, h);
-            } 
-            //สี
-            ticketCtx.fillStyle = 'rgba(255, 0, 0, 0.4)'; 
-            ticketCtx.fill();
-            }
+      const [x1, y1, x2, y2] = coords;
+      const w = (x2 - x1) * scaleX;
+      const h = (y2 - y1) * scaleY;
+      ticketCtx.rect(x1 * scaleX, y1 * scaleY, w, h);
+    } 
+    //สี
+    ticketCtx.fillStyle = 'rgba(255, 0, 0, 0.4)'; 
+    ticketCtx.fill();
+  }
 
  /**
-     * ฟังก์ชันล้าง Canvas 
-     */
-        function clearTicketHighlight() {
-            if (!ticketCtx) return;
-            ticketCtx.clearRect(0, 0, ticketCanvas.width, ticketCanvas.height);
-        }
+ * ฟังก์ชันล้าง Canvas 
+ */
+  function clearTicketHighlight() {
+    if (!ticketCtx) return;
+    ticketCtx.clearRect(0, 0, ticketCanvas.width, ticketCanvas.height);
+  }
+
+  // create JavaScript object
+  const zones = {
+    AL: document.getElementById("ALseat_number"),
+    AR: document.getElementById("ARseat_number"),
+    B: document.getElementById("Bseat_number"),
+    C: document.getElementById("Cseat_number")
+  };
+  const title = document.querySelector('input[name="concert_title"]').getAttribute('value');
+
+  // fetch only available seats to display
+  async function fetchSeats() {
+    for (const index in zones) {
+      const selectElement = zones[index];
+      const response = await fetch(`/fetchSeats/${title}/${index}`);
+      const seats = await response.json();
+
+      selectElement.innerHTML = '';
+
+      if (seats.length === 0) {
+        const optionAdd = document.createElement('option');
+        optionAdd.value = "";
+        optionAdd.textContent = 'sold out';
+        selectElement.appendChild(optionAdd);
+      }
+
+      seats.forEach(seat => {
+        const optionAdd = document.createElement('option');
+        optionAdd.value = seat.seat_number;
+        optionAdd.textContent = `${index} ที่นั่งที่ ${seat.seat_number}`;
+        selectElement.appendChild(optionAdd);
+      });
+    }
+  }
+  fetchSeats();
   </script>
 </body>
 

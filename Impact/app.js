@@ -233,9 +233,6 @@ app.post("/buyTicket", requireRole("user"), async (req, res) => {
   }
 });
 
-
-// strat path
-
 app.get("/naruto", (req, res) => {
  res.render('naruto.ejs', { u : req.user });
 });
@@ -266,7 +263,7 @@ app.get("/editProfile", (req, res) => {
   res.render('edit_profile.ejs', { u : req.user });
 });
 
-// fetch user transaction for display
+// fetch user transaction for display in purcahse_history.ejs
 app.get('/fetchTransactions', async (req, res) => {
   try {
     let q;
@@ -322,6 +319,35 @@ app.get('/fetchTransactions', async (req, res) => {
   }
 })
 
+// fetch seat available in events.ejs
+app.get('/fetchSeats/:concert_title/:zone_name', async (req, res) => {
+  const { concert_title, zone_name } = req.params;
+  try {
+    const q = `
+        SELECT seat_number
+        FROM (
+          SELECT generate_series(1, z.capacity) AS seat_number
+          FROM zone_detail z
+          JOIN concert_detail c ON z.concert_id = c.concert_id
+          WHERE c.title = $1 AND z.zone_name = $2
+        ) AS all_seats
+        WHERE seat_number NOT IN (
+          SELECT t.seat_number
+          FROM transaction t
+          JOIN zone_detail z ON t.zone_id = z.zone_id
+          JOIN concert_detail c ON z.concert_id = c.concert_id
+          WHERE c.title = $1 AND z.zone_name = $2
+        )
+      `;
+      // use generate_series(1, z.capacity) for generate a series of integers from 1 to z.capacity:
+    const result = await pool.query(q, [ concert_title, zone_name ]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('error massage: ', err.message);
+    res.status(500).send('unable to fetch seats for zone: ', zone_name);
+  }
+});
+
 app.delete('/admin/delete/:id', async (req, res) =>{
   const { id } = req.params;
   try {
@@ -354,11 +380,15 @@ app.post("/editProfile/update", async (req, res) => {
     req.session.user.phone = inputPhone;
 
     console.log("profile update succesfully");
-    return res.json({ message: 'profile update' });
+    return res.status(200).json({ 
+      message: 'profile update'
+    });
   } catch (err) {
     if (err.code === '23505') {
       console.error('Username or Phone Number already exists');
-      return res.json({ message : 'Username or Phone Number has been taken' });
+      return res.status(400).json({ 
+        message : 'Username or Phone Number has been taken'
+      });
     }
     console.error('error massage: ', err.message);
     res.status(500).send('Server error');

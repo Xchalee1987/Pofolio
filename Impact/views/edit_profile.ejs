@@ -199,16 +199,13 @@
       }
       const msg = await response.json();
       console.log('Server response:', msg.message);
-      console.log(username);
-      //sent if wrong password input
-      if(!msg.ok){
-      return alert(msg.message);
+      if (response.status === 200) {
+        username = inputUsername;
+        phone = inputPhone;
+        console.log("user as ", username);
+        console.log("num as", phone);
       }
-      username = inputUsername;
-      phone =  inputPhone;
-      console.log(username);
-      resetAllDefault();
-      
+      alert(msg.message);
     });
 
     resetAllDefault();
