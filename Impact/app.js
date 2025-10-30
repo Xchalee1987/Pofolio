@@ -32,8 +32,8 @@ app.use(
       createTableIfMissing: true,
     }),
     secret: process.env.SESSION_SECRET || "dev-secret",
-    resave: false,
-    saveUninitialized: false,
+    resave: false, // Don’t save session if nothing changed
+    saveUninitialized: false, // Don’t create a session until something is stored in it
     cookie: {
       httpOnly: true,
       sameSite: "lax",
@@ -73,6 +73,11 @@ app.use((req, res, next) => {
   const openPaths = ["/", "/login", "/logout", "/register","/reset", "/naruto", "/Lisa", "/Mayaram", "/Solo", "/cocktail"]; //เส้นทางที่เข้าถึงได้โดยไม่ต้อง Login
   if (openPaths.includes(req.path)) { //เช็คreq ที่ถูกส่งมาปัจจุบันว่า มีใน path ในนี้ไหม 
     return next();  //ถ้า ใช่ ให้ไปต่อ
+  }
+  // ต้องแยกออกมาเพราะ path นี้มี path parameters/ route parameters
+  // without this the event pages can't fetch available seats if not login first
+  if (req.path.startsWith("/fetchSeats")) {
+    return next();
   }
   return requireAuth(req, res, next); //ถ้าไม่ ให้ไปทำฟังชั่น requireAuth บรรทัดที่ 63
 });
@@ -226,13 +231,14 @@ app.post("/buyTicket", requireRole("user"), async (req, res) => {
     if (e.code === '23505') { //ดักจับที่นั่งซ้ำ
      
       return res.status(409).render('No_login.ejs', { 
-        mess:"ที่นั่งนี้ถูกจองไปแล้ว"
-        ,u : req.user });
+        mess:"ที่นั่งนี้ถูกจองไปแล้ว",
+        u : req.user });
     }
     return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
   }
 });
 
+//path to each event
 app.get("/naruto", (req, res) => {
  res.render('naruto.ejs', { u : req.user });
 });

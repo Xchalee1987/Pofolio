@@ -102,24 +102,6 @@
                     <div class="ticket_detail_in">
                         <div class="ticket_detail_item1">
                             <div class="ticket_detail_item1_in">
-                                <p>Zone AR</p>
-                            </div>
-                        </div>
-                        <div class="ticket_detail_item2">
-                            <div class="ticket_detail_item2_in">
-                                    <p>7,500 THB</p>
-                            </div>                      
-                        </div>
-                        <div class="ticket_detail_item3">
-                              <div class="ticket_detail_item3_in">
-                                    <p>On Sale</p>
-                            </div>   
-                        </div>                    
-                    </div>
-                     
-                    <div class="ticket_detail_in">
-                        <div class="ticket_detail_item1">
-                            <div class="ticket_detail_item1_in">
                                 <p>Zone AL</p>
                             </div>
                         </div>
@@ -129,7 +111,25 @@
                             </div>                      
                         </div>
                         <div class="ticket_detail_item3">
-                              <div class="ticket_detail_item3_in">
+                              <div class="ticket_detail_item3_in" id="ALstatus">
+                                    <p>On Sale</p>
+                            </div>   
+                        </div>                    
+                    </div>
+                     
+                    <div class="ticket_detail_in">
+                        <div class="ticket_detail_item1">
+                            <div class="ticket_detail_item1_in">
+                                <p>Zone AR</p>
+                            </div>
+                        </div>
+                        <div class="ticket_detail_item2">
+                            <div class="ticket_detail_item2_in">
+                                    <p>7,500 THB</p>
+                            </div>                      
+                        </div>
+                        <div class="ticket_detail_item3">
+                              <div class="ticket_detail_item3_in" id="ARstatus">
                                     <p>On Sale</p>
                             </div>   
                         </div>                    
@@ -147,7 +147,7 @@
                             </div>                      
                         </div>
                         <div class="ticket_detail_item3">
-                              <div class="ticket_detail_item3_in">
+                              <div class="ticket_detail_item3_in" id="Bstatus">
                                     <p>On Sale</p>
                             </div>   
                         </div>                    
@@ -166,7 +166,7 @@
                             </div>                      
                         </div>
                         <div class="ticket_detail_item3">
-                              <div class="ticket_detail_item3_in">
+                              <div class="ticket_detail_item3_in" id="Cstatus">
                                     <p>On Sale</p>
                             </div>   
                         </div>                    
@@ -505,10 +505,17 @@
       selectElement.innerHTML = '';
 
       if (seats.length === 0) {
+        // add option named "SOLD OUT" to empty select element(AL AR B C)
         const optionAdd = document.createElement('option');
         optionAdd.value = "";
-        optionAdd.textContent = 'sold out';
+        optionAdd.textContent = 'SOLD OUT';
         selectElement.appendChild(optionAdd);
+        // Change "On Sale" to "Sold Out"
+        const status = document.querySelector(`#${index}status`);
+        const p = document.createElement('p');
+        p.innerHTML = "Sold Out";
+        status.innerHTML = '';
+        status.appendChild(p);
       }
 
       seats.forEach(seat => {
