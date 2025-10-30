@@ -70,7 +70,7 @@ function requireAuth(req, res, next) {
 // check in case user without login enter where "no role" can't enter
 // (enter the path that contain /u will check if user login yet)
 app.use((req, res, next) => {
-  const openPaths = ["/", "/login", "/logout", "/register", "/naruto", "/Lisa", "/Mayaram", "/Solo", "/cocktail"]; //all paths that "no role" can enter
+  const openPaths = ["/", "/login", "/logout", "/register","/reset", "/naruto", "/Lisa", "/Mayaram", "/Solo", "/cocktail"]; //all paths that "no role" can enter
   if (openPaths.includes(req.path)) {
     return next(); 
   }
@@ -81,7 +81,9 @@ function requireRole(...roles) {
   return (req, res, next) => {
     if (!req.user) return res.status(401).send("กรุณาลงชื่อเข้าใช้");
     if (!roles.includes(req.user.role)) {
-      return res.status(403).render('No_admin.ejs', { u : req.user });
+      return res.status(403).render('No_login.ejs', {
+         mess:"คุณไม่มีสิทธิ"
+        ,u : req.user });
       // return res.status(403).send("ไม่มีสิทธิ์");
     }
     next();
@@ -111,7 +113,7 @@ app.post("/login", async (req, res) => {
 
     if (rows.length === 0) {
       return res.status(401).render('No_login.ejs',{
-        mess:"รหัสผ่านไม่ถูกต้อง หรือ ถูกใช้งานไปแล้ว"
+        mess:"ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง"
       
         , u : req.user }
         
@@ -168,6 +170,38 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.post("/reset",async (req, res) =>{
+   const { username,phone, passwordNew } = req.body;
+  try {
+    const q = `
+      SELECT username, phone
+      FROM "user_detail"
+      WHERE username = $1
+        AND phone = $2
+      LIMIT 1
+    `;
+    console.log("this");
+     const { rows }= await pool.query(q, [username,phone]);
+
+    if (rows.length === 0) {
+      return res.status(401).render('No_login.ejs',{
+        mess:"ชื่อผู้ใช้หรือเบอร์โทรไม่ถูกต้อง "}      
+      );
+    }
+    const qq = `
+    UPDATE "user_detail" 
+    SET password = crypt($1, gen_salt('bf')) 
+    WHERE username = $2  RETURNING *
+    `;
+    await pool.query(qq, [passwordNew,username]);
+   return res.render("Yes_reset.ejs");
+
+  } catch (e) {
+    console.error(e);
+   return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
+  }
+});
+
 app.post("/buyTicket", requireRole("user"), async (req, res) => {
     
   const { concert_title, zone_name, seat_number } = req.body;
@@ -191,7 +225,9 @@ app.post("/buyTicket", requireRole("user"), async (req, res) => {
     console.error(e);
     if (e.code === '23505') { //ดักจับที่นั่งซ้ำ
      
-      return res.status(409).render('No_selec.ejs', { u : req.user });
+      return res.status(409).render('No_login.ejs', { 
+        mess:"ที่นั่งนี้ถูกจองไปแล้ว"
+        ,u : req.user });
     }
     return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
   }
@@ -322,7 +358,7 @@ app.post("/editProfile/update", async (req, res) => {
   } catch (err) {
     if (err.code === '23505') {
       console.error('Username or Phone Number already exists');
-      return res.json({ message : 'Username is already taken' });
+      return res.json({ message : 'Username or Phone Number has been taken' });
     }
     console.error('error massage: ', err.message);
     res.status(500).send('Server error');

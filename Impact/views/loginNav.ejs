@@ -19,7 +19,7 @@
           <ul>
             <li><a href="/purchase_history" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
             <li><a href="#" id="profile">คุณ <%= u.username %></a></li>
-            <li><a href="/logout" onclick="">Logout</a></li>
+            <li><a href="/logout" onclick="">ออกจากระบบ</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -29,9 +29,9 @@
         <div class="overlay">
           <span>User ID: <%= u.user_id %></span>
           <span>Username: <%= u.username %></span>
-          <span>Phone number: <%= u.phone %></span>
-          <span>Role: <%= u.role %></span>
-          <a href="/editProfile" id="editProfileBtn">Edit Profile</a>
+          <span>เบอร์โทรศัพท์: <%= u.phone %></span>
+          <span>สิทธิในการเข้าถึง: <%= u.role %></span>
+          <a href="/editProfile" id="editProfileBtn">แก้ไขโปรไฟล์</a>
         </div>
       </div>
       <% } else { %>

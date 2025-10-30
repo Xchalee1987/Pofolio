@@ -1,7 +1,18 @@
 // toggle register page in login_page.html
 $(document).ready(function(){
-  $('.toggle-register a').click(function(){
-    $('.login-page').animate({height:"toggle", opacity:"toggle"}, "slow");
+  $('#toggle-register a').click(function(){
+    $('.toggle-form').hide();
+    $('#registration-page').fadeIn(400);
+  });
+
+  $('.toggle-login a').click(function(){
+    $('.toggle-form').hide();
+    $('#login-page').fadeIn(400);
+  });
+
+  $('#toggle-reset a').click(function(){
+    $('.toggle-form').hide();
+    $('#reset-page').fadeIn(400);
   });
 });
 // toggle register page in login_page.html

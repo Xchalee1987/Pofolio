@@ -56,7 +56,7 @@
     <section id="about" class="about section">
 
       <div class="box">
-        <form method="POST" action="/login" class="login-form login-page">
+        <form method="POST" action="/login" class="toggle-form" id="login-page">
             <!-- the browser sends the form data in the body of the HTTP request -->
             <!-- using the application/x-www-form-urlencoded format by default. -->
             <h2>ลงชื่อเข้าใช้</h2>
@@ -69,11 +69,14 @@
                 <input type="password" name="password" required>
             </div>
             <button type="submit">ยืนยัน</button>
+            <div class="textpass">
+                <p id="toggle-register">ยังไม่มีบัญชี? <a href="#">ลงทะเบียน</a></p>
+                <p id="toggle-reset">ลืมรหัสผ่าน?<a href="#">รีเซ็ตรหัสผ่าน</a></p>
+            </div>
             
-            <p class="toggle-register">Don't have an account? <a href="#">Register now</a></p>
         </form>
 
-        <form method="POST" action="/register" class="registration-form login-page">
+        <form method="POST" action="/register" class="toggle-form" id="registration-page">
             <h2>สมัครสมาชิก</h2>
             <div>
                 <label>ชื่อผู้ใช้</label>
@@ -90,8 +93,30 @@
             <button type="submit">ยืนยัน</button>
 
             <!-- button for toggle -->
-            <p class="toggle-register">Already have account? <a href="#">Sign in</a></p>
+            <p class="toggle-login textpass">มีบัญชีอยู่แล้ว? <a href="#">ลงชื่อเข้าใช้</a></p>
         </form>
+
+        <!-- Joe -->
+         <form method="POST" action="/reset" class="toggle-form" id="reset-page">
+            <h2>แก้ไขรหัสผ่าน</h2>
+            <div>
+                <label>ชื่อผู้ใช้</label>
+                <input type="text" name="username" required>
+            </div>
+            <div>
+                <label>เบอร์โทร</label>
+                <input type="tel" name="phone" required>
+            </div>
+            <div>
+                <label>รหัสผ่านใหม่</label>
+                <input type="password" name="passwordNew" required>
+            </div>
+            <button type="submit">ยืนยัน</button>
+
+            <!-- button for toggle -->
+            <p class="toggle-login textpass">มีบัญชีอยู่แล้ว?<a href="#">ลงชื่อเข้าใช้</a></p>
+        </form>
+
       </div>
 
     </section><!-- register/login Section -->

@@ -160,32 +160,35 @@ input[type=submit] {
 
 /* register/login box register.html*/
 .box {
-  width: 400px;
+  display: flex;
+  width: 500px;
+  height: 600px;
   margin: 110px 0 0 0;
+  justify-content: center;
   justify-self: center;
   align-items: center;
-  padding: 20px 60px 60px 60px;
+  padding: 20px 60px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 0 5px 5px 0 rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   border: 3px solid var(--accent-color);
 }
 
-.box .login-page h2 {
+.box h2 {
   text-align: center;
-  margin: 40px 0 20px 0;
+  margin: 0 0 40px 0;
 }
 
-.box .login-page label {
+.box label {
   display: block;
   margin: 2px 0 10px 0;
 }
 
-.box .login-page div input {
+.box div input {
   background-color: #e5fff4;
   width: 100%;
 }
 
-.box .login-page button {
+.box button {
   width: 100%;
   font-size: 20px;
   margin: 20px 0px;
@@ -194,20 +197,23 @@ input[type=submit] {
   border-radius: 0 0 10px 10px;
 }
 
-.box .login-page button:hover {
+.box button:hover {
   background-color: rgba(12, 59, 47, 0.3);
 }
 
-.registration-form {
+.toggle-form {
+  width: 100%;
+  margin: 20px;
+}
+
+#registration-page {
   display: none;
 }
 
-
-
-.register-page {
-  width: 600px;
+#reset-page {
+  display: none;
 }
-/* register/login box register.html*/
+/* register/login/reset box register.html*/
 
 /* Profile Overlay main.ejs, purchase_history.ejs */
 .overlay-container {
@@ -381,3 +387,8 @@ label.disable {
   margin-top: 20px;
 }
 /* User progfile in edit_profile.ejs */
+
+.textpass{
+    display: block;
+    text-align: center;
+}
