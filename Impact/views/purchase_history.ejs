@@ -141,12 +141,12 @@
   <script src="/js/myJQuery.js"></script>
 
   <script>
-    const userRole = "<%= u.role %>";
+    const userRole = "<%= u.role %>"; // role ที่ส่งมาจาก app
     const historyList = document.getElementById('history-list');
 
     async function fetchTransaction() {
         const response = await fetch('/fetchTransactions');
-        const transactions = await response.json();
+        const transactions = await response.json(); //jsonที่ถูกส่งมาจาก app fetchTransactions
         historyList.innerHTML = '';
         transactions.forEach(transaction => {
             const transactionDiv = document.createElement('div');

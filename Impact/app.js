@@ -11,15 +11,15 @@ import { DataRowMessage } from "pg-protocol/dist/messages";
 import path from "path";
 
 dotenv.config();
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url)); //เหมือนว่าจะสร้างตัวแปร __dirname เพื่อให้ใช้เป็น ไดเรทเทอรีเริ้มต้น
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // --- PostgreSQL pool ---
-const { Pool } = pg;
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+const { Pool } = pg; //ดึงclass pool ออกจาก pg
+const pool = new Pool({ //สร้าง อินสแตนซ์ ขึ้นมาใช้งาน
+  connectionString: process.env.DATABASE_URL, //ดึงค่าจาก .env จาก DATABASE_URL มา
 });
 
 // --- Session Store (เก็บ session ลง Postgres) ---
@@ -48,14 +48,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'assets')));
 
 // --- Helper: แนบ user เข้ากับ req จาก session ---
-app.use((req, res, next) => {
+app.use((req, res, next) => {  //ทำทุกครั้งที่มีการ Request เข้ามา
   if (req.session && req.session.user) {
     req.user = req.session.user;
   }
   next();
 });
 
-app.get("/", (req, res) => {
+app.get("/", (req, res) => {  //localhost:3000 ที่เรียกใช้
   res.render("main.ejs", { u : req.user });
 });
 
@@ -70,11 +70,11 @@ function requireAuth(req, res, next) {
 // check in case user without login enter where "no role" can't enter
 // (enter the path that contain /u will check if user login yet)
 app.use((req, res, next) => {
-  const openPaths = ["/", "/login", "/logout", "/register","/reset", "/naruto", "/Lisa", "/Mayaram", "/Solo", "/cocktail"]; //all paths that "no role" can enter
-  if (openPaths.includes(req.path)) {
-    return next(); 
+  const openPaths = ["/", "/login", "/logout", "/register","/reset", "/naruto", "/Lisa", "/Mayaram", "/Solo", "/cocktail"]; //เส้นทางที่เข้าถึงได้โดยไม่ต้อง Login
+  if (openPaths.includes(req.path)) { //เช็คreq ที่ถูกส่งมาปัจจุบันว่า มีใน path ในนี้ไหม 
+    return next();  //ถ้า ใช่ ให้ไปต่อ
   }
-  return requireAuth(req, res, next);
+  return requireAuth(req, res, next); //ถ้าไม่ ให้ไปทำฟังชั่น requireAuth บรรทัดที่ 63
 });
 
 function requireRole(...roles) {
@@ -91,14 +91,14 @@ function requireRole(...roles) {
 }
 
 // click on ลงชื่อเข้าใช้ in index.html will check first if already login
-app.get("/login", (req, res) => {
+app.get("/login", (req, res) => {  
   if(req.user){
     return res.render("main.ejs", { u : req.user });
   }
   return res.status(401).sendFile(path.join(__dirname, 'public', 'login_page.html'));
 });
 
-app.post("/login", async (req, res) => {
+app.post("/login", async (req, res) => {  //เมื่อมีการส่ง Request POST มา
   const { username, password } = req.body;
   try {
     const q = `
@@ -109,7 +109,7 @@ app.post("/login", async (req, res) => {
       LIMIT 1
     `;
 
-    const { rows } = await pool.query(q, [username, password]);
+    const { rows } = await pool.query(q, [username, password]); // ถ้าตรวจสอบแล้วพบ มันจะส่ง 1 กลับมา
 
     if (rows.length === 0) {
       return res.status(401).render('No_login.ejs',{
@@ -288,9 +288,9 @@ app.get('/fetchTransactions', async (req, res) => {
         JOIN zone_detail z ON t.zone_id = z.zone_id
         JOIN concert_detail c ON z.concert_id = c.concert_id
         JOIN user_detail u ON t.user_id = u.user_id
-        ORDER BY t.purchase_date DESC
+        ORDER BY t.purchase_date DESC 
       `;
-      params = [];
+      params = []; 
     } else {
       //  User: fetch only their own transactions
       q = `

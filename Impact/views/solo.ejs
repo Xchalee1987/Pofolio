@@ -426,7 +426,7 @@
     }
 
       const ticketCanvas = document.getElementById('ticketHighlightCanvas');
-    const ticketCtx = ticketCanvas ? ticketCanvas.getContext('2d') : null;
+      const ticketCtx = ticketCanvas ? ticketCanvas.getContext('2d') : null;  //CanvasRenderingContext2D object
 
     // ถ้า Canvas ไม่พบ ก็หยุดการทำงาน
     if (!ticketCtx) {

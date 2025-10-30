@@ -91,12 +91,12 @@
         <div class="profile-info">
           <label>ชื่อผู้ใช้ |</label>
           <a href="#" class="editnamebtn">แก้ไขชื่อผู้ใช้</a>
-          <a href="#" class="editnamebtn disable" onclick="resetDefault(1)">ยกเลิกแก้ไขชื่อผู้ใช้</a>
+          <a href="#" class="editnamebtn disable" onclick="resetDefault(1)">ยกเลิกแก้ไขชื่อผู้ใช้</a> <!-- ส่งค่า 1 ไปที่ resetDefault --> 
           <input type="text" class="editUsername disable" id="input-username">
 
           <label>เบอร์โทรศัพท์ |</label>
           <a href="#" class="editphonebtn">แก้ไขเบอร์โทรศัพท์</a>
-          <a href="#" class="editphonebtn disable" onclick="resetDefault(2)">ยกเลิกแก้ไขเบอร์โทรศัพท์</a>
+          <a href="#" class="editphonebtn disable" onclick="resetDefault(2)">ยกเลิกแก้ไขเบอร์โทรศัพท์</a><!-- ส่งค่า 2 ไปที่ resetDefault -->
           <input type="text" class="editPhone disable" id="input-phone">
 
           <label class="passwordLabel">กรุณากรอกรหัสผ่านเพื่อแก้ไขข้อมูล</label>
@@ -153,12 +153,13 @@
   <script src="/js/myJQuery.js"></script>
 
   <script>
-    const username = "<%= u.username %>";
-    const phone = "<%= u.phone %>";
+    let username = "<%= u.username %>";
+    let phone = "<%= u.phone %>";
 
     function resetDefault(n) {
       if (n == 1) { document.getElementById("input-username").value = username; }
       if (n == 2) { document.getElementById("input-phone").value = phone; }
+      
     }
 
     function resetAllDefault() {
@@ -198,8 +199,16 @@
       }
       const msg = await response.json();
       console.log('Server response:', msg.message);
+      console.log(username);
       //sent if wrong password input
-      alert(msg.message);
+      if(!msg.ok){
+      return alert(msg.message);
+      }
+      username = inputUsername;
+      phone =  inputPhone;
+      console.log(username);
+      resetAllDefault();
+      
     });
 
     resetAllDefault();

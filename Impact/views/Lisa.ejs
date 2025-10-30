@@ -429,8 +429,8 @@
       document.getElementById('buy_menu_top_4500_C').style.right='0%';
     }
 
-      const ticketCanvas = document.getElementById('ticketHighlightCanvas');
- const ticketCtx = ticketCanvas ? ticketCanvas.getContext('2d') : null;
+    const ticketCanvas = document.getElementById('ticketHighlightCanvas');
+    const ticketCtx = ticketCanvas ? ticketCanvas.getContext('2d') : null;
 
  // ถ้า Canvas ไม่พบ ก็หยุดการทำงาน
  if (!ticketCtx) {
@@ -440,10 +440,10 @@
      function highlightTicketArea(areaElement) {
      if (!ticketCtx) return;
  
-         clearTicketHighlight(); 
+        clearTicketHighlight(); 
  
         const coordsString = areaElement.getAttribute('coords');
-         const coords = coordsString.split(',').map(c => parseFloat(c.trim())); 
+        const coords = coordsString.split(',').map(c => parseFloat(c.trim())); 
                
         
         // ปรับขนาดให้ตรงกับรูป
