@@ -31,9 +31,10 @@ app.use(
       tableName: "session", // ชื่อตาราง session (ปล่อยให้ lib สร้างให้โดยอัตโนมัติ)
       createTableIfMissing: true,
     }),
-    secret: process.env.SESSION_SECRET || "dev-secret",
+    secret: process.env.SESSION_SECRET || "dev-secret", // The browser stores this cookie and sends it back with each request.
     resave: false, // Don’t save session if nothing changed
-    saveUninitialized: false, // Don’t create a session until something is stored in it
+    saveUninitialized: false, // Don’t create a session until something is stored in it, 
+    // meaning if person visits this site and doesn't log in, no session is saved. A session will not be created
     cookie: {
       httpOnly: true,
       sameSite: "lax",
