@@ -7,6 +7,7 @@
 */
 
 (function() {
+  // helps catch common coding mistakes
   "use strict";
 
   /**

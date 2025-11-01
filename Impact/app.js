@@ -36,9 +36,10 @@ app.use(
       tableName: "session", // ชื่อตาราง session (ปล่อยให้ lib สร้างให้โดยอัตโนมัติ)
       createTableIfMissing: true,
     }),
-    secret: process.env.SESSION_SECRET || "dev-secret",
-    resave: false,
-    saveUninitialized: false,
+    secret: process.env.SESSION_SECRET || "dev-secret", // The browser stores this cookie and sends it back with each request.
+    resave: false, // Don’t save session if nothing changed
+    saveUninitialized: false, // Don’t create a session until something is stored in it, 
+    // meaning if person visits this site and doesn't log in, no session is saved. A session will not be created
     cookie: {
       httpOnly: true,
       sameSite: "lax",
@@ -101,6 +102,11 @@ app.use((req, res, next) => {
   const openPaths = ["/", "/login", "/logout", "/register","/reset", "/naruto", "/Lisa", "/Mayaram", "/Solo", "/cocktail"]; //เส้นทางที่เข้าถึงได้โดยไม่ต้อง Login
   if (openPaths.includes(req.path)) { //เช็คreq ที่ถูกส่งมาปัจจุบันว่า มีใน path ในนี้ไหม 
     return next();  //ถ้า ใช่ ให้ไปต่อ
+  }
+  // ต้องแยกออกมาเพราะ path นี้มี path parameters/ route parameters
+  // without this the event pages can't fetch available seats if not login first
+  if (req.path.startsWith("/fetchSeats")) {
+    return next();
   }
   return requireAuth(req, res, next); //ถ้าไม่ ให้ไปทำฟังชั่น requireAuth บรรทัดที่ 63
 });
@@ -346,16 +352,14 @@ app.post("/buyTicket", requireRole("user"), async (req, res) => {
     if (e.code === '23505') { //ดักจับที่นั่งซ้ำ
      
       return res.status(409).render('No_login.ejs', { 
-        mess:"ที่นั่งนี้ถูกจองไปแล้ว"
-        ,u : req.user });
+        mess:"ที่นั่งนี้ถูกจองไปแล้ว",
+        u : req.user });
     }
     return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
   }
 });
 
-
-// strat path
-
+//path to each event
 app.get("/naruto", (req, res) => {
  res.render('naruto.ejs', { u : req.user });
 });
@@ -393,7 +397,7 @@ app.get("/editProfile", (req, res) => {
   res.render('edit_profile.ejs', { u : req.user });
 });
 
-// fetch user transaction for display
+// fetch user transaction for display in purcahse_history.ejs
 app.get('/fetchTransactions', async (req, res) => {
   try {
     let q;
@@ -449,6 +453,35 @@ app.get('/fetchTransactions', async (req, res) => {
   }
 })
 
+// fetch seat available in events.ejs
+app.get('/fetchSeats/:concert_title/:zone_name', async (req, res) => {
+  const { concert_title, zone_name } = req.params;
+  try {
+    const q = `
+        SELECT seat_number
+        FROM (
+          SELECT generate_series(1, z.capacity) AS seat_number
+          FROM zone_detail z
+          JOIN concert_detail c ON z.concert_id = c.concert_id
+          WHERE c.title = $1 AND z.zone_name = $2
+        ) AS all_seats
+        WHERE seat_number NOT IN (
+          SELECT t.seat_number
+          FROM transaction t
+          JOIN zone_detail z ON t.zone_id = z.zone_id
+          JOIN concert_detail c ON z.concert_id = c.concert_id
+          WHERE c.title = $1 AND z.zone_name = $2
+        )
+      `;
+      // use generate_series(1, z.capacity) for generate a series of integers from 1 to z.capacity:
+    const result = await pool.query(q, [ concert_title, zone_name ]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('error massage: ', err.message);
+    res.status(500).send('unable to fetch seats for zone: ', zone_name);
+  }
+});
+
 app.delete('/admin/delete/:id', async (req, res) =>{
   const { id } = req.params;
   try {
@@ -481,11 +514,15 @@ app.post("/editProfile/update", async (req, res) => {
     req.session.user.phone = inputPhone;
 
     console.log("profile update succesfully");
-    return res.json({ message: 'profile update' });
+    return res.status(200).json({ 
+      message: 'profile update'
+    });
   } catch (err) {
     if (err.code === '23505') {
       console.error('Username or Phone Number already exists');
-      return res.json({ message : 'Username or Phone Number has been taken' });
+      return res.status(400).json({ 
+        message : 'Username or Phone Number has been taken'
+      });
     }
     console.error('error massage: ', err.message);
     res.status(500).send('Server error');
