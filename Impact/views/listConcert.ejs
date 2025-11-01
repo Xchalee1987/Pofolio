@@ -69,7 +69,7 @@
                         <% } else { %>
                         <p><i>ไม่มีรูปภาพ</i></p>
                         <% } %>    
-                        <% if (u.role === 'staff') { %>
+                        <% if (u.role === 'admin') { %>
                         <form action="/listConcert/delete/<%= concert.concert_id %>" method="POST" style="display:inline;">
                             <button type="submit" onclick="return confirm('ยืนยันการลบคอนเสิร์ตนี้หรือไม่?')"> ลบ</button>
                         </form>

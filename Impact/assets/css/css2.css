@@ -9,9 +9,6 @@ body{
     height: 800px;
     flex-direction: column;
 }
-.container_reserve_in{
-
-}
 #buttom_home{
     padding: 20px;
     margin-bottom: 10px;
@@ -21,7 +18,7 @@ body{
     color: green;
     font-size: 120px
 }
-.reserve_text{
+#reserve_text{
    text-align: center;
    font-size: 30px;
 }

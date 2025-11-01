@@ -22,301 +22,153 @@ body p,body button{
 }
 .BG_top >img{
     width: 100%; /* ให้ความกว้างเต็มพื้นที่ของ .BG_top */
-    height: 450px;
+    /* height: 450px; */
     object-fit: cover;
     object-position: center top;
 }
 
 .page-title{
-
     background-color: rgb(42, 3, 87);  
-
     overflow: hidden;
-
 }
-
-.page-title_Mayaram{
-
-    background-color: #3B060A;  
-
-    overflow: hidden;
-
-}
-
-
-
-
 
 .container_middle {
-
-   
-
     width: 100%;
-
     margin-left: auto;
-
     box-sizing: border-box;
-
     margin-right: auto;
-
     display: block;
-
     padding-left: 16px;
-
     padding-right: 16px;
-
     position: relative;
-
     margin-top: -225px;
-
     z-index: 1;
-
 }
 
 .Grid_middle {
-
     box-sizing: border-box;
-
     display: flex;
-
     flex-flow: wrap;
-
     width: 100%;
-
     -webkit-box-pack: center;
-
     justify-content: center;
-
-   
-
 }
 
-
-
 .inGrid_middle {
-
-   
-
     flex-basis: 83.3333%;
-
-        -webkit-box-flex: 0;
-
-        flex-grow: 0;
-
-        max-width: 83.3333%;
-
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    max-width: 83.3333%;
 }
 
 .inGrid_middle_middle {
-
     display: flex;
-
     flex-direction: column;
-
     width: 100%;
-
     flex-direction: row;
-
-
-
 }
 
-
-
 .inGrid_middle_Left {
-
     display: block;
-
     width: 282px;
-
     height: 400px;
-
     overflow: hidden;
-
     border-radius: 16px;
-
     box-shadow: rgba(114, 114, 114, 0.1) 0px 0px 0px 0px, rgba(114, 114, 114, 0.05) 0px 4px 10px 0px;
-
 }
 
 .inGrid_middle_Rigth {
-
     flex: 1 1 0%;
-
     margin-left: 24px;
-
 }
 
 .mg_middle_Left{
-
     width: 282px;
-
 }
 
 .mg_middle_Left img{
-
-        position: absolute;
-
+    position: absolute;
     inset: 0px;
-
     box-sizing: border-box;
-
     padding: 0px;
-
     border: none;
-
     margin: auto;
-
     display: block;
-
     width: 0px;
-
     height: 0px;
-
     min-width: 100%;
-
     max-width: 100%;
-
     min-height: 100%;
-
     max-height: 100%;
-
-     background-color: #e00202;
-
+    background-color: #e00202;
+    object-fit: cover;
 }
 
 .mg_middle_Lefe_left >.mg_middle_Left_1{
-
     box-sizing: border-box;
-
     display: block;
-
     overflow: hidden;
-
     width: initial;
-
     height: initial;
-
     background: none;
-
     opacity: 1;
-
     border: 0px;
-
     margin: 0px;
-
     padding: 0px;
-
     position: relative;
-
 }
 
 .mg_middle_Left_2{
-
     box-sizing: border-box;
-
     display: block;
-
     width: initial;
-
     height: initial;
-
     background: none;
-
     opacity: 1;
-
     border: 0px;
-
     margin: 0px;
-
     padding: 141.844% 0px 0px;
-
 }
 
 .mg_middle_Lefe_left{
-
     width: 282px;  
-
     margin-left: auto;
-
     margin-right: auto;
-
     border-radius: 16px;
-
     overflow: hidden;
-
     box-shadow: rgba(114, 114, 114, 0.1) 0px 0px 0px 0px, rgba(114, 114, 114, 0.05) 0px 4px 10px 0px;
-
 }
 
 .inGrid_middle_Rigth{
-
     margin-left: 24px;
-
     margin: 0px;
-
     flex: 1 1 0%;
-
 }
 
 .box_middle_Rigth {
-
     display: flex;
-
     margin-left: 24px;
-
     flex-direction: column;
-
     height: 100%;
-
 }
 
 .box_middle_Rigth_top{
-
     margin: 0px;
-
     background-color: rgb(48, 107, 145);
-
     padding: 24px;
-
     border-radius: 12px;
-
     box-shadow: rgba(114, 114, 114, 0.1) 0px 0px 0px 0px, rgba(114, 114, 114, 0.05) 0px 4px 10px 0px;
-
 }
-
-.box_middle_Rigth_top_Mayaram{
-
-    margin: 0px;
-
-    background-color: #8A0000;
-
-    padding: 24px;
-
-    border-radius: 12px;
-
-    box-shadow: rgba(114, 114, 114, 0.1) 0px 0px 0px 0px, rgba(114, 114, 114, 0.05) 0px 4px 10px 0px;
-
-}
-
-
 
 .box_middle_Rigth_top_text{
-
     display: flex;
-
     flex-direction: row;
-
     align-items: flex-start;
-
 }
 
 .box_middle_Rigth_buttom{
-
     margin-top: 16px;
-
     background-color: rgb(48, 107, 145);
-
     -webkit-box-flex: 1;
 
     flex-grow: 1;
@@ -416,7 +268,6 @@ body p,body button{
     justify-content: center;
     align-items: center;
     height: 1000px;
-
 }
 
 .img_ticket_map_container {

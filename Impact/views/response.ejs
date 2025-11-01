@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>No_admin</title>
+  <title>Succeed</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -47,17 +47,27 @@
 
   <main class="main">
     <div class="container_reserve">
-       <div class="container_reserve_in">
+      <div class="container_reserve_in">
         <div class="reserve_correct">
-            <i class="fa-regular fa-circle-xmark" ></i>
+          <% if(locals.icon) { %>
+            <% if(icon === 'greenCheck') %>
+              <i class="fa-regular fa-circle-check"  ></i>
+          <% } %>
+
         </div>
-        <div class="reserve_text">
-            <p><%= mess %></p>
+        <div id="reserve_text">
+        <% if(locals.msg) { %>
+          <% msg.forEach(line => { %>
+          <p><%= line %></p>
+          <% }); %>
+        <% } %>
         </div>
-       </div>
-       <a href="/"><button id="buttom_home">กลับไปหน้าหลัก</button></a>
-       <a href="/login"><button id="buttom_home">ลงชื่อเข้าใช้</button></a>
-      
+      </div>
+      <% if(locals.addPath) { %>
+        <% addPath.forEach((add) => { %>
+        <a href="<%= add.path %> "><button id="buttom_home"><%= add.text %></button></a>
+        <% }); %>
+      <% } %>
     </div>
     
   </main>

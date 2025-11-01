@@ -107,8 +107,6 @@ input[type=submit] {
   width: 230px;
   margin: 0 10px 80px 10px;
   padding: 10px;
-
-
 }
 
 .event-lists > .event-items > div {
@@ -131,6 +129,7 @@ input[type=submit] {
   margin: 0;
   border-radius: 10px 10px 0 0;
   align-items: center;
+  object-fit: cover;
 }
 
 .event-lists > .event-items span {
@@ -152,7 +151,7 @@ input[type=submit] {
 
 .event-lists > .event-items span:nth-child(4) {
   color: rgb(101, 101, 101);
-  height: 45px;
+  height: 50px;
 }
 /* event lists */
 

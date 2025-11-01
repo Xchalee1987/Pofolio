@@ -46,13 +46,13 @@
   <main class="main">
 
     <!-- Page Title -->
-    <div class="page-title" style="background-color: #C75D2C;">
+    <div class="page-title">
       
         <div class="container"> 
           <div class="BG_Theme">
             <!-- Background -->
             <div class="BG_top">
-              <img src="<%= concert.image_pathbg %>" alt="">
+              <img src="<%= concert.bgimage_path %>" alt="">
             </div>
             <div class="container_middle">
               <div class="Grid_middle">
@@ -80,9 +80,10 @@
                             </div>
                             <div class="box_middle_Rigth_buttom BG_border color_naruto" >
                               <div class="box_middle_Rigth_buttom_condetail">
-                                <p><%= concert.date%></p>
+                                <p><%= concert.date %></p>
                                 
                                 <p>ศิลปิน         : <%= concert.artist%></p>
+                                <p><%= concert.detail %></p>
                                 <div class="buttom_ticket">
                                     <button id="buy_ticket" onclick="openManu()" style="background-color: #F3E9DC;">ซื้อตั๋ว</button>
                                 </div>                            
@@ -102,24 +103,6 @@
                     <div class="ticket_detail_in BG_border color_naruto" >
                         <div class="ticket_detail_item1">
                             <div class="ticket_detail_item1_in">
-                                <p>Zone AR</p>
-                            </div>
-                        </div>
-                        <div class="ticket_detail_item2">
-                            <div class="ticket_detail_item2_in">
-                                    <p>7,500 THB</p>
-                            </div>                      
-                        </div>
-                        <div class="ticket_detail_item3">
-                              <div class="ticket_detail_item3_in">
-                                    <p>On Sale</p>
-                            </div>   
-                        </div>                    
-                    </div>
-                     
-                    <div class="ticket_detail_in BG_border color_naruto">
-                        <div class="ticket_detail_item1">
-                            <div class="ticket_detail_item1_in">
                                 <p>Zone AL</p>
                             </div>
                         </div>
@@ -129,8 +112,37 @@
                             </div>                      
                         </div>
                         <div class="ticket_detail_item3">
-                              <div class="ticket_detail_item3_in">
-                                    <p>On Sale</p>
+                              <div class="ticket_detail_item3_in" id="ALstatus">
+                                <!-- some() is used to finds at least one element that satisfies the condition -->
+                                <% const isALavailable = seats.some(seat => seat.zone_name === 'AL'); %>
+                                <% if (!isALavailable) { %>
+                                  <p>Sold Out</p>
+                                <% } else { %>
+                                  <p>On Sale</p>
+                                <% } %>
+                            </div>   
+                        </div>                    
+                    </div>
+                     
+                    <div class="ticket_detail_in BG_border color_naruto">
+                        <div class="ticket_detail_item1">
+                            <div class="ticket_detail_item1_in">
+                                <p>Zone AR</p>
+                            </div>
+                        </div>
+                        <div class="ticket_detail_item2">
+                            <div class="ticket_detail_item2_in">
+                                    <p>7,500 THB</p>
+                            </div>                      
+                        </div>
+                        <div class="ticket_detail_item3">
+                              <div class="ticket_detail_item3_in" id="ARstatus">
+                                <% const isARavailable = seats.some(seat => seat.zone_name === 'AR'); %>
+                                <% if (!isARavailable) { %>
+                                  <p>Sold Out</p>
+                                <% } else { %>
+                                  <p>On Sale</p>
+                                <% } %>
                             </div>   
                         </div>                    
                     </div>
@@ -147,8 +159,13 @@
                             </div>                      
                         </div>
                         <div class="ticket_detail_item3">
-                              <div class="ticket_detail_item3_in">
-                                    <p>On Sale</p>
+                              <div class="ticket_detail_item3_in" id="Bstatus">
+                                <% const isBavailable = seats.some(seat => seat.zone_name === 'B'); %>
+                                <% if (!isBavailable) { %>
+                                  <p>Sold Out</p>
+                                <% } else { %>
+                                  <p>On Sale</p>
+                                <% } %>
                             </div>   
                         </div>                    
                     </div>
@@ -166,8 +183,13 @@
                             </div>                      
                         </div>
                         <div class="ticket_detail_item3">
-                              <div class="ticket_detail_item3_in">
-                                    <p>On Sale</p>
+                              <div class="ticket_detail_item3_in" id="Cstatus">
+                                <% const isCavailable = seats.some(seat => seat.zone_name === 'C'); %>
+                                <% if (!isCavailable) { %>
+                                  <p>Sold Out</p>
+                                <% } else { %>
+                                  <p>On Sale</p>
+                                <% } %>
                             </div>   
                         </div>                    
                     </div>
@@ -187,7 +209,7 @@
             <div id="buy_menu"  style="background-color: #7B542F">
               <div class="warpper_all_buy">
                 
-              <span class="fa fa-times" onclick="closeManu()"></span>
+              <span class="fa fa-times" onclick="closeAllManu()"></span>
                <div class="wapper_img_ticket">
                 <div class="img_ticket_map_container">
                   <img src="/img/ST.png" alt="" usemap="#ticket-map" class="img-mapper-img" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
@@ -207,29 +229,39 @@
         <!-- 7500 -->
         <div class="buy_container_top">
           <div id="buy_menu_top_7500_AL" >
-            <span class="fa fa-times" onclick="closeManu()"></span>
+            <span class="fa fa-times" onclick="closeSelectedZoneManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ <%= concert.title %></h3>
+                    <h3>Concert ที่คุณเลือกคือ <%= concert.title %></h3>
                 </div>             
                 <div class="wapper_ticker_detail">
-                    <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="title" value="<%= concert.title %>" required >
-                    <input type="hidden"name="zone_name" value="AL" required >
-                    <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
-                      <option value="1">AL ที่นั่ง1</option>
-                      <option value="2">AL ที่นั่ง2</option>
-                      <option value="3">AL ที่นั่ง3</option>
-                    </select> <br>
-                    <div class="wapper_ticker_detail">
-                        <h3>ราคา 7,500 THB</h3>
-                    </div> 
-                    <br>
-                  <button class="buttom_ticket_buy" type="submit">จองเลย</button>
-                </form>
+                  <form class="my-form" action="/buyTicket" method="POST">
+                      <input type="hidden"name="concert_id" value="<%= concert.concert_id %>" required >
+                      <input type="hidden"name="zone_name" value="AL" required >
+                      <label for="seat_number">เลือกที่นั่ง:</label>
+                      <select name="seat_number" class="seat_number_class" id="ALseat_number" required>
+                        <% if (isALavailable) { %>
+                          <!-- filter() method accepts a function (often called a callback function) -->
+                          <!-- that is executed once for each element in the array -->
+                          <!-- the callback function must return a boolean value -->
+                           <option value="">โปรกเลือกที่นั่ง</option>
+
+                          <% const zoneALSeats = seats.filter((seat) => { return seat.zone_name === 'AL' }); %>
+                          <% zoneALSeats.forEach(function(seat) { %>
+                            <option value="<%= seat.seat_number %>">AL ที่นั่งที่ <%= seat.seat_number %></option>
+                          <% }); %>
+                        <% } else { %>
+                            <option value="">SOLD OUT</option>
+                        <% } %>
+                      </select> <br>
+                      <div class="wapper_ticker_detail">
+                          <h3>ราคา 7,500 THB</h3>
+                      </div> 
+                      <br>
+                    <button class="buttom_ticket_buy" type="submit">จองเลย</button>
+                  </form>
                     
                 </div>
                 
@@ -242,22 +274,29 @@
        <!-- 7500_AR -->
         <div class="buy_container_top">
           <div id="buy_menu_top_7500_AR" >
-            <span class="fa fa-times" onclick="closeManu()"></span>
+            <span class="fa fa-times" onclick="closeSelectedZoneManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
+                    <h3>Concert ที่คุณเลือกคือ <%= concert.title %></h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="title" value="<%= concert.title %>" required >
+                    <input type="hidden"name="concert_id" value="<%= concert.concert_id %>" required >
                     <input type="hidden"name="zone_name" value="AR" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
-                      <option value="1">AR ที่นั่ง1</option>
-                      <option value="2">AR ที่นั่ง2</option>
-                      <option value="3">AR ที่นั่ง3</option>
+                    <select name="seat_number" class="seat_number_class" id="ARseat_number" required>
+                      <% if (isARavailable) { %>
+                           <option value="">โปรกเลือกที่นั่ง</option>
+
+                          <% const zoneARSeats = seats.filter((seat) => { return seat.zone_name === 'AR' }); %>
+                          <% zoneARSeats.forEach(function(seat) { %>
+                            <option value="<%= seat.seat_number %>">AR ที่นั่งที่ <%= seat.seat_number %></option>
+                          <% }); %>
+                      <% } else { %>
+                        <option value="">SOLD OUT</option>
+                       <% } %>
                     </select> <br>
                     <div class="wapper_ticker_detail">
                         <h3>ราคา 7,500 THB</h3>
@@ -278,22 +317,29 @@
         <!-- 5500_B -->
          <div class="buy_container_top">
           <div id="buy_menu_top_5500_B" >
-            <span class="fa fa-times" onclick="closeManu()"></span>
+            <span class="fa fa-times" onclick="closeSelectedZoneManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
+                    <h3>Concert ที่คุณเลือกคือ <%= concert.title %></h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="title" value="<%= concert.title %>" required >
+                    <input type="hidden"name="concert_id" value="<%= concert.concert_id %>" required >
                     <input type="hidden"name="zone_name" value="B" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
-                      <option value="1">B ที่นั่ง1</option>
-                      <option value="2">B ที่นั่ง2</option>
-                      <option value="3">B ที่นั่ง3</option>
+                    <select name="seat_number" class="seat_number_class" id="Bseat_number" required>
+                      <% if (isBavailable) { %>
+                           <option value="">โปรกเลือกที่นั่ง</option>
+
+                          <% const zoneBSeats = seats.filter((seat) => { return seat.zone_name === 'B' }); %>
+                          <% zoneBSeats.forEach(function(seat) { %>
+                            <option value="<%= seat.seat_number %>">B ที่นั่งที่ <%= seat.seat_number %></option>
+                          <% }); %>
+                      <% } else { %>
+                        <option value="">SOLD OUT</option>
+                      <% } %>
                     </select> <br>
                     <div class="wapper_ticker_detail">
                         <h3>ราคา 5,500 THB</h3>
@@ -314,22 +360,29 @@
        <!-- 4500_C -->
          <div class="buy_container_top">
           <div id="buy_menu_top_4500_C">
-            <span class="fa fa-times" onclick="closeManu()"></span>
+            <span class="fa fa-times" onclick="closeSelectedZoneManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
+                    <h3>Concert ที่คุณเลือกคือ <%= concert.title %></h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="title" value="<%= concert.title %>" required >
+                    <input type="hidden"name="concert_id" value="<%= concert.concert_id %>" required >
                     <input type="hidden"name="zone_name" value="C" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number" required>
-                      <option value="1">C ที่นั่ง1</option>
-                      <option value="2">C ที่นั่ง2</option>
-                      <option value="3">C ที่นั่ง3</option>
+                    <select name="seat_number" class="seat_number_class" id="Cseat_number" required>
+                      <% if (isCavailable) { %>
+                           <option value="">โปรกเลือกที่นั่ง</option>
+
+                          <% const zoneCSeats = seats.filter((seat) => { return seat.zone_name === 'C' }); %>
+                          <% zoneCSeats.forEach(function(seat) { %>
+                            <option value="<%= seat.seat_number %>">C ที่นั่งที่ <%= seat.seat_number %></option>
+                          <% }); %>
+                      <% } else { %>
+                        <option value="">SOLD OUT</option>
+                      <% } %>
                     </select> <br>
                     <div class="wapper_ticker_detail">
                         <h3>ราคา 4,500 THB</h3>
@@ -400,8 +453,15 @@
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
-    function closeManu(){
+    function closeAllManu(){
       document.getElementById('buy_menu').style.right='100%';
+      document.getElementById('buy_menu_top_7500_AL').style.right='100%';
+      document.getElementById('buy_menu_top_7500_AR').style.right='100%';
+      document.getElementById('buy_menu_top_5500_B').style.right='100%';
+      document.getElementById('buy_menu_top_4500_C').style.right='100%';
+    }
+
+    function closeSelectedZoneManu() {
       document.getElementById('buy_menu_top_7500_AL').style.right='100%';
       document.getElementById('buy_menu_top_7500_AR').style.right='100%';
       document.getElementById('buy_menu_top_5500_B').style.right='100%';
@@ -484,6 +544,54 @@
         if (!ticketCtx) return;
         ticketCtx.clearRect(0, 0, ticketCanvas.width, ticketCanvas.height);
     }
+
+// create JavaScript object
+  const zones = {
+    AL: document.getElementById("ALseat_number"),
+    AR: document.getElementById("ARseat_number"),
+    B: document.getElementById("Bseat_number"),
+    C: document.getElementById("Cseat_number")
+  };
+  const concert_id = document.querySelector('input[name="concert_id"]').getAttribute('value');
+
+  // fetch only available seats to display
+  async function fetchSeats() {
+    for (const index in zones) {
+      const selectElement = zones[index];
+      const response = await fetch(`/fetchSeats/${concert_id}/${index}`);
+      const seats = await response.json();
+
+      selectElement.innerHTML = '';
+
+      if (seats.length === 0) {
+        // add option named "SOLD OUT" to empty select element(AL AR B C)
+        const optionAdd = document.createElement('option');
+        optionAdd.value = "";
+        optionAdd.textContent = 'SOLD OUT';
+        selectElement.appendChild(optionAdd);
+        // Change "On Sale" to "Sold Out"
+        const status = document.querySelector(`#${index}status`);
+        const p = document.createElement('p');
+        p.innerHTML = "Sold Out";
+        status.innerHTML = '';
+        status.appendChild(p);
+      }
+      else {
+        const optionPlaceholder = document.createElement('option');
+        optionPlaceholder.value = "";
+        optionPlaceholder.textContent = "โปรกเลือกที่นั่ง";
+        selectElement.appendChild(optionPlaceholder);
+
+        seats.forEach(seat => {
+          const optionAdd = document.createElement('option');
+          optionAdd.value = seat.seat_number;
+          optionAdd.textContent = `${index} ที่นั่งที่ ${seat.seat_number}`;
+          selectElement.appendChild(optionAdd);
+        });
+      }
+    }
+  }
+  fetchSeats();
   </script>
 </body>
 

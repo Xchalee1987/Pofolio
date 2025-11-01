@@ -781,7 +781,7 @@ h6 {
 # Global Page Titles & Breadcrumbs
 --------------------------------------------------------------*/
 .page-title {
-  --background-color: var(--accent-color);
+  --background-color: var(--default-color);
   --default-color: #fff;
   --heading-color: #fff;
   color: var(--default-color);

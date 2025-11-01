@@ -50,8 +50,16 @@ app.use(
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Map the root (/) of the URL to the physical public directory, can use / to file or folder in public directly
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'assets')));
+
+// This is the default setting Express uses
+// Express uses a setting named views to specify the default directory for template files
+// app.set('views', path.join(__dirname, 'views'));
+// unless you explicitly override it.
+
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // ตั้งค่า multer สำหรับอัปโหลดไฟล์
@@ -77,20 +85,19 @@ app.use((req, res, next) => {  //ทำทุกครั้งที่มี�
 app.get("/", async (req, res) => {  //localhost:3000 ที่เรียกใช้
   let result = { rows: [] };
   try {
-        
-        result = await pool.query('SELECT * FROM concert_detail2 ORDER BY date ASC');
-        
-    } catch (err) {
-        
-        console.error("Error fetching concerts for main page:", err);
-        
-    }
-  res.render("main.ejs", { concerts: result.rows, u : req.user});
+    result = await pool.query('SELECT * FROM concert_detail ORDER BY date ASC');
+    res.render("main.ejs", {
+      u : req.user,
+      concerts: result.rows
+    });
+  } catch (err) {
+        console.error("Error fetching concerts for main page: ", err.message);
+  }
 });
 
 // --- Middleware: ต้องล็อกอินก่อน ---
 function requireAuth(req, res, next) {
-  if (!req.user) {
+  if (!req.user) { // ดักเมื่อกดสั่งซื้อตั๋วโดยไม่ได้ลงชื่อเข้าใช้
     return res.status(401).sendFile(path.join(__dirname, 'public', 'login_page.html'));
   }
   next();
@@ -99,25 +106,29 @@ function requireAuth(req, res, next) {
 // check in case user without login enter where "no role" can't enter
 // (enter the path that contain /u will check if user login yet)
 app.use((req, res, next) => {
-  const openPaths = ["/", "/login", "/logout", "/register","/reset", "/naruto", "/Lisa", "/Mayaram", "/Solo", "/cocktail"]; //เส้นทางที่เข้าถึงได้โดยไม่ต้อง Login
+  const openPaths = ["/", "/login", "/logout", "/register", "/reset"]; //เส้นทางที่เข้าถึงได้โดยไม่ต้อง Login
   if (openPaths.includes(req.path)) { //เช็คreq ที่ถูกส่งมาปัจจุบันว่า มีใน path ในนี้ไหม 
     return next();  //ถ้า ใช่ ให้ไปต่อ
   }
   // ต้องแยกออกมาเพราะ path นี้มี path parameters/ route parameters
   // without this the event pages can't fetch available seats if not login first
-  if (req.path.startsWith("/fetchSeats")) {
+  if (req.path.startsWith("/fetchSeats") || req.path.startsWith("/listConcerts")) {
     return next();
   }
-  return requireAuth(req, res, next); //ถ้าไม่ ให้ไปทำฟังชั่น requireAuth บรรทัดที่ 63
+  return requireAuth(req, res, next);
 });
 
 function requireRole(...roles) {
   return (req, res, next) => {
     if (!req.user) return res.status(401).send("กรุณาลงชื่อเข้าใช้");
     if (!roles.includes(req.user.role)) {
-      return res.status(403).render('No_login.ejs', {
-         mess:"คุณไม่มีสิทธิ"
-        ,u : req.user });
+      return res.status(403).render('response.ejs', {
+        u : req.user,
+        msg : [ 'คุณไม่มีสิทธิเข้าถึง' ],
+        addPath : [
+          {path: '/', text: 'กลับไปหน้าหลัก'}
+        ]
+      });
       // return res.status(403).send("ไม่มีสิทธิ์");
     }
     next();
@@ -125,21 +136,14 @@ function requireRole(...roles) {
 }
 
 // click on ลงชื่อเข้าใช้ in index.html will check first if already login
-app.get("/login",async (req, res) => { 
-  let result = { rows: [] }; 
-   try {    
-        result = await pool.query('SELECT * FROM concert_detail2 ORDER BY date ASC');     
-    } catch (err) {       
-        console.error("Error fetching concerts for main page:", err);     
-    }
+app.get("/login", (req, res) => {
   if(req.user){
-    return res.render("main.ejs", { u : req.user,concerts: result.rows });
+    return res.redirect('/');
   }
   return res.status(401).sendFile(path.join(__dirname, 'public', 'login_page.html'));
 });
 
 app.post("/login", async (req, res) => {  //เมื่อมีการส่ง Request POST มา
-  let result = { rows: [] };
   const { username, password } = req.body;
   try {
     const q = `
@@ -149,16 +153,16 @@ app.post("/login", async (req, res) => {  //เมื่อมีการส่
         AND password = crypt($2, password)
       LIMIT 1
     `;
-    result = await pool.query('SELECT * FROM concert_detail2 ORDER BY date ASC');
-    const { rows } = await pool.query(q, [username, password]); // ถ้าตรวจสอบแล้วพบ มันจะส่ง 1 กลับมา
+    const { rows } = await pool.query(q, [username, password]);
 
     if (rows.length === 0) {
-      return res.status(401).render('No_login.ejs',{
-        mess:"ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง"
-      
-        , u : req.user }
-        
-      );
+      return res.status(401).render('response.ejs',{
+        u : req.user,
+        msg: [ 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' ],
+        addPath : [
+          {path: '/', text: 'กลับไปหน้าหลัก'}
+        ]
+      });
     }
 
     const u = rows[0];
@@ -168,9 +172,9 @@ app.post("/login", async (req, res) => {  //เมื่อมีการส่
       phone: u.phone,
       role: u.role,
     };
-    res.render("main.ejs", { u ,concerts: result.rows});
+    res.redirect('/');
   } catch (e) {
-    console.error(e);
+    console.error(e.message);
     res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
   }
 });
@@ -198,24 +202,36 @@ app.post("/register", async (req, res) => {
 
     await pool.query(q, [username, number, password]); //ดักจับถ้าชื่อผู้ใช้ซ้ำ
 
-    return res.render('register.ejs');
+    return res.render('response.ejs', {
+      msg : [
+        'คุณลงทะเบียนสำเร็จแล้ว!',
+        'กรุณาลงชื่อเข้าใช้เพื่อเริ่มใช้บริการของเรา'
+      ],
+      addPath : [
+        {path: '/login', text: 'ลงชื่อเข้าใช้'}
+      ]
+    });
   } catch (e) {
     console.error(e);
     if (e.code === '23505') {
-      return res.status(409).send(`
-        <h1>ชื่อผู้ใช้ซ้ำกรุณาลงทะเบียนใหม่</h1>
-        <a href="/login">ย้อนกลับ/a>
-        `);
+      return res.render('response.ejs', {
+        msg : [
+          'ชื่อผู้ใช้ซ้ำกรุณาลงทะเบียนใหม่'
+        ],
+        addPath : [
+          {path: '/login', text: 'ย้อนกลับ'}
+        ]
+      });
     }
     return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
   }
 });
 
-app.get('/add', (req, res) => {
-  res.render('add_event.ejs');
+app.get('/listConcerts/add', (req, res) => {
+  res.render('add_event.ejs', { u : req.user });
 });
 
-app.post('/add', 
+app.post('/listConcerts/add', 
   upload.fields([
     { name: 'image', maxCount: 1 },   // สำหรับภาพหน้าปก
     { name: 'imageBG', maxCount: 1 }  // สำหรับภาพพื้นหลัง
@@ -239,59 +255,101 @@ app.post('/add',
   }
 });
 
-// ✅ Route แสดงคอนเสิร์ตทั้งหมด
 app.get('/listConcerts', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM concert_detail2 ORDER BY concert_id DESC');
-    res.render('listConcert.ejs', { concerts: result.rows, u : req.user });
-    
+    const result = await pool.query('SELECT * FROM concert_detail ORDER BY concert_id DESC');
+    res.render('listConcert.ejs', {
+      u : req.user,
+      concerts: result.rows
+    });
   } catch (err) {
     console.error(err);
     res.send('Error loading concerts');
   }
 });
 
-app.get('/listConcerts/:title', async (req, res) => {
-  const concertTitle = req.params.title; 
+app.get('/listConcerts/:concert_id', async (req, res) => {
+  const concertID = req.params.concert_id;
+  try {
+      const concertResult = await pool.query(
+          'SELECT * FROM concert_detail WHERE concert_id = $1', 
+          [ concertID ]
+      );
+        
+      if (concertResult.rows.length === 0) {
+        return res.status(404).send('Concert not found');
+      }
+      // ดึงข้อมูลคอนเสิร์ตที่พบมาเพียงรายการเดียว
+      const concert = concertResult.rows[0];
 
-    try {
-        
-        const result = await pool.query(
-            'SELECT * FROM concert_detail2 WHERE title = $1', 
-            [concertTitle]
-        );
-        
-       
-        if (result.rows.length === 0) {
-            return res.status(404).send('Concert not found');
-        }
+      // FROM - Generates all possible seats for ALL zones in the concert
+      // LEFT JOIN - Selects all SOLD (booked) seats for the concert
+      // WHERE on last line - Only include seats that did NOT match a seat that's in transaction table
+      const q = `
+        SELECT
+          all_seats.zone_name,
+          all_seats.seat_number
+        FROM (
+          SELECT 
+            generate_series(1, capacity) AS seat_number,
+            zone_name
+          FROM zone_detail
+          WHERE concert_id = $1
+        ) AS all_seats
+        LEFT JOIN (
+          SELECT
+            z.zone_name,
+            t.seat_number
+          FROM transaction t
+          JOIN zone_detail z ON t.zone_id = z.zone_id
+          WHERE z.concert_id = $1
+        ) AS sold_seats
+        ON all_seats.zone_name = sold_seats.zone_name AND all_seats.seat_number = sold_seats.seat_number
+        WHERE sold_seats.seat_number IS NULL;
+      `;
+      // use generate_series(1, z.capacity) for generate a series of integers from 1 to z.capacity:
 
-        // ดึงข้อมูลคอนเสิร์ตที่พบมาเพียงรายการเดียว
-        const concert = result.rows[0]; 
+      const availableSeatsResult = await pool.query(q, [ concert.concert_id ]);
+      const seats = availableSeatsResult.rows;
+
+      // filter() method accepts a function (often called a callback function)
+      // that is executed once for each element in the Array
+      // the callback function must return a boolean value
+      // console.log(seats.filter((seat) => { return seat.zone_name === 'C' }));
         
-        
-        res.render('concertDetail.ejs', { 
-            concert: concert, 
-            u : req.user 
-        });
-        
-    } catch (err) {
-        console.error(err);
-        res.send('Error loading concert detail');
-    }
+      res.render('concertDetail.ejs', { 
+        u : req.user,
+        concert: concert, 
+        seats : seats
+      });
+  } catch (err) {
+    console.error('error massage*(/listConcerts/:concert_id): ', err);
+    res.send('Error loading concert detail');
+  }
 });
 
-app.post('/listConcert/delete/:id', async (req, res) => {
+app.post('/listConcert/delete/:id', requireRole('admin'), async (req, res) => {
   try {
-    
-    
-
     const { id } = req.params;
-    await pool.query('DELETE FROM concert_detail2 WHERE concert_id = $1', [id]);
+    const q = `
+      BEGIN;
+
+      DELETE FROM "transaction"
+      WHERE zone_id IN ( SELECT zone_id FROM "zone_detail" WHERE concert_id = $1 );
+
+      DELETE FROM "zone_name"
+      WHERE concert_id = $1;
+
+      DELETE FROM "concert_detail"
+      WHERE concert_id = $1;
+
+      COMMIT;
+    `;
+    await pool.query(q, [ id ]);
 
     res.redirect('/listConcerts');
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.status(500).send('เกิดข้อผิดพลาดในการลบข้อมูล');
   }
 });
@@ -310,9 +368,12 @@ app.post("/reset",async (req, res) =>{
      const { rows }= await pool.query(q, [username,phone]);
 
     if (rows.length === 0) {
-      return res.status(401).render('No_login.ejs',{
-        mess:"ชื่อผู้ใช้หรือเบอร์โทรไม่ถูกต้อง "}      
-      );
+      return res.status(401).render('response.ejs',{
+        msg : [ 'ชื่อผู้ใช้หรือเบอร์โทรไม่ถูกต้อง' ],
+        addPath : [
+          {path: '/login', text: 'ย้อนกลับ'}
+        ]
+      });
     }
     const qq = `
     UPDATE "user_detail" 
@@ -320,7 +381,13 @@ app.post("/reset",async (req, res) =>{
     WHERE username = $2  RETURNING *
     `;
     await pool.query(qq, [passwordNew,username]);
-   return res.render("Yes_reset.ejs");
+   return res.render('response.ejs', {
+    icon : 'greenCheck',
+    msg : [ 'reset password Succeed' ],
+    addPath : [
+      {path: '/login', text: 'ลงชื่อเข้าใช้'}
+    ]
+   });
 
   } catch (e) {
     console.error(e);
@@ -330,81 +397,59 @@ app.post("/reset",async (req, res) =>{
 
 app.post("/buyTicket", requireRole("user"), async (req, res) => {
     
-  const { title, zone_name, seat_number } = req.body;
+  const { concert_id, zone_name, seat_number } = req.body;
     try {
     const q = `
       INSERT INTO transaction(user_id, zone_id, seat_number) 
       SELECT 
         $1 AS user_id,
-        z.zone_id,
+        zone_id,
         $2 AS seat_number
-      FROM zone_detail z
-      JOIN concert_detail2 c
-        ON z.concert_id = c.concert_id
-      WHERE c.title = $3 AND z.zone_name = $4;
+      FROM zone_detail
+      WHERE concert_id = $3 AND zone_name = $4;
     `;
 
-    await pool.query(q, [req.user.user_id, seat_number,title, zone_name]);//ดักจับที่นั่งซ้ำ
+    await pool.query(q, [ req.user.user_id, seat_number, concert_id, zone_name ] ); // ดักจับที่นั่งซ้ำ
 
-    res.render('succeed.ejs', { u : req.user });
+    res.render('response.ejs', {
+      u : req.user,
+      icon : 'greenCheck',
+      msg : [
+        'บันทึกการจองสำเสร็จ',
+        'เราได้บันทึกการจองของคุณเรียบร้อบแล้ว',
+        'กรุณาชำระค่าใช้จ่ายตามเวลาที่กำหนด',
+        'ระยะเวลาในการขำระ 24 ชม.',
+        'ขอบคุณที่ใช้บริการ'
+      ],
+      addPath : [
+        {path: '/', text: 'กลับไปหน้าหลัก'},
+        {path: '/purchase_history', text: 'ไปหน้าประวัติการสั่งซื้อ'},
+      ]
+    });
   } catch (e) {
-    console.error(e);
+    console.error(e.message);
     if (e.code === '23505') { //ดักจับที่นั่งซ้ำ
      
-      return res.status(409).render('No_login.ejs', { 
+      return res.status(409).render('response.ejs', { 
         mess:"ที่นั่งนี้ถูกจองไปแล้ว",
-        u : req.user });
+        u : req.user,
+        mag : [ 'ที่นั่งนี้ถูกจองไปแล้ว' ],
+        addPath : [
+          {path: `/listConcerts/${concert_id}`, text: 'ย้อนกลับ'}
+        ]
+      });
     }
     return res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
   }
 });
 
-//path to each event
-app.get("/naruto", (req, res) => {
- res.render('naruto.ejs', { u : req.user });
-});
-
-app.get("/cocktail", (req, res) => {
- res.render('cocktail.ejs', { u : req.user });
-});
-
-app.get("/Solo", (req, res) => {
- res.render('solo.ejs', { u : req.user });
-});
-
-app.get("/Mayaram", (req, res) => {
- res.render('Mayaram.ejs', { u : req.user });
-});
-
-app.get("/Lisa", (req, res) => {
- res.render('Lisa.ejs', { u : req.user });
-});
-
-app.get("/add_event", (req, res) => {
- res.render('add_event.ejs', { u : req.user });
-});
-
-
-
-// End path
-
-
-app.get("/purchase_history", (req, res) => {
-  res.render('purchase_history.ejs', { u : req.user });
-});
-
-app.get("/editProfile", (req, res) => {
-  res.render('edit_profile.ejs', { u : req.user });
-});
-
-// fetch user transaction for display in purcahse_history.ejs
-app.get('/fetchTransactions', async (req, res) => {
+app.get("/purchase_history", requireRole('user', 'admin'), async (req, res) => {
   try {
     let q;
     let params;
 
     if (req.user.role === 'admin') {
-      // Admin: fetch ALL users' transactions
+      // Admin: ALL users' transactions
       q = `
         SELECT 
           t.trans_id,
@@ -423,7 +468,7 @@ app.get('/fetchTransactions', async (req, res) => {
       `;
       params = []; 
     } else {
-      //  User: fetch only their own transactions
+      //  User: only their own transactions
       q = `
         SELECT 
           t.trans_id,
@@ -446,46 +491,37 @@ app.get('/fetchTransactions', async (req, res) => {
     // const all_trans_id = result.rows.map(row => row.trans_id);
     // console.log('all transaction id: ', all_trans_id);
 
-    res.json(result.rows);
+    // result = The entire response object from the database driver.
+    // data type : Object
+    // is Used to get metadata about the query, 
+    // such as the command executed, the number of rows affected, and the fields returned.
+    // vvvvvvvvvvv
+    // console.log(result);
+
+    // result.rows = An array containing only the actual data (the records) returned by the query.
+    // data type : Array
+    // is Used to iterate over the data and display it or process it in your application.
+    // vvvvvvvvvvv
+    // console.log(result.rows);
+
+    res.render('purchase_history.ejs', { 
+      u : req.user,
+      ts : result.rows
+     });
   } catch (err) {
     console.error('Database error:', err.message);
     res.status(500).send('Query to database not successful');
   }
-})
-
-// fetch seat available in events.ejs
-app.get('/fetchSeats/:concert_title/:zone_name', async (req, res) => {
-  const { concert_title, zone_name } = req.params;
-  try {
-    const q = `
-        SELECT seat_number
-        FROM (
-          SELECT generate_series(1, z.capacity) AS seat_number
-          FROM zone_detail z
-          JOIN concert_detail c ON z.concert_id = c.concert_id
-          WHERE c.title = $1 AND z.zone_name = $2
-        ) AS all_seats
-        WHERE seat_number NOT IN (
-          SELECT t.seat_number
-          FROM transaction t
-          JOIN zone_detail z ON t.zone_id = z.zone_id
-          JOIN concert_detail c ON z.concert_id = c.concert_id
-          WHERE c.title = $1 AND z.zone_name = $2
-        )
-      `;
-      // use generate_series(1, z.capacity) for generate a series of integers from 1 to z.capacity:
-    const result = await pool.query(q, [ concert_title, zone_name ]);
-    res.json(result.rows);
-  } catch (err) {
-    console.error('error massage: ', err.message);
-    res.status(500).send('unable to fetch seats for zone: ', zone_name);
-  }
 });
 
-app.delete('/admin/delete/:id', async (req, res) =>{
-  const { id } = req.params;
+app.get("/editProfile", (req, res) => {
+  res.render('edit_profile.ejs', { u : req.user });
+});
+
+app.delete('/admin/delete/:trans_id', async (req, res) =>{
+  const { trans_id } = req.params;
   try {
-    await pool.query(`DELETE FROM "transaction" WHERE trans_id = $1`, [ id ]);
+    await pool.query(`DELETE FROM "transaction" WHERE trans_id = $1`, [ trans_id ]);
     res.json({ message: 'Transaction deleted'});
   } catch (err) {
     console.error('Database error:', err.message);

@@ -42,70 +42,47 @@
 </head>
 
 <body class="index-page">
-  <body>
-    <div id="background-overlay"></div> <div id="content-wrapper">
-        
-</body>
-
-  <header id="header" class="header fixed-top">
-
-    <div class="topbar d-flex align-items-center">
-      <div class="container d-flex justify-content-center justify-content-md-between">
-      </div>
-    </div><!-- End Top Bar -->
-
-    <div class="branding d-flex align-items-cente">
-
-      <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="/login" class="logo d-flex align-items-center">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="img/logo.png" alt=""> -->
-            <h1 class="sitename">Ticket Duo</h1>
-        </a>
-
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="#" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
-            <li><a href="#" id="profile">คุณ <%= u.username %></a></li>
-            <li><a href="/logout" onclick="">Logout</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-
-        
-
-      </div>
-
-      <div class="overlay-container overlay-toggle">
-        <div class="overlay">
-          <span>User ID: <%= u.user_id %></span>
-          <span>Username: <%= u.username %></span>
-          <span>Phone number: <%= u.phone %></span>
-          <span>Role: <%= u.role %></span>
-          <a href="/editProfile" id="editProfileBtn">Edit Profile</a>
-        </div>
-      </div>
-
-    </div>
-
-  </header>
+  <%- include("loginNav.ejs"); %>
 
   <main class="main">
 
     <!-- Purchase history Section -->
     <section id="about" class="about section">
-      
-      <!-- Section Title -->
+        
+    <!-- Section Title -->
       <div class="container section-title history-title" data-aos="fade-up">
         <h2>ประวัติการสั่งซื้อ</h2>
       </div><!-- End Section Title -->
 
-      <div class="history-container" id="history-list"></div>
+      <div class="history-container" id="history-list">
+        <% ts.forEach(t => { %>
+          <div class="history-item">
+            <hr>
+              <div>
+                <% if (u.role === 'admin') { %>
+                <button class="delTransactionBtn" data-transaction-id="<%= t.trans_id %>">Delete</button>
+                <% } %>
+                <span>
+                  Transaction ID <%= t.trans_id %>
+                  <% if (u.role === 'admin') { %>
+                   | by <%= t.username %> (User ID: <%= t.user_id %>)
+                  <% } %>
+                </span>
+                <span>Concert Name: <%= t.title %></span>
+                <span>Zone Name: <%= t.zone_name %></span>
+                <span>Seat Number: <%= t.seat_number %></span>
+                <span>Price: <%= t.base_price %></span>
+                <span><%= t.formatted_purchase_date %></span>
+              </div>
+            <hr>
+          </div>
+        <% }); %>
+
+      </div>
 
     </section><!-- Purchase history Section -->
 
-  </main>
-  </div>
+  </main>   
 
   <footer id="footer" class="footer accent-background">
 
@@ -139,67 +116,7 @@
   <script src="/js/main.js"></script>
 
   <script src="/js/myJQuery.js"></script>
-
-  <script>
-    const userRole = "<%= u.role %>"; // role ที่ส่งมาจาก app
-    const historyList = document.getElementById('history-list');
-
-    async function fetchTransaction() {
-        const response = await fetch('/fetchTransactions');
-        const transactions = await response.json(); //jsonที่ถูกส่งมาจาก app fetchTransactions
-        historyList.innerHTML = '';
-        transactions.forEach(transaction => {
-            const transactionDiv = document.createElement('div');
-            transactionDiv.classList.add('history-item');
-            if (userRole === 'admin') {
-              transactionDiv.innerHTML += `
-              <hr>
-              <div>
-                <button onclick="deleteTransaction(${transaction.trans_id})">Delete</button>
-                <span>Transaction ID ${transaction.trans_id} | by ${transaction.username} (User ID: ${transaction.user_id})</span>
-                <span>Concert Name: ${transaction.title}</span>
-                <span>Zone Name: ${transaction.zone_name}</span>
-                <span>Seat Number: ${transaction.seat_number}</span>
-                <span>Price: ${transaction.base_price}</span>
-                <span>${transaction.formatted_purchase_date}</span>
-              </div>
-              <hr>
-              `;}
-              else {
-                transactionDiv.innerHTML = `
-              <hr>
-              <div>
-                <span>Transaction ID ${transaction.trans_id}</span>
-                <span>Concert Name: ${transaction.title}</span>
-                <span>Zone Name: ${transaction.zone_name}</span>
-                <span>Seat Number: ${transaction.seat_number}</span>
-                <span>Price: ${transaction.base_price}</span>
-                <span>${transaction.formatted_purchase_date}</span>
-              </div>
-              <hr>
-                `;
-              }
-
-            historyList.appendChild(transactionDiv);
-        });
-    }
-    
-    async function deleteTransaction(id) {
-      if (confirm(`Are you sure to delete [Trans ID: ${id}] transaction?`)) {
-        const res = await fetch(`/admin/delete/${id}`, { method: 'DELETE' });
-        if (res.ok) {
-          alert('Transaction deleted');
-          fetchTransaction();
-        } else {
-          alert('Failed to delete transaction');
-        }
-      }
-    }
-
-
-    fetchTransaction();
-  </script>
-
+  <script src="/js/purchase_history.js"></script>
 </body>
 
 </html>

@@ -105,72 +105,19 @@
         <h2>Events<br></h2>
       </div><!-- End Section Title -->
 
-      <!-- <div class="container event-lists">
-        <a  href="/naruto" class="event-items">
-          <div>
-            <img src="/img/Promode_con/naruto_re.jpg"alt="Con_3">
-            <span>Naruto</span>
-            <span>25 November 2025</span>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, repellendus nam ab quibusdam culpa itaque reiciendis repudiandae a corporis ducimus earum assumenda, quam eveniet rem. Ratione molestias iste quia optio?</span>
-          </div>
-        </a>
-        <a href="/cocktail" class="event-items">
-          <div>
-            <img src="/img/Promode_con/cocktail.jpg" alt="Con_3">
-            <span>Cocktail</span>
-            <span>26 September 2025</span>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora doloribus officiis harum accusamus eligendi dolores repudiandae fugit odit doloremque voluptate perspiciatis voluptates qui facilis velit eveniet, magni facere, voluptatibus veniam.</span>
-          </div>
-        </a>
-        <a href="/Solo" class="event-items">
-          <div>
-            <img src="/img/Promode_con/solo.jpg" alt="Con_3">
-            <span>Solo leveling</span>
-            <span>25 November 2025</span>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum saepe provident optio, numquam blanditiis dolores nemo impedit, distinctio dolore consequuntur dicta eaque id aliquid esse neque tenetur, sint quibusdam sit.</span>
-          </div>
-        </a>
-        <a href="/Mayaram" class="event-items">
-          <div>
-            <img src="/img/Promode_con/Miyaram.jpg" alt="Con_3">
-            <span>MAIYARAP</span>
-            <span>25 November 2025</span>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt provident consectetur eaque voluptate totam corporis dicta inventore aperiam dolores impedit voluptates odio, quo repellat, voluptatum excepturi iste reiciendis quae ipsum?</span>
-          </div>
-        </a>
-        <a href="/Lisa" class="event-items">
-        <div>
-          <img src="/img/Promode_con/Lisa.jpg" alt="Con_3">
-          <span>Lisa</span>
-          <span>26 September 2025</span>
-            <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia, aliquam dignissimos amet alias id assumenda numquam omnis dolorem rem quos voluptate molestiae distinctio, quo magnam ducimus, adipisci nesciunt eligendi ullam?</span>
-        </div>
-          
-        </a>
-      </div> -->
-
       <div class="container event-lists">
-          <% concerts.forEach(function(concert) { %>
-
-    <a href="/listConcerts/<%= concert.title %>" class="event-items">
-        <div>
-            <img src="<%= concert.image_path%>" alt="<%= concert.title %>">
-            
-            <span><%= concert.title %></span>
-            
-            <span><%= concert.date %></span> 
-            
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, repellendus nam ab quibusdam culpa itaque reiciendis repudiandae a corporis ducimus earum assumenda, quam eveniet rem. Ratione molestias iste quia optio?</span>
-        </div>
-    </a>
-
-<% }); %>
+        <% concerts.forEach(function(concert) { %>
+          <a href="/listConcerts/<%= concert.concert_id %>" class="event-items">
+              <div>
+                  <img src="<%= concert.image_path%>" alt="<%= concert.title %>">
+                  <span><%= concert.title %></span>
+                  <span><%= concert.date %></span> 
+                  <span><%= concert.detail %></span>
+              </div>
+          </a>
+        <% }); %>
       </div>
-
       
-
-
-
     </section><!-- /About Section -->
 
   </main>
@@ -209,7 +156,6 @@
 
   <!-- Main JS File -->
   <script src="/js/main.js"></script>
-
   <script src="/js/myJQuery.js"></script>
 
 </body>
