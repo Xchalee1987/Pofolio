@@ -9,12 +9,17 @@ import pg from "pg";
 import bcrypt from "bcrypt";
 import { DataRowMessage } from "pg-protocol/dist/messages";
 import path from "path";
+import multer from 'multer';
+
+
 
 dotenv.config();
 const __dirname = dirname(fileURLToPath(import.meta.url)); //เหมือนว่าจะสร้างตัวแปร __dirname เพื่อให้ใช้เป็น ไดเรทเทอรีเริ้มต้น
 
+
 const app = express();
 const port = process.env.PORT || 3000;
+
 
 // --- PostgreSQL pool ---
 const { Pool } = pg; //ดึงclass pool ออกจาก pg
@@ -46,6 +51,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'assets')));
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
+// ตั้งค่า multer สำหรับอัปโหลดไฟล์
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads');
+  },
+  filename: (req, file, cb) => {
+     cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage });
+
 
 // --- Helper: แนบ user เข้ากับ req จาก session ---
 app.use((req, res, next) => {  //ทำทุกครั้งที่มีการ Request เข้ามา
@@ -55,8 +73,18 @@ app.use((req, res, next) => {  //ทำทุกครั้งที่มี�
   next();
 });
 
-app.get("/", (req, res) => {  //localhost:3000 ที่เรียกใช้
-  res.render("main.ejs", { u : req.user });
+app.get("/", async (req, res) => {  //localhost:3000 ที่เรียกใช้
+  let result = { rows: [] };
+  try {
+        
+        result = await pool.query('SELECT * FROM concert_detail2 ORDER BY date ASC');
+        
+    } catch (err) {
+        
+        console.error("Error fetching concerts for main page:", err);
+        
+    }
+  res.render("main.ejs", { concerts: result.rows, u : req.user});
 });
 
 // --- Middleware: ต้องล็อกอินก่อน ---
@@ -91,14 +119,21 @@ function requireRole(...roles) {
 }
 
 // click on ลงชื่อเข้าใช้ in index.html will check first if already login
-app.get("/login", (req, res) => {  
+app.get("/login",async (req, res) => { 
+  let result = { rows: [] }; 
+   try {    
+        result = await pool.query('SELECT * FROM concert_detail2 ORDER BY date ASC');     
+    } catch (err) {       
+        console.error("Error fetching concerts for main page:", err);     
+    }
   if(req.user){
-    return res.render("main.ejs", { u : req.user });
+    return res.render("main.ejs", { u : req.user,concerts: result.rows });
   }
   return res.status(401).sendFile(path.join(__dirname, 'public', 'login_page.html'));
 });
 
 app.post("/login", async (req, res) => {  //เมื่อมีการส่ง Request POST มา
+  let result = { rows: [] };
   const { username, password } = req.body;
   try {
     const q = `
@@ -108,7 +143,7 @@ app.post("/login", async (req, res) => {  //เมื่อมีการส่
         AND password = crypt($2, password)
       LIMIT 1
     `;
-
+    result = await pool.query('SELECT * FROM concert_detail2 ORDER BY date ASC');
     const { rows } = await pool.query(q, [username, password]); // ถ้าตรวจสอบแล้วพบ มันจะส่ง 1 กลับมา
 
     if (rows.length === 0) {
@@ -127,7 +162,7 @@ app.post("/login", async (req, res) => {  //เมื่อมีการส่
       phone: u.phone,
       role: u.role,
     };
-    res.render("main.ejs", { u });
+    res.render("main.ejs", { u ,concerts: result.rows});
   } catch (e) {
     console.error(e);
     res.status(500).send("เกิดข้อผิดพลาดภายในระบบ");
@@ -170,6 +205,91 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.get('/add', (req, res) => {
+  res.render('add_event.ejs');
+});
+
+app.post('/add', 
+  upload.fields([
+    { name: 'image', maxCount: 1 },   // สำหรับภาพหน้าปก
+    { name: 'imageBG', maxCount: 1 }  // สำหรับภาพพื้นหลัง
+  ]), async (req, res) => {
+  const { title, artist, date, time } = req.body;
+  const image_path = req.files['image'] ? `/uploads/${req.files['image'][0].filename}`: null;
+  const image_pathbg = req.files['imageBG'] ? `/uploads/${req.files['image'][0].filename}`: null;
+    
+  try {
+      await pool.query(
+        `INSERT INTO concert_detail2 
+         (title, artist, date, time, image_path, image_pathbg) 
+         VALUES ($1, $2, $3, $4, $5, $6 )`,
+        [title, artist, date, time, image_path, image_pathbg]
+      );
+      console.log("2")
+    res.redirect('/listConcerts');
+  } catch (err) {
+    console.error(err);
+    res.send('Error inserting concert');
+  }
+});
+
+// ✅ Route แสดงคอนเสิร์ตทั้งหมด
+app.get('/listConcerts', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM concert_detail2 ORDER BY concert_id DESC');
+    res.render('listConcert.ejs', { concerts: result.rows, u : req.user });
+    
+  } catch (err) {
+    console.error(err);
+    res.send('Error loading concerts');
+  }
+});
+
+app.get('/listConcerts/:title', async (req, res) => {
+  const concertTitle = req.params.title; 
+
+    try {
+        
+        const result = await pool.query(
+            'SELECT * FROM concert_detail2 WHERE title = $1', 
+            [concertTitle]
+        );
+        
+       
+        if (result.rows.length === 0) {
+            return res.status(404).send('Concert not found');
+        }
+
+        // ดึงข้อมูลคอนเสิร์ตที่พบมาเพียงรายการเดียว
+        const concert = result.rows[0]; 
+        
+        
+        res.render('concertDetail.ejs', { 
+            concert: concert, 
+            u : req.user 
+        });
+        
+    } catch (err) {
+        console.error(err);
+        res.send('Error loading concert detail');
+    }
+});
+
+app.post('/listConcert/delete/:id', async (req, res) => {
+  try {
+    
+    
+
+    const { id } = req.params;
+    await pool.query('DELETE FROM concert_detail2 WHERE concert_id = $1', [id]);
+
+    res.redirect('/listConcerts');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('เกิดข้อผิดพลาดในการลบข้อมูล');
+  }
+});
+
 app.post("/reset",async (req, res) =>{
    const { username,phone, passwordNew } = req.body;
   try {
@@ -204,7 +324,7 @@ app.post("/reset",async (req, res) =>{
 
 app.post("/buyTicket", requireRole("user"), async (req, res) => {
     
-  const { concert_title, zone_name, seat_number } = req.body;
+  const { title, zone_name, seat_number } = req.body;
     try {
     const q = `
       INSERT INTO transaction(user_id, zone_id, seat_number) 
@@ -213,12 +333,12 @@ app.post("/buyTicket", requireRole("user"), async (req, res) => {
         z.zone_id,
         $2 AS seat_number
       FROM zone_detail z
-      JOIN concert_detail c
+      JOIN concert_detail2 c
         ON z.concert_id = c.concert_id
       WHERE c.title = $3 AND z.zone_name = $4;
     `;
 
-    await pool.query(q, [req.user.user_id, seat_number, concert_title, zone_name]);//ดักจับที่นั่งซ้ำ
+    await pool.query(q, [req.user.user_id, seat_number,title, zone_name]);//ดักจับที่นั่งซ้ำ
 
     res.render('succeed.ejs', { u : req.user });
   } catch (e) {
@@ -255,6 +375,13 @@ app.get("/Mayaram", (req, res) => {
 app.get("/Lisa", (req, res) => {
  res.render('Lisa.ejs', { u : req.user });
 });
+
+app.get("/add_event", (req, res) => {
+ res.render('add_event.ejs', { u : req.user });
+});
+
+
+
 // End path
 
 

@@ -30,7 +30,7 @@
   <link href="/css/main.css" rel="stylesheet">
   <link href="/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/css2.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- =======================================================
   * Template Name: Impact
@@ -46,18 +46,45 @@
 <%- include("loginNav.ejs"); %>
 
   <main class="main">
-    <div class="container_reserve">
-       <div class="container_reserve_in">
-        <div class="reserve_correct">
-            <i class="fa-regular fa-circle-xmark" ></i>
+        <div class="container_addEvent">
+            <div class="container_addEvent_in">
+              <div class="container_addEvent_in">
+                <h2>รายการคอนเสิร์ตทั้งหมด</h2> 
+                 <a href="/listConcerts">ดูรายการคอนเสิร์ตทั้งหมด</a>
+                <hr>
+              </div>
+                <div class="container_addEvent_in2">
+                
+                <form action="/add" method="POST" enctype="multipart/form-data">
+                <label>ชื่อคอนเสิร์ต:</label><br>
+                <input type="text" name="title" required><br><br>
+
+                <label>ศิลปิน:</label><br>
+                <input type="text" name="artist" required><br><br>
+
+                <label>วันที่:</label><br>
+                <input type="date" name="date" required><br><br>
+
+                <label>เวลา:</label><br>
+                <input type="time" name="time" required><br><br>
+
+                <label>อัปโหลดรูปภาพหน้าปก:</label><br>
+                <input type="file" name="image" accept="image/*"><br><br>
+
+                <label>อัปโหลดรูปภาพด้านหลัง:</label><br>
+                <input type="file" name="imageBG" accept="image/*"><br><br>
+                <button type="submit">บันทึก</button>
+            </form>
+
+            <br>
+           
+
+                </div>
+                 
+            </div>             
         </div>
-        <div class="reserve_text">
-            <p>ที่นั่งถูกจองไปแล้ว</p>
-        </div>
-       </div>
-       <a href="/"><button id="buttom_home">กลับไปหน้าหลัก</button></a>
-      
-    </div>
+  
+
     
   </main>
 

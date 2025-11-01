@@ -14,17 +14,18 @@
           <h1 class="sitename">ยินดีต้อนรับ!</h1>
         </a>
 
-      <% if (locals.u) { %>
+     <%if(locals.u && locals.u.role === 'staff') { %>
         <nav id="navmenu" class="navmenu">
           <ul>
+            <li><a href="/add_event" >เพิ่มรายการconcert</a></li>
             <li><a href="/purchase_history" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
             <li><a href="#" id="profile">คุณ <%= u.username %></a></li>
             <li><a href="/logout" onclick="">ออกจากระบบ</a></li>
+            
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
        </div>
-
       <div class="overlay-container overlay-toggle">
         <div class="overlay">
           <span>User ID: <%= u.user_id %></span>
@@ -34,7 +35,29 @@
           <a href="/editProfile" id="editProfileBtn">แก้ไขโปรไฟล์</a>
         </div>
       </div>
-      <% } else { %>
+        <% }else if(locals.u) { %>
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            
+            <li><a href="/purchase_history" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
+            <li><a href="#" id="profile">คุณ <%= u.username %></a></li>
+            <li><a href="/logout" onclick="">ออกจากระบบ</a></li>
+            
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+       </div>
+      <div class="overlay-container overlay-toggle">
+        <div class="overlay">
+          <span>User ID: <%= u.user_id %></span>
+          <span>Username: <%= u.username %></span>
+          <span>เบอร์โทรศัพท์: <%= u.phone %></span>
+          <span>สิทธิในการเข้าถึง: <%= u.role %></span>
+          <a href="/editProfile" id="editProfileBtn">แก้ไขโปรไฟล์</a>
+        </div>
+      </div>
+
+      <% }else { %>
         <nav id="navmenu" class="navmenu">
           <ul>
             <li><a href="/login">ลงชื่อเข้าใช้</a></li>

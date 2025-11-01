@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Lisa</title>
+  <title><%= concert.title %></title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -28,7 +28,7 @@
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
-   <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: Impact
@@ -43,17 +43,16 @@
 
 <%- include("loginNav.ejs"); %>
 
-
   <main class="main">
 
     <!-- Page Title -->
-    <div class="page-title" style="background-color: #EF88AD;">
+    <div class="page-title" style="background-color: #C75D2C;">
       
         <div class="container"> 
           <div class="BG_Theme">
             <!-- Background -->
             <div class="BG_top">
-              <img src="/img/Promode_con/LiSA-Live-is-Smile-Always-Lander-Vertical-crop-1024x597.jpg" alt=""><!-- Background ด้านหลัง-->
+              <img src="<%= concert.image_pathbg %>" alt="">
             </div>
             <div class="container_middle">
               <div class="Grid_middle">
@@ -62,30 +61,30 @@
                     <div class="inGrid_middle_Left">
                       <div class="mg_middle_Left">
                         <div class="mg_middle_Lefe_left">
-                          <span style="box-sizing: border-box; display: block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;"><span style="box-sizing: border-box; display: block; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 141.844% 0px 0px;"></span>
+                          <span style="box-sizing: border-box; display: block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;">
+                            <span style="box-sizing: border-box; display: block; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 141.844% 0px 0px;"></span>
                           
                           <span style="box-sizing: border-box; display: block; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; "></span>                          
                           <!-- IMG Promode -->
-                           
-                          <img src="/img/Promode_con/Lisa.jpg" alt="">  <!-- รูปภาพฝั่งซ้าย -->
+                          <img src="<%= concert.image_path %>" alt="<%= concert.title %>">
                          </span>
                         </div>                       
                       </div>
                     </div>
                     <div class="inGrid_middle_Rigth">
                           <div class="box_middle_Rigth">
-                            <div class="box_middle_Rigth_top color_Lisa BG_border">
+                            <div class="box_middle_Rigth_top BG_border color_naruto" >
                               <div class="box_middle_Rigth_top_text">
-                                  <h2 style="color: white;">Lisa</h2>
+                                  <h2 style="color: white;"><%= concert.title %></h2>
                               </div>
                             </div>
-                            <div class="box_middle_Rigth_buttom color_Lisa BG_border" >
+                            <div class="box_middle_Rigth_buttom BG_border color_naruto" >
                               <div class="box_middle_Rigth_buttom_condetail">
-                                <p>วันที่จัดการแสดง : 26 September 2025</p>
-                                <p>สถานที่        : Bangkok</p>
-                                <p>ศิลปิน         : Lisa</p>
+                                <p><%= concert.date%></p>
+                                
+                                <p>ศิลปิน         : <%= concert.artist%></p>
                                 <div class="buttom_ticket">
-                                    <button id="buy_ticket" onclick="openManu()" style="background-color: #670D2F;">ซื้อตั๋ว</button>
+                                    <button id="buy_ticket" onclick="openManu()" style="background-color: #F3E9DC;">ซื้อตั๋ว</button>
                                 </div>                            
                               </div>
                             </div>
@@ -100,7 +99,7 @@
         <div class="ticket_detail_container">
             <div class="wapper_ticket_detail_container .BG_ticket_detail">
                 <div class="ticket_detail BG_ticket_detail">
-                    <div class="ticket_detail_in color_Lisa BG_border">
+                    <div class="ticket_detail_in BG_border color_naruto" >
                         <div class="ticket_detail_item1">
                             <div class="ticket_detail_item1_in">
                                 <p>Zone AR</p>
@@ -118,7 +117,7 @@
                         </div>                    
                     </div>
                      
-                    <div class="ticket_detail_in color_Lisa BG_border">
+                    <div class="ticket_detail_in BG_border color_naruto">
                         <div class="ticket_detail_item1">
                             <div class="ticket_detail_item1_in">
                                 <p>Zone AL</p>
@@ -136,7 +135,7 @@
                         </div>                    
                     </div>
 
-                    <div class="ticket_detail_in color_Lisa BG_border">
+                    <div class="ticket_detail_in BG_border color_naruto">
                         <div class="ticket_detail_item1">
                             <div class="ticket_detail_item1_in">
                                 <p>Zone B</p>
@@ -155,7 +154,7 @@
                     </div>
 
 
-                    <div class="ticket_detail_in color_Lisa BG_border">
+                    <div class="ticket_detail_in BG_border color_naruto">
                         <div class="ticket_detail_item1">
                             <div class="ticket_detail_item1_in">
                                 <p>Zone C</p>
@@ -176,21 +175,16 @@
             </div>
         </div>
 
-        
         <!-- VDO -->
 
-        <div class="VDO_div_container" style="background-color:  #EF88AD">
-          <div class="VDO_div_in">
-              <iframe width="840" height="540" src="https://www.youtube.com/embed/CzQS7R-m2D4?si=NmljCjXWpBJD2RXG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>          
-          </div>
-        </div>
+        
+
     <!-- VDO -->
 
 
 
-
         <div class="buy_container">
-            <div id="buy_menu" style="background-color: #EF88AD;">
+            <div id="buy_menu"  style="background-color: #7B542F">
               <div class="warpper_all_buy">
                 
               <span class="fa fa-times" onclick="closeManu()"></span>
@@ -212,20 +206,20 @@
 
         <!-- 7500 -->
         <div class="buy_container_top">
-          <div id="buy_menu_top_7500_AL">
+          <div id="buy_menu_top_7500_AL" >
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ Lisa</h3>
+                    <h3>Concertที่คุณเลือกคือ <%= concert.title %></h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="concert_title" value="Lisa" required > <!-- ชื่อcon ต้องตรงกับ DB -->
-                    <input type="hidden"name="zone_name" value="AL" required > <!-- ชื่อzone -->
+                    <input type="hidden"name="title" value="<%= concert.title %>" required >
+                    <input type="hidden"name="zone_name" value="AL" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required> <!-- เลขที่นั่ง-->
+                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
                       <option value="1">AL ที่นั่ง1</option>
                       <option value="2">AL ที่นั่ง2</option>
                       <option value="3">AL ที่นั่ง3</option>
@@ -244,20 +238,20 @@
             </div>
           </div>
         </div>
-        <!-- end 7500 -->
-       <!-- 7500 -->
+        <!-- end 7500_AL -->
+       <!-- 7500_AR -->
         <div class="buy_container_top">
-          <div id="buy_menu_top_7500_AR">
+          <div id="buy_menu_top_7500_AR" >
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ Lisa</h3>
+                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="concert_title" value="Lisa" required >
+                    <input type="hidden"name="title" value="<%= concert.title %>" required >
                     <input type="hidden"name="zone_name" value="AR" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
@@ -279,21 +273,21 @@
             </div>
           </div>
         </div>
-        <!-- end 7500 -->
+        <!-- end 7500_AR -->
 
-        <!-- 5500 -->
+        <!-- 5500_B -->
          <div class="buy_container_top">
-          <div id="buy_menu_top_5500_B">
+          <div id="buy_menu_top_5500_B" >
             <span class="fa fa-times" onclick="closeManu()"></span>
             <div class="wapper_img_ticket_top">
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ Lisa</h3>
+                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="concert_title" value="Lisa" required >
+                    <input type="hidden"name="title" value="<%= concert.title %>" required >
                     <input type="hidden"name="zone_name" value="B" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
                     <select name="seat_number" class="seat_number_class" id="seat_number"required>
@@ -316,9 +310,8 @@
             </div>
           </div>
         </div>
-      <!-- end 5500 -->
-
-      <!-- 4500 -->
+      <!-- end 5500_B -->
+       <!-- 4500_C -->
          <div class="buy_container_top">
           <div id="buy_menu_top_4500_C">
             <span class="fa fa-times" onclick="closeManu()"></span>
@@ -326,14 +319,14 @@
               <div class="ticket_map_container_top">
                 
                 <div class="wapper_ticker_detail">
-                    <h3>Concertที่คุณเลือกคือ Lisa</h3>
+                    <h3>Concertที่คุณเลือกคือ Naruto</h3>
                 </div>             
                 <div class="wapper_ticker_detail">
                     <form class="my-form" action="/buyTicket" method="POST">
-                    <input type="hidden"name="concert_title" value="Lisa" required >
+                    <input type="hidden"name="title" value="<%= concert.title %>" required >
                     <input type="hidden"name="zone_name" value="C" required >
                     <label for="seat_number">เลือกที่นั่ง:</label>
-                    <select name="seat_number" class="seat_number_class" id="seat_number"required>
+                    <select name="seat_number" class="seat_number_class" id="seat_number" required>
                       <option value="1">C ที่นั่ง1</option>
                       <option value="2">C ที่นั่ง2</option>
                       <option value="3">C ที่นั่ง3</option>
@@ -342,7 +335,8 @@
                         <h3>ราคา 4,500 THB</h3>
                     </div> 
                     <br>
-                  <button class="buttom_ticket_buy" type="submit">จองเลย</button>
+                    <a href=""><button  class="buttom_ticket_buy" type="submit">จองเลย</button></a>
+                  
                 </form>
                 
 
@@ -353,7 +347,7 @@
             </div>
           </div>
         </div>
-      <!-- end 4500 -->
+      <!-- end 4500_C -->
       
     </div><!-- End Page Title -->
 
@@ -430,24 +424,35 @@
       document.getElementById('buy_menu_top_4500_C').style.right='0%';
     }
 
-    const ticketCanvas = document.getElementById('ticketHighlightCanvas');
-    const ticketCtx = ticketCanvas ? ticketCanvas.getContext('2d') : null;
+      const ticketCanvas = document.getElementById('ticketHighlightCanvas');
+    const ticketCtx = ticketCanvas ? ticketCanvas.getContext('2d') : null;
 
- // ถ้า Canvas ไม่พบ ก็หยุดการทำงาน
- if (!ticketCtx) {
- console.error("Canvas 'ticketHighlightCanvas' not found or context failed.");
- }
+    // ถ้า Canvas ไม่พบ ก็หยุดการทำงาน
+    if (!ticketCtx) {
+      console.error("Canvas 'ticketHighlightCanvas' not found or context failed.");
+    }
 
-     function highlightTicketArea(areaElement) {
-     if (!ticketCtx) return;
- 
-        clearTicketHighlight(); 
- 
-        const coordsString = areaElement.getAttribute('coords');
-        const coords = coordsString.split(',').map(c => parseFloat(c.trim())); 
-               
+    /**
+     * ฟังก์ชันวาดรูปร่างไฮไลต์บน Canvas ของ Ticket
+     * @param {HTMLElement} areaElement - แท็ก <area> ที่ถูกชี้เมาส์
+     */
+    function highlightTicketArea(areaElement) {
+        if (!ticketCtx) return;
+        
+        clearTicketHighlight(); 
+        
+        const coordsString = areaElement.getAttribute('coords');
+        const coords = coordsString.split(',').map(c => parseFloat(c.trim())); 
         
-        // ปรับขนาดให้ตรงกับรูป
+        // **********************************************
+        // ส่วนสำคัญ: การปรับสัดส่วน (Scaling)
+        // เนื่องจากรูปภาพและ Canvas ถูกตั้งค่าให้ปรับขนาด 100% 
+        // แต่พิกัด (coords) อ้างอิงขนาดดั้งเดิม (เช่น 886x530)
+        // เราต้องคำนวณอัตราส่วนการปรับขนาด (Scale Factor)
+        // เพื่อให้พิกัดตรงกับขนาดจริงของ Canvas ที่แสดงผล
+        // **********************************************
+        
+        // สมมติขนาดดั้งเดิมของรูปภาพ (ตามพิกัดสูงสุดที่คุณให้มา)
         const originalWidth = 960; 
         const originalHeight = 540; 
         
@@ -455,27 +460,30 @@
         const scaleX = ticketCanvas.width / originalWidth;
         const scaleY = ticketCanvas.height / originalHeight;
         
-            ticketCtx.beginPath();
+        ticketCtx.beginPath();
+        
+        // รูปแบบ rect
+        if (areaElement.shape.toLowerCase() === 'rect' && coords.length === 4) {
+            // ใช้พิกัดที่ปรับสเกลแล้ว
+            const [x1, y1, x2, y2] = coords;
+            const w = (x2 - x1) * scaleX;
+            const h = (y2 - y1) * scaleY;
+            ticketCtx.rect(x1 * scaleX, y1 * scaleY, w, h);
+        }
+        // เพิ่ม logic สำหรับ poly, circle ตรงนี้ถ้ามี
 
-            if (areaElement.shape.toLowerCase() === 'rect' && coords.length === 4) {
-            
-            const [x1, y1, x2, y2] = coords;
-            const w = (x2 - x1) * scaleX;
-            const h = (y2 - y1) * scaleY;
-            ticketCtx.rect(x1 * scaleX, y1 * scaleY, w, h);
-            } 
-            //สี
-            ticketCtx.fillStyle = 'rgba(255, 0, 0, 0.4)'; 
-            ticketCtx.fill();
-            }
+        // กำหนดสีและวาด
+        ticketCtx.fillStyle = 'rgba(255, 0, 0, 0.4)'; // สีแดงโปร่งแสง 40%
+        ticketCtx.fill();
+    }
 
- /**
-     * ฟังก์ชันล้าง Canvas 
+    /**
+     * ฟังก์ชันล้าง Canvas ของ Ticket ทั้งหมด
      */
-        function clearTicketHighlight() {
-            if (!ticketCtx) return;
-            ticketCtx.clearRect(0, 0, ticketCanvas.width, ticketCanvas.height);
-        }
+    function clearTicketHighlight() {
+        if (!ticketCtx) return;
+        ticketCtx.clearRect(0, 0, ticketCanvas.width, ticketCanvas.height);
+    }
   </script>
 </body>
 

@@ -800,3 +800,59 @@ body p,body button{
 .VDO_div_in{
     margin-bottom:50px ;
 }
+.container_addEvent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12%;
+   
+}
+
+
+.container_addEvent_1{
+    
+}
+
+.container_addEvent_in{
+    
+
+}
+.container_addEvent_in2 {
+    margin-top: 0;
+    display: flex;
+    flex-wrap: wrap; /* ให้กล่องขึ้นบรรทัดใหม่ได้ */
+    align-items: stretch; /* สำคัญ: ทำให้กล่องลูกสูงเท่ากัน */
+}
+.concert-item-box{
+    width: 300px;
+    max-width: 100%;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+}
+.concert-item-box img {
+    max-width: 100%; 
+    height: auto; 
+    display: block;
+}
+.concert-item-box > form > button{
+    /* 1. จัดวาง */
+    margin-top: 10px;
+    padding: 8px 15px; /* เพิ่ม padding ให้ปุ่มใหญ่ขึ้น */
+    cursor: pointer;   /* แสดงให้เห็นว่าเป็นองค์ประกอบที่คลิกได้ */
+    
+    /* 2. สีพื้นฐาน (สีแดง) */
+    background-color: #dc3545; /* แดงมาตรฐาน */
+    color: white;             /* ตัวอักษรสีขาว */
+    border: 1px solid #dc3545; /* ขอบสีเดียวกับพื้นหลัง */
+    border-radius: 5px;       /* ทำให้ขอบโค้งมนเล็กน้อย */
+    font-size: 20px;
+    
+    /* 3. รูปแบบข้อความ */
+    font-weight: 600; /* ทำให้ข้อความหนาขึ้น */
+    transition: background-color 0.3s ease; /* เพิ่ม transition เมื่อ hover */
+}
