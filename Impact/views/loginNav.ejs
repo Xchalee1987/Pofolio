@@ -18,7 +18,7 @@
         <nav id="navmenu" class="navmenu">
           <ul>
             <% if (u.role === 'staff' || u.role === 'admin') { %>
-            <li><a href="/listConcerts/add" >เพิ่มรายการconcert</a></li>
+            <li><a href="/listConcerts" >เพิ่มรายการconcert</a></li>
             <% } %>
             <% if (u.role === 'user' || u.role === 'admin') { %>
             <li><a href="/purchase_history" id="purchase_history">ประวัติการสั่งซื้อ</a></li>

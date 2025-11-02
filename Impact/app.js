@@ -226,9 +226,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.get('/listConcerts/add', requireRole('staff', 'admin'), (req, res) => {
-  res.render('add_event.ejs', { u : req.user });
-});
+
 
 app.post('/listConcerts/add', requireRole('staff', 'admin'), upload.fields([
     { name: 'image', maxCount: 1 },   // สำหรับภาพหน้าปก
@@ -263,7 +261,11 @@ app.post('/listConcerts/add', requireRole('staff', 'admin'), upload.fields([
   }
 });
 
-app.get('/listConcerts', async (req, res) => {
+// app.get('/listConcerts/add', requireRole('staff', 'admin'), (req, res) => {
+//   res.render('add_event.ejs', { u : req.user });
+// });
+
+app.get('/listConcerts',requireRole('staff', 'admin'), async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM concert_detail ORDER BY concert_id DESC');
     res.render('listConcert.ejs', {

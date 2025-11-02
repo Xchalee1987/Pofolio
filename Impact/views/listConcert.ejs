@@ -31,6 +31,8 @@
   <link href="/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/css2.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <script src="https://cdn.tailwindcss.com"></script>
+
 
   <!-- =======================================================
   * Template Name: Impact
@@ -50,43 +52,126 @@
 <%- include("loginNav.ejs"); %>
 
   <main class="main">
-        <div class="container_addEvent">
-            <div class="container_addEvent_1">
-                <div class="container_addEvent_in">
-                    <h2>รายการคอนเสิร์ตทั้งหมด</h2> 
-                    <a href="/listConcerts/add">+ เพิ่มคอนเสิร์ตใหม่</a>
-                    <hr>
-                </div>
-                <div class="container_addEvent_in2">
-                    <% if (concerts.length === 0) { %>
-                        <p>ยังไม่มีข้อมูลคอนเสิร์ต</p>
-                    <% } else { %>
-                    <% concerts.forEach(concert => { %>      
-                        <div class="concert-item-box" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 15px;"> 
-                            <h3><%= concert.title %></h3>        
-                            <p>ศิลปิน: <%= concert.artist %></p>
-                            <p>วันที่: <%= concert.date.toISOString().split('T')[0] %></p>
-                            <p>เวลา: <%= concert.time %></p>
+    <div class="container_big">
+            <div class="max-w-6xl mx-auto p-4 md:p-8">
+        
+            <!-- Main layout container: uses flexbox -->
+            <!-- Stacks on mobile (flex-col) and becomes a row on medium screens (md:flex-row) -->
+            <div class="flex flex-col md:flex-row gap-6">
 
-                            <% if (concert.image_path) { %>
-                            <img src="<%= concert.image_path %>" alt="Concert Image" >
-                            <% } else { %>
-                            <p><i>ไม่มีรูปภาพ</i></p>
-                            <% } %>    
-                            <% if (u.role === 'admin') { %>
-                            <form action="/listConcert/delete/<%= concert.concert_id %>" method="POST" style="display:inline;">
-                                <button type="submit" onclick="return confirm('ยืนยันการลบคอนเสิร์ตนี้หรือไม่?')"> ลบ</button>
-                            </form>
-                            <% } %>   
-                        </div>     
-                    <% }) %>  
-                    <hr>
-                    <% } %>
-                </div>  
-            </div>           
-        </div>
+                <!-- Left Column: Item List (Wider) -->
+                <!-- Takes full width on mobile, and 1/2 width on desktop (md:w-1/2) -->
+                <div class="w-full md:w-2/3">
+                    <div class="bg-white p-6 rounded-lg shadow-md ">
+                        <h2 class="text-2xl font-semibold mb-4">รายชื่อคอนเสิร์ตทั้งหมด</h2>
+                        
+                        <!-- Item List Container -->
+                        <div class="space-y-3">
+                            <!-- Placeholder List Items -->
+                                <div class="container_addEvent_in2">
+                                    <% if (concerts.length === 0) { %>
+                                        <p>ยังไม่มีข้อมูลคอนเสิร์ต</p>
+                                    <% } else { %>
+                                    <% concerts.forEach(concert => { %>      
+                                    <div class="concert-item-box" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 15px;"> 
+                                        <h3><%= concert.title %></h3>        
+                                        <p>ศิลปิน: <%= concert.artist %></p>
+                                        <p>วันที่: <%= concert.date.toISOString().split('T')[0] %></p>
+                                        <p>เวลา: <%= concert.time %></p>
+
+                                        <% if (concert.image_path) { %>
+                                            <div class="imege_div">
+                                                <img src="<%= concert.image_path %>" alt="Concert Image" >
+                                            </div>                
+                                        <% } else { %>
+                                        <p><i>ไม่มีรูปภาพ</i></p>
+                                        <% } %>    
+                                        <% if (u.role === 'admin' ) { %>
+                                        <form action="/listConcert/delete/<%= concert.concert_id %>" method="POST" style="display:inline;">
+                                            <button type="submit" onclick="return confirm('ยืนยันการลบคอนเสิร์ตนี้หรือไม่?')"> ลบ</button>
+                                        </form>
+                                <% } %>   
+                                    </div>     
+                                    <% }) %>                                   
+                                        <hr>                                      
+                                <% } %>                             
+                            </div>                                                         
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Form (Narrower) -->
+                <!-- Takes full width on mobile, and 1/2 width on desktop (md:w-1/2) -->
+                <div class="w-full md:w-1/3">
+                    <div class="bg-white p-8 rounded-lg shadow-md w-[500px]" >
+                        <h2 class="text-2xl font-semibold mb-4">เพิ่มคอนเสิร์ตใหม่</h2>
+
+                                <!-- <div>
+                                    <label for="item_name" class="block text-sm font-medium text-gray-700">Item Name</label>
+                                    <input type="text" id="item_name" name="item_name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div> -->
+                        
+                        <!-- Simple Form -->
+                        <form action="/listConcerts/add" method="POST" enctype="multipart/form-data">
+                            <div class="space-y-4">
+                              
+                                <div>
+                                    <label>ชื่อคอนเสิร์ต:</label><br>
+                                    <input type="text" name="title" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"  required>
+                                </div>
+                                <div>
+                                    <label>ศิลปิน:</label><br>
+                                    <input type="text" name="artist" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <div >
+                                    <label>วันที่:</label><br>
+                                    <input type="date" name="date" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <div >
+                                  <label>เวลา:</label><br>
+                                    <input type="time" name="time" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <div>
+                                    <label>รายละเอียด:</label><br>
+                                     <input type="text" name="detail" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <div>
+                                    <label>จำนวนที่นั่งของแต่ละโซน:</label><br>
+                                    <label>AL <input type="number" name="ALcap" value="1" min="1" class="mt-1 block w-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"  required></label>
+                                    <label>AR <input type="number" name="ARcap" value="1" min="1" class="mt-1 block w-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required></label>
+                                    <label>B <input type="number" name="Bcap" value="1" min="1" class="mt-1 block w-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required></label>
+                                    <label>C <input type="number" name="Ccap" value="1" min="1" class="mt-1 block w-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required></label>
+                                    <br><br>
+                                </div>
+                                <div>
+                                    <label>อัปโหลดรูปภาพหน้าปก:</label><br>
+                                    <input type="file" name="image" accept="image/*" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <div>
+                                    <label>อัปโหลดรูปภาพพื้นหลัง:</label><br>
+                                    <input type="file" name="imageBG" accept="image/*" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <!-- Submit Button -->
+                                <div>
+                                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        บันทึก
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div> <!-- End of flex container -->
+            
+        </div> <!-- End of main container -->
+    </div>
+        
   
+
+    
   </main>
+
 
   
   <!-- Scroll Top -->

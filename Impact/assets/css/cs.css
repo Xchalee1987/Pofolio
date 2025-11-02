@@ -653,10 +653,14 @@ body p,body button{
 }
 .container_addEvent{
     display: flex;
+     
+     align-items: stretch;
     justify-content: center;
     align-items: center;
     margin-top: 12%;
+   
 }
+
 .container_addEvent_in2 {
     margin-top: 0;
     display: flex;
@@ -695,4 +699,19 @@ body p,body button{
     /* 3. รูปแบบข้อความ */
     font-weight: 600; /* ทำให้ข้อความหนาขึ้น */
     transition: background-color 0.3s ease; /* เพิ่ม transition เมื่อ hover */
+}
+
+
+.container_big{
+    margin-top: 12%;
+}
+
+.imege_div{
+    width: 250px;
+    height: 400px;
+}
+.imege_div>img {
+    width: 100%;
+  height: 100%; 
+  object-fit: cover;
 }
