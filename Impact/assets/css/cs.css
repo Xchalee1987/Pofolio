@@ -22,7 +22,7 @@ body p,body button{
 }
 .BG_top >img{
     width: 100%; /* ให้ความกว้างเต็มพื้นที่ของ .BG_top */
-    /* height: 450px; */
+    height: 600px;
     object-fit: cover;
     object-position: center top;
 }
@@ -656,17 +656,6 @@ body p,body button{
     justify-content: center;
     align-items: center;
     margin-top: 12%;
-   
-}
-
-
-.container_addEvent_1{
-    
-}
-
-.container_addEvent_in{
-    
-
 }
 .container_addEvent_in2 {
     margin-top: 0;

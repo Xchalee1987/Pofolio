@@ -112,7 +112,7 @@ app.use((req, res, next) => {
   }
   // ต้องแยกออกมาเพราะ path นี้มี path parameters/ route parameters
   // without this the event pages can't fetch available seats if not login first
-  if (req.path.startsWith("/fetchSeats") || req.path.startsWith("/listConcerts")) {
+  if (req.path.startsWith("/concertDetail")) {
     return next();
   }
   return requireAuth(req, res, next);
@@ -129,7 +129,6 @@ function requireRole(...roles) {
           {path: '/', text: 'กลับไปหน้าหลัก'}
         ]
       });
-      // return res.status(403).send("ไม่มีสิทธิ์");
     }
     next();
   };
@@ -227,30 +226,39 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.get('/listConcerts/add', (req, res) => {
+app.get('/listConcerts/add', requireRole('staff', 'admin'), (req, res) => {
   res.render('add_event.ejs', { u : req.user });
 });
 
-app.post('/listConcerts/add', 
-  upload.fields([
+app.post('/listConcerts/add', requireRole('staff', 'admin'), upload.fields([
     { name: 'image', maxCount: 1 },   // สำหรับภาพหน้าปก
     { name: 'imageBG', maxCount: 1 }  // สำหรับภาพพื้นหลัง
   ]), async (req, res) => {
-  const { title, artist, date, time } = req.body;
+  const { title, artist, date, time, detail, ALcap, ARcap, Bcap, Ccap } = req.body;
   const image_path = req.files['image'] ? `/uploads/${req.files['image'][0].filename}`: null;
-  const image_pathbg = req.files['imageBG'] ? `/uploads/${req.files['image'][0].filename}`: null;
+  const bgimage_path = req.files['imageBG'] ? `/uploads/${req.files['image'][0].filename}`: null;
     
   try {
-      await pool.query(
-        `INSERT INTO concert_detail2 
-         (title, artist, date, time, image_path, image_pathbg) 
-         VALUES ($1, $2, $3, $4, $5, $6 )`,
-        [title, artist, date, time, image_path, image_pathbg]
+    const concertResult = await pool.query(`
+        INSERT INTO concert_detail (title, artist, date, time, detail, image_path, bgimage_path) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7 ) RETURNING concert_id;
+        `, [title, artist, date, time, detail, image_path, bgimage_path]
       );
-      console.log("2")
+
+    const concert_id = concertResult.rows[0].concert_id;
+      
+      await pool.query(`
+        INSERT INTO zone_detail (concert_id, zone_name, base_price, capacity)
+        VALUES 
+            ($1, 'AL', 7500, $2),
+            ($1, 'AR', 7500, $3),
+            ($1, 'B', 5500, $4),
+            ($1, 'C', 4500, $5)
+        ;`, [concert_id, ALcap, ARcap, Bcap, Ccap]);
+
     res.redirect('/listConcerts');
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.send('Error inserting concert');
   }
 });
@@ -268,7 +276,35 @@ app.get('/listConcerts', async (req, res) => {
   }
 });
 
-app.get('/listConcerts/:concert_id', async (req, res) => {
+app.post('/listConcert/delete/:id', requireRole('admin'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const delTransQuery = `
+      DELETE FROM "transaction"
+      WHERE zone_id IN ( SELECT zone_id FROM "zone_detail" WHERE concert_id = $1 );
+    `;
+    await pool.query(delTransQuery, [ id ]);
+    
+    const delZonesQuery = `
+      DELETE FROM "zone_detail"
+      WHERE concert_id = $1;
+    `;
+    await pool.query(delZonesQuery, [ id ]);
+
+    const delConcertQuery = `
+      DELETE FROM "concert_detail"
+      WHERE concert_id = $1;
+    `;
+    await pool.query(delConcertQuery, [ id ]);
+
+    res.redirect('/listConcerts');
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('เกิดข้อผิดพลาดในการลบข้อมูล');
+  }
+});
+
+app.get('/concertDetail/:concert_id', async (req, res) => {
   const concertID = req.params.concert_id;
   try {
       const concertResult = await pool.query(
@@ -325,32 +361,6 @@ app.get('/listConcerts/:concert_id', async (req, res) => {
   } catch (err) {
     console.error('error massage*(/listConcerts/:concert_id): ', err);
     res.send('Error loading concert detail');
-  }
-});
-
-app.post('/listConcert/delete/:id', requireRole('admin'), async (req, res) => {
-  try {
-    const { id } = req.params;
-    const q = `
-      BEGIN;
-
-      DELETE FROM "transaction"
-      WHERE zone_id IN ( SELECT zone_id FROM "zone_detail" WHERE concert_id = $1 );
-
-      DELETE FROM "zone_name"
-      WHERE concert_id = $1;
-
-      DELETE FROM "concert_detail"
-      WHERE concert_id = $1;
-
-      COMMIT;
-    `;
-    await pool.query(q, [ id ]);
-
-    res.redirect('/listConcerts');
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('เกิดข้อผิดพลาดในการลบข้อมูล');
   }
 });
 
@@ -514,10 +524,6 @@ app.get("/purchase_history", requireRole('user', 'admin'), async (req, res) => {
   }
 });
 
-app.get("/editProfile", (req, res) => {
-  res.render('edit_profile.ejs', { u : req.user });
-});
-
 app.delete('/admin/delete/:trans_id', async (req, res) =>{
   const { trans_id } = req.params;
   try {
@@ -529,6 +535,10 @@ app.delete('/admin/delete/:trans_id', async (req, res) =>{
   }
 });
 
+app.get("/editProfile", (req, res) => {
+  res.render('edit_profile.ejs', { u : req.user });
+});
+
 app.post("/editProfile/update", async (req, res) => {
   const { inputUsername, inputPhone, inputPass } = req.body;
   try {
@@ -538,9 +548,10 @@ app.post("/editProfile/update", async (req, res) => {
     );
     if (validPassword.rows.length === 0) {
       console.log("wrong password input");
-      return res.status(404).json({ message: 'Invalid password' });
+      return res.status(400).json({ message: 'Invalid password' });
     }
 
+    // RETURING is unnecessary but just keep it for curiousity
     await pool.query(
       'UPDATE "user_detail" SET username = $1, phone = $2 WHERE user_id = $3 RETURNING *',
       [inputUsername, inputPhone, req.user.user_id]
@@ -550,14 +561,19 @@ app.post("/editProfile/update", async (req, res) => {
     req.session.user.phone = inputPhone;
 
     console.log("profile update succesfully");
-    return res.status(200).json({ 
-      message: 'profile update'
+    res.render('response.ejs', {
+      icon : 'greenCheck',
+      msg : [ 'แก้ไขโปรไฟล์สำเร็จ' ],
+      addPath : [
+        {path: '/', text: 'กลับไปหน้าหลัก'},
+      ]
     });
   } catch (err) {
     if (err.code === '23505') {
-      console.error('Username or Phone Number already exists');
-      return res.status(400).json({ 
-        message : 'Username or Phone Number has been taken'
+      console.error('Username already exists');
+      return res.render('response.ejs', {
+        msg : [ 'ชื่อผู้ใช้นี้มีอยู่แล้ว', 'โปรดลองใหม่อีกครั้ง' ],
+        addPath : [ {path: '/editProfile', text: 'ย้อนกลับ'} ]
       });
     }
     console.error('error massage: ', err.message);
@@ -588,11 +604,20 @@ app.post("/editProfile/updatePass", async (req, res) => {
     req.session.user.phone = inputPhone;
 
     console.log("profile update succesfully");
-    return res.json({ message: 'profile update' });
+    res.render('response.ejs', {
+      icon : 'greenCheck',
+      msg : [ 'แก้ไขโปรไฟล์สำเร็จ' ],
+      addPath : [
+        {path: '/', text: 'กลับไปหน้าหลัก'},
+      ]
+    });
   } catch (err) {
     if (err.code === '23505') {
-      console.error('Username or Phone Number already exists');
-      return res.json({ message : 'Username is already taken' });
+      console.error('Username already exists');
+      return res.render('response.ejs', {
+        msg : [ 'ชื่อผู้ใช้นี้มีอยู่แล้ว', 'โปรดลองใหม่อีกครั้ง' ],
+        addPath : [ {path: '/editProfile', text: 'ย้อนกลับ'} ]
+      });
     }
     console.error('error massage: ', err.message);
     res.status(500).send('Server error');

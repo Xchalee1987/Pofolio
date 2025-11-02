@@ -39,6 +39,10 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+  <!-- JQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 </head>
 
 <body class="service-details-page">
@@ -46,46 +50,53 @@
 <%- include("loginNav.ejs"); %>
 
   <main class="main">
-        <div class="container_addEvent">
-            <div class="container_addEvent_in">
-              <div class="container_addEvent_in">
-                <h2>รายการคอนเสิร์ตทั้งหมด</h2> 
-                 <a href="/listConcerts">ดูรายการคอนเสิร์ตทั้งหมด</a>
-                <hr>
-              </div>
-                <div class="container_addEvent_in2">
-                
-                <form action="/listConcerts/add" method="POST" enctype="multipart/form-data">
-                <label>ชื่อคอนเสิร์ต:</label><br>
-                <input type="text" name="title" required><br><br>
+    <div class="container_addEvent">
+      <div class="container_addEvent_in">
 
-                <label>ศิลปิน:</label><br>
-                <input type="text" name="artist" required><br><br>
-
-                <label>วันที่:</label><br>
-                <input type="date" name="date" required><br><br>
-
-                <label>เวลา:</label><br>
-                <input type="time" name="time" required><br><br>
-
-                <label>อัปโหลดรูปภาพหน้าปก:</label><br>
-                <input type="file" name="image" accept="image/*"><br><br>
-
-                <label>อัปโหลดรูปภาพด้านหลัง:</label><br>
-                <input type="file" name="imageBG" accept="image/*"><br><br>
-                <button type="submit">บันทึก</button>
-            </form>
-
-            <br>
-           
-
-                </div>
-                 
-            </div>             
+        <div class="container_addEvent_in">
+          <h2>รายการคอนเสิร์ตทั้งหมด</h2> 
+          <a href="/listConcerts">ดูรายการคอนเสิร์ตทั้งหมด</a>
+          <hr>
         </div>
-  
 
-    
+        <div class="container_addEvent_in2">
+                
+          <form action="/listConcerts/add" method="POST" enctype="multipart/form-data">
+            <label>ชื่อคอนเสิร์ต:</label><br>
+            <input type="text" name="title" required><br><br>
+
+            <label>ศิลปิน:</label><br>
+            <input type="text" name="artist" required><br><br>
+
+            <label>วันที่:</label><br>
+            <input type="date" name="date" required><br><br>
+
+            <label>เวลา:</label><br>
+            <input type="time" name="time" required><br><br>
+            
+            <label>รายละเอียด:</label><br>
+            <input type="text" name="detail" required><br><br>
+
+            <label>จำนวนที่นั่งของแต่ละโซน:</label><br>
+            <label>AL <input type="number" name="ALcap" value="1" min="1" required></label><br>
+            <label>AR <input type="number" name="ARcap" value="1" min="1" required></label><br>
+            <label>B <input type="number" name="Bcap" value="1" min="1" required></label><br>
+            <label>C <input type="number" name="Ccap" value="1" min="1" required></label>
+            <br><br>
+
+            <label>อัปโหลดรูปภาพหน้าปก:</label><br>
+            <input type="file" name="image" accept="image/*" required><br><br>
+
+            <label>อัปโหลดรูปภาพพื้นหลัง:</label><br>
+            <input type="file" name="imageBG" accept="image/*" required><br><br>
+            <button type="submit">บันทึก</button>
+          </form>
+          <br>
+
+        </div>  
+
+      </div>             
+    </div>
   </main>
 
   <footer id="footer" class="footer accent-background">
@@ -121,6 +132,7 @@
 
   <!-- Main JS File -->
   <script src="/js/main.js"></script>
+  <script src="/js/myJQuery.js"></script>
   
 </body>
 

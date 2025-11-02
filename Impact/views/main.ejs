@@ -107,7 +107,7 @@
 
       <div class="container event-lists">
         <% concerts.forEach(function(concert) { %>
-          <a href="/listConcerts/<%= concert.concert_id %>" class="event-items">
+          <a href="/concertDetail/<%= concert.concert_id %>" class="event-items">
               <div>
                   <img src="<%= concert.image_path%>" alt="<%= concert.title %>">
                   <span><%= concert.title %></span>

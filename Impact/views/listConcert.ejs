@@ -39,6 +39,10 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+  <!-- JQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 </head>
 
 <body class="service-details-page">
@@ -46,49 +50,42 @@
 <%- include("loginNav.ejs"); %>
 
   <main class="main">
-         <div class="container_addEvent">
+        <div class="container_addEvent">
             <div class="container_addEvent_1">
                 <div class="container_addEvent_in">
-                <h2>รายการคอนเสิร์ตทั้งหมด</h2> 
-                <a href="/add">+ เพิ่มคอนเสิร์ตใหม่</a>
-                <hr>
-            </div>
-            <div class="container_addEvent_in2">
+                    <h2>รายการคอนเสิร์ตทั้งหมด</h2> 
+                    <a href="/listConcerts/add">+ เพิ่มคอนเสิร์ตใหม่</a>
+                    <hr>
+                </div>
+                <div class="container_addEvent_in2">
                     <% if (concerts.length === 0) { %>
                         <p>ยังไม่มีข้อมูลคอนเสิร์ต</p>
                     <% } else { %>
                     <% concerts.forEach(concert => { %>      
-                    <div class="concert-item-box" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 15px;"> 
-                        <h3><%= concert.title %></h3>        
-                        <p>ศิลปิน: <%= concert.artist %></p>
-                        <p>วันที่: <%= concert.date.toISOString().split('T')[0] %></p>
-                        <p>เวลา: <%= concert.time %></p>
+                        <div class="concert-item-box" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 15px;"> 
+                            <h3><%= concert.title %></h3>        
+                            <p>ศิลปิน: <%= concert.artist %></p>
+                            <p>วันที่: <%= concert.date.toISOString().split('T')[0] %></p>
+                            <p>เวลา: <%= concert.time %></p>
 
-                        <% if (concert.image_path) { %>
-                        <img src="<%= concert.image_path %>" alt="Concert Image" >
-                        <% } else { %>
-                        <p><i>ไม่มีรูปภาพ</i></p>
-                        <% } %>    
-                        <% if (u.role === 'admin') { %>
-                        <form action="/listConcert/delete/<%= concert.concert_id %>" method="POST" style="display:inline;">
-                            <button type="submit" onclick="return confirm('ยืนยันการลบคอนเสิร์ตนี้หรือไม่?')"> ลบ</button>
-                        </form>
-                <% } %>   
-                    </div>     
+                            <% if (concert.image_path) { %>
+                            <img src="<%= concert.image_path %>" alt="Concert Image" >
+                            <% } else { %>
+                            <p><i>ไม่มีรูปภาพ</i></p>
+                            <% } %>    
+                            <% if (u.role === 'admin') { %>
+                            <form action="/listConcert/delete/<%= concert.concert_id %>" method="POST" style="display:inline;">
+                                <button type="submit" onclick="return confirm('ยืนยันการลบคอนเสิร์ตนี้หรือไม่?')"> ลบ</button>
+                            </form>
+                            <% } %>   
+                        </div>     
                     <% }) %>  
-                     
-                        <hr>
-                        
-                <% } %>
-                 
-            </div>
-                 
+                    <hr>
+                    <% } %>
+                </div>  
             </div>           
-            </div>  
         </div>
   
-
-    
   </main>
 
   
@@ -110,6 +107,7 @@
 
   <!-- Main JS File -->
   <script src="/js/main.js"></script>
+  <script src="/js/myJQuery.js"></script>
   
 </body>
 

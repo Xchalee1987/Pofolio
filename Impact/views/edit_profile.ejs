@@ -43,34 +43,7 @@
 
 <body class="index-page">
 
-  <header id="header" class="header fixed-top">
-
-    <div class="topbar d-flex align-items-center">
-      <div class="container d-flex justify-content-center justify-content-md-between"></div>
-    </div><!-- End Top Bar -->
-
-    <div class="branding d-flex align-items-cente">
-
-      <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="/login" class="logo d-flex align-items-center">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="img/logo.png" alt=""> -->
-            <h1 class="sitename">Ticket Duo</h1>
-        </a>
-
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="/purchase_history" id="purchase_history">ประวัติการสั่งซื้อ</a></li>
-            <li><a href="#" id="profile">คุณ <%= u.username %></a></li>
-            <li><a href="/logout" onclick="">Logout</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-      </div>
-
-    </div>
-
-  </header>
+  <%- include('loginNav.ejs') %>
 
   <main class="main">
 
@@ -83,31 +56,30 @@
       </div>
       <!-- End Section Title -->
       
-      <form id="edit-form" class="profile-container">
+      <form method="POST" onsubmit="return confirmToSetAction();" id="edit-form" class="profile-container">
         <h2>Profile</h2>
-          <span id="updated-msg"></span>
-        
+        <span id="updated-msg"></span>
         
         <div class="profile-info">
           <label>ชื่อผู้ใช้ |</label>
           <a href="#" class="editnamebtn">แก้ไขชื่อผู้ใช้</a>
           <a href="#" class="editnamebtn disable" onclick="resetDefault(1)">ยกเลิกแก้ไขชื่อผู้ใช้</a> <!-- ส่งค่า 1 ไปที่ resetDefault --> 
-          <input type="text" class="editUsername disable" id="input-username">
+          <input type="text" class="disable" id="input-username" name="inputUsername" value="<%= u.username %>">
 
           <label>เบอร์โทรศัพท์ |</label>
           <a href="#" class="editphonebtn">แก้ไขเบอร์โทรศัพท์</a>
           <a href="#" class="editphonebtn disable" onclick="resetDefault(2)">ยกเลิกแก้ไขเบอร์โทรศัพท์</a><!-- ส่งค่า 2 ไปที่ resetDefault -->
-          <input type="text" class="editPhone disable" id="input-phone">
+          <input type="text" class="disable" id="input-phone" name="inputPhone" value="<%= u.phone %>">
 
           <label class="passwordLabel">กรุณากรอกรหัสผ่านเพื่อแก้ไขข้อมูล</label>
           <label class="passwordLabel disable">กรุณากรอกรหัสผ่านเก่า</label>
           <a href="#" class="editpassbtn">แก้ไขเรหัสผ่าน</a>
           <a href="#" class="editpassbtn disable">ยกเลิกแก้ไขเรหัสผ่าน</a>
-          <input type="password" id="input-passwordOld" class="clear-password">
+          <input type="password" id="input-passwordOld" class="clear-password" name="inputPass">
           <span id="no-password-entered" style="color: red;text-align: center;"></span>
 
           <label class="passwordLabel disable">กรุณากรอกรหัสผ่านใหม่</label>
-          <input type="password" id="input-passwordNew" class="clear-password disable">
+          <input type="password" id="input-passwordNew" class="clear-password disable" name="inputPassNew">
         </div>
 
         <div class="button">
@@ -149,67 +121,8 @@
 
   <!-- Main JS File -->
   <script src="/js/main.js"></script>
-  
   <script src="/js/myJQuery.js"></script>
-
-  <script>
-    let username = "<%= u.username %>";
-    let phone = "<%= u.phone %>";
-
-    function resetDefault(n) {
-      if (n == 1) { document.getElementById("input-username").value = username; }
-      if (n == 2) { document.getElementById("input-phone").value = phone; }
-      
-    }
-
-    function resetAllDefault() {
-      document.getElementById("input-username").setAttribute("value", username);
-      document.getElementById("input-phone").setAttribute("value", phone);
-    }
-
-    document.getElementById("edit-form").addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if(document.getElementById("input-passwordOld").value === "") {
-        document.getElementById("no-password-entered").innerHTML = "โปรดป้อนรหัสผ่านเพื่อทำการ";
-      }
-      const inputUsername = document.getElementById("input-username").value;
-      const inputPhone = document.getElementById("input-phone").value;
-      const inputPass = document.getElementById("input-passwordOld").value;
-      const inputPassNew = document.getElementById("input-passwordNew").value;
-      let response;
-
-      if (inputPassNew === "") {
-        const formData = new URLSearchParams();
-        formData.append('inputUsername', inputUsername);
-        formData.append('inputPhone', inputPhone);
-        formData.append('inputPass', inputPass);
-
-        response = await fetch('/editProfile/update', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: formData
-        });
-      }
-      else {
-        response = await fetch('/editProfile/updatePass', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ inputUsername, inputPhone, inputPass, inputPassNew })
-        });
-      }
-      const msg = await response.json();
-      console.log('Server response:', msg.message);
-      if (response.status === 200) {
-        username = inputUsername;
-        phone = inputPhone;
-        console.log("user as ", username);
-        console.log("num as", phone);
-      }
-      alert(msg.message);
-    });
-
-    resetAllDefault();
-  </script>
+  <script src="/js/edit_profile.js"></script>
 
 </body>
 
