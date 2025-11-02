@@ -1,10 +1,10 @@
-const delBtns = document.querySelectorAll('.delTransactionBtn');
+const delUserBtns = document.querySelectorAll('.del-user');
 
-delBtns.forEach(btn => {
-    btn.addEventListener("click", function(e) {
+delUserBtns.forEach(delBtn => {
+    delBtn.addEventListener("click", function(e) {
         e.preventDefault();
 
-        const trans_id = e.target.dataset.transactionId;
+        const trans_id = e.target.dataset.userId;
         // data-transaction-id (with a hyphen) in HTML becomes dataset.transactionId in JS.
 
         confirmDelete(trans_id);
@@ -12,16 +12,17 @@ delBtns.forEach(btn => {
 });
     
 async function confirmDelete(id) {
-    if (confirm(`คุณแน่ใจว่าต้องการลบรายการสั่งซื้อ [Trans ID: ${id}] หรือไม่?`)) {
+    if (confirm(`ยืนยันการลบผู้ใช้ User ID: ${id} หรือไม่?`)) {
         try {
-            const response = await fetch(`/admin/delete/${id}`, { method: 'DELETE' });
+            const response = await fetch(`/admin/userDelete/${id}`, { method: 'DELETE' });
+            console.log(response);
             if (response.ok) {
                 alert('ลบรายการสำเร็จ');
-                // Reload the page to show the transaction is gone
+                // Reload the page after deleted user
                 window.location.reload();
             } else {
                 // Handle server errors (e.g., 404, 500)
-                alert('เกิดข้อผิดพลาด: ไม่สามารถลบรายการได้');
+                alert('เกิดข้อผิดพลาด: ไม่สามารถลบผู้ใช้ได้');
             }
         } catch (error) {
             // Handle network errors (e.g., server is down)

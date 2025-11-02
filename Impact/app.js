@@ -226,8 +226,6 @@ app.post("/register", async (req, res) => {
   }
 });
 
-
-
 app.post('/listConcerts/add', requireRole('staff', 'admin'), upload.fields([
     { name: 'image', maxCount: 1 },   // สำหรับภาพหน้าปก
     { name: 'imageBG', maxCount: 1 }  // สำหรับภาพพื้นหลัง
@@ -526,7 +524,47 @@ app.get("/purchase_history", requireRole('user', 'admin'), async (req, res) => {
   }
 });
 
-app.delete('/admin/delete/:trans_id', async (req, res) =>{
+app.get('/userList', async (req, res) => {
+  try {
+    const q = `
+    SELECT
+      u.user_id,
+      username,
+      COUNT(t.user_id) AS "totalTransaction"
+    FROM "user_detail" AS u
+    LEFT JOIN "transaction" AS t ON t.user_id = u.user_id
+    WHERE role = 'user'
+    GROUP BY u.user_id, u.username
+    ORDER BY u.user_id DESC;
+  `;
+  const result = await pool.query(q);
+
+  res.render('user_list.ejs', {
+    u : req.user,
+    users : result.rows
+  });
+  } catch (err) {
+    console.error('Database error:', err.message);
+    res.status(500).send('Query to database not successful');
+  }
+});
+
+app.delete('/admin/userDelete/:delUser_id', requireRole('admin') , async (req, res) => {
+    const { delUser_id } = req.params;
+  try {
+    await pool.query(`DELETE FROM "transaction" WHERE user_id = $1`, [ delUser_id ]);
+
+    await pool.query(`DELETE FROM "user_detail" WHERE user_id = $1`, [ delUser_id ]);
+
+    // can't redirect(/userList) cuz DELETE method is doing fetch/ axios
+    res.json({ message: 'Transaction deleted'});
+  } catch (err) {
+    console.error('Database error:', err.message);
+    res.status(500).send('Query to database not successful');
+  }
+});
+
+app.delete('/admin/delete/:trans_id', requireRole('admin') , async (req, res) =>{
   const { trans_id } = req.params;
   try {
     await pool.query(`DELETE FROM "transaction" WHERE trans_id = $1`, [ trans_id ]);

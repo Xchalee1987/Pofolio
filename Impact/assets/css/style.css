@@ -238,19 +238,19 @@
   padding: 10px 0;
 }
 
-.history-container .history-item button {
+.delete-button {
   background-color: #E6493C;
   color: var(--contrast-color);
   font-size: 20px;
   float: right;
   position: relative;
-  padding: 15px 30px;
+  padding: 13px 30px;
   border: none;
   border-radius: 5px;
   transition: 0.3s;
 }
 
-.history-container .history-item button:hover {
+.delete-button:hover {
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
   background-color: color-mix(in srgb, #E6493C, transparent 10%);
 }
@@ -337,3 +337,33 @@ label.disable {
     display: block;
     text-align: center;
 }
+
+/* user scrollable div in user_list.ejs */
+.user-item-list-container {
+  width: 600px;
+  height: 300px;         /* It MUST have a fixed height */
+  overflow-y: auto;      /* Adds a vertical scrollbar only when needed */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: var(--accent-color);
+  margin: 0 auto;       /* auto margin to make container stay on center */
+}
+
+.user-list-item {
+  display: flex;
+  justify-content: space-between; /* Puts username left, button right */
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #eee;
+  background-color: #fff;
+  margin-bottom: 8px; /* Space between items */
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+}
+
+.user-list-item > p:nth-child(2) {
+  background-color: #ffdd78d7;
+  padding: 0 10px;
+}
+/* user scrollable div in user_list.ejs */

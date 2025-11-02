@@ -17,6 +17,9 @@
      <%if(locals.u) { %>
         <nav id="navmenu" class="navmenu">
           <ul>
+            <% if (u.role === 'admin') { %>
+            <li><a href="/userList" >จัดการผู้ใช้งาน</a></li>
+            <% } %>
             <% if (u.role === 'staff' || u.role === 'admin') { %>
             <li><a href="/listConcerts" >เพิ่มรายการconcert</a></li>
             <% } %>

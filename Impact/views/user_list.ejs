@@ -46,41 +46,29 @@
 
   <main class="main">
 
-    <!-- Purchase history Section -->
+    <!-- User list Section -->
     <section id="about" class="about section">
         
     <!-- Section Title -->
       <div class="container section-title history-title" data-aos="fade-up">
-        <h2>ประวัติการสั่งซื้อ</h2>
+        <h2>รายชื่อผู้ใช้งาน</h2>
       </div><!-- End Section Title -->
 
-      <div class="history-container" id="history-list">
-        <% ts.forEach(t => { %>
-          <div class="history-item">
-            <hr>
-              <div>
-                <% if (u.role === 'admin') { %>
-                <button class="delTransactionBtn delete-button" data-transaction-id="<%= t.trans_id %>">Delete</button>
-                <% } %>
-                <span>
-                  Transaction ID <%= t.trans_id %>
-                  <% if (u.role === 'admin') { %>
-                   | by <%= t.username %> (User ID: <%= t.user_id %>)
-                  <% } %>
-                </span>
-                <span>Concert Name: <%= t.title %></span>
-                <span>Zone Name: <%= t.zone_name %></span>
-                <span>Seat Number: <%= t.seat_number %></span>
-                <span>Price: <%= t.base_price %></span>
-                <span><%= t.formatted_purchase_date %></span>
-              </div>
-            <hr>
-          </div>
-        <% }); %>
-
+      <div class="user-item-list-container">
+        <% if (locals.users) { %>
+            <% users.forEach(function(user) { %>
+                <div class="user-list-item">
+                    <p>Username: <%= user.username %> (User ID: <%= user.user_id %>)</p>
+                    <p>Total transaction: <%= user.totalTransaction %></p>
+                    <button type="submit" data-user-id="<%= user.user_id %>" class="del-user delete-button">Delete</button>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>ไม่มีผู้ใช้</p>
+        <% } %>
       </div>
 
-    </section><!-- Purchase history Section -->
+    </section><!-- User list Section -->
 
   </main>   
 
@@ -116,7 +104,7 @@
   <script src="/js/main.js"></script>
 
   <script src="/js/myJQuery.js"></script>
-  <script src="/js/purchase_history.js"></script>
+  <script src="/js/user_list.js"></script>
 </body>
 
 </html>
